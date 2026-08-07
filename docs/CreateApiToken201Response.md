@@ -8,6 +8,7 @@
 | **name** | **String** | Token name for identification |  |
 | **token_prefix** | **String** | First 12 chars of the token for identification |  |
 | **scopes** | **Array&lt;String&gt;** | Permission scopes granted by the token |  |
+| **brand_id** | **String** | Brand this token is restricted to, or null for organization-wide access |  |
 | **last_used_at** | **String** | Timestamp the token was last used (ISO 8601), null if never used |  |
 | **expires_at** | **String** | Expiry timestamp (ISO 8601), null if it never expires |  |
 | **created_at** | **String** | Creation timestamp (ISO 8601) |  |
@@ -23,6 +24,7 @@ instance = Zippendo::CreateApiToken201Response.new(
   name: Warehouse integration,
   token_prefix: zipp_live_8f,
   scopes: [&quot;read:shipments&quot;,&quot;write:shipments&quot;],
+  brand_id: brnd_8f3kd92ld0,
   last_used_at: 2026-06-22T14:30:00.000Z,
   expires_at: 2026-09-20T14:30:00.000Z,
   created_at: 2026-06-22T14:30:00.000Z,

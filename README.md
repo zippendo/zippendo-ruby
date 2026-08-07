@@ -40,6 +40,45 @@ Every call takes an `org_id` (your organization ID, found in the dashboard). It 
 call by design: one API token can be granted access to multiple organizations, and `org_id` selects
 which one the request acts on.
 
+## Brands
+
+A brand is a sub-account inside your organization — one company running several consumer-facing labels
+(Pitaya, Kiwi) keeps each label's orders and shipments separate, with its own company name, address and
+logo on the documents its shipments produce. Any call can be scoped to one brand by sending the
+`X-Zippendo-Brand` header with the brand's ID or slug.
+
+The header is not a method argument: it applies uniformly to every operation, so set it once as a default
+header on the client and every call inherits it.
+
+```ruby
+Zippendo.configure do |config|
+  config.access_token = ENV["ZIPPENDO_API_TOKEN"]
+end
+
+Zippendo::ApiClient.default.default_headers["X-Zippendo-Brand"] = "pitaya"  # brand ID or slug
+
+shipments = Zippendo::ShipmentsApi.new
+shipments.list_shipments("org_8f3kd92ld0", limit: 50)   # Pitaya's shipments only
+```
+
+To address two brands from one process, give each its own `ApiClient`:
+
+```ruby
+kiwi = Zippendo::ApiClient.new
+kiwi.default_headers["X-Zippendo-Brand"] = "brnd_8f3kd92ld0"
+Zippendo::OrdersApi.new(kiwi).list_orders("org_8f3kd92ld0")
+```
+
+Omit the header and the request covers the whole organization — the behaviour of every existing token.
+A header naming a brand that does not exist in the organization is rejected with `404 BRAND_NOT_FOUND`.
+
+A token created with a `brand_id` (see `CreateApiTokenRequest`) is permanently confined to that brand and
+needs no header. Sending `X-Zippendo-Brand` naming a *different* brand on such a token is refused with
+`403 BRAND_ACCESS_DENIED` — the binding is never widened.
+
+Creating, updating and deleting brands is done in the Zippendo dashboard; brand management is not part of
+this SDK.
+
 ## Listing & pagination
 
 List endpoints accept `:page` (1-based) and `:limit`, and return a page with `data` plus `total`,

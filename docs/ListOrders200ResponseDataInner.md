@@ -9,6 +9,7 @@
 | **customer_name** | **String** | Customer full name. | [optional] |
 | **customer_email** | **String** | Customer email address. | [optional] |
 | **status** | **String** | Order fulfilment status derived from its shipments. |  |
+| **brand_id** | **String** | Brand this record belongs to, or null when it is organization-wide |  |
 | **subtotal_amount** | **Float** | Order subtotal before shipping and tax. | [optional] |
 | **total_amount** | **Float** | Order grand total. | [optional] |
 | **currency** | **String** | ISO 4217 currency code. | [optional] |
@@ -28,6 +29,7 @@ instance = Zippendo::ListOrders200ResponseDataInner.new(
   customer_name: Anna Jensen,
   customer_email: anna@example.dk,
   status: processing,
+  brand_id: brnd_8f3kd92ld0,
   subtotal_amount: 998,
   total_amount: 1047,
   currency: DKK,

@@ -1,7 +1,7 @@
 =begin
 #Zippendo Public API
 
-#Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).
+#Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.
 
 The version of the OpenAPI document: 1.0.0
 Contact: support@zippendo.com
@@ -29,6 +29,9 @@ module Zippendo
 
     # Order fulfilment status derived from its shipments.
     attr_accessor :status
+
+    # Brand this record belongs to, or null when it is organization-wide
+    attr_accessor :brand_id
 
     # Order subtotal before shipping and tax.
     attr_accessor :subtotal_amount
@@ -80,6 +83,7 @@ module Zippendo
         :'customer_name' => :'customerName',
         :'customer_email' => :'customerEmail',
         :'status' => :'status',
+        :'brand_id' => :'brandId',
         :'subtotal_amount' => :'subtotalAmount',
         :'total_amount' => :'totalAmount',
         :'currency' => :'currency',
@@ -108,6 +112,7 @@ module Zippendo
         :'customer_name' => :'String',
         :'customer_email' => :'String',
         :'status' => :'String',
+        :'brand_id' => :'String',
         :'subtotal_amount' => :'Float',
         :'total_amount' => :'Float',
         :'currency' => :'String',
@@ -123,6 +128,7 @@ module Zippendo
       Set.new([
         :'customer_name',
         :'customer_email',
+        :'brand_id',
         :'subtotal_amount',
         :'total_amount',
         :'currency',
@@ -169,6 +175,12 @@ module Zippendo
         self.status = attributes[:'status']
       else
         self.status = nil
+      end
+
+      if attributes.key?(:'brand_id')
+        self.brand_id = attributes[:'brand_id']
+      else
+        self.brand_id = nil
       end
 
       if attributes.key?(:'subtotal_amount')
@@ -358,6 +370,7 @@ module Zippendo
           customer_name == o.customer_name &&
           customer_email == o.customer_email &&
           status == o.status &&
+          brand_id == o.brand_id &&
           subtotal_amount == o.subtotal_amount &&
           total_amount == o.total_amount &&
           currency == o.currency &&
@@ -376,7 +389,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, order_number, customer_name, customer_email, status, subtotal_amount, total_amount, currency, shipment_count, order_channel, created_at, updated_at].hash
+      [id, order_number, customer_name, customer_email, status, brand_id, subtotal_amount, total_amount, currency, shipment_count, order_channel, created_at, updated_at].hash
     end
 
     # Builds the object from hash

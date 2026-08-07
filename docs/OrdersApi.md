@@ -248,6 +248,7 @@ org_id = 'org_8f3kd92ld0' # String | Organization ID
 opts = {
   page: 1, # Integer | Page number (1-based)
   limit: 20, # Integer | Items per page (max 100)
+  brand_id: 'brnd_8f3kd92ld0', # String | Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.
   status: 'pending', # String | Order fulfilment status derived from its shipments.
   order_channel_id: 'clz9k2f0a0001abcd1234efgh', # String | Filter by order channel ID.
   search: 'Anna' # String | Search by order number or customer name/email.
@@ -287,6 +288,7 @@ end
 | **org_id** | **String** | Organization ID |  |
 | **page** | **Integer** | Page number (1-based) | [optional][default to 1] |
 | **limit** | **Integer** | Items per page (max 100) | [optional][default to 20] |
+| **brand_id** | **String** | Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand. | [optional] |
 | **status** | **String** | Order fulfilment status derived from its shipments. | [optional] |
 | **order_channel_id** | **String** | Filter by order channel ID. | [optional] |
 | **search** | **String** | Search by order number or customer name/email. | [optional] |

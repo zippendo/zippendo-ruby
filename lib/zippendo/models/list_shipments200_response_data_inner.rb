@@ -1,7 +1,7 @@
 =begin
 #Zippendo Public API
 
-#Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).
+#Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.
 
 The version of the OpenAPI document: 1.0.0
 Contact: support@zippendo.com
@@ -28,6 +28,9 @@ module Zippendo
 
     # Lifecycle status of the shipment.
     attr_accessor :status
+
+    # Brand this record belongs to, or null when it is organization-wide
+    attr_accessor :brand_id
 
     attr_accessor :address
 
@@ -67,6 +70,7 @@ module Zippendo
         :'type' => :'type',
         :'carrier_settings' => :'carrierSettings',
         :'status' => :'status',
+        :'brand_id' => :'brandId',
         :'address' => :'address',
         :'created_at' => :'createdAt',
         :'updated_at' => :'updatedAt'
@@ -91,6 +95,7 @@ module Zippendo
         :'type' => :'String',
         :'carrier_settings' => :'ListShipments200ResponseDataInnerCarrierSettings',
         :'status' => :'String',
+        :'brand_id' => :'String',
         :'address' => :'ListShipments200ResponseDataInnerAddress',
         :'created_at' => :'String',
         :'updated_at' => :'String'
@@ -100,6 +105,7 @@ module Zippendo
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'brand_id',
         :'address',
       ])
     end
@@ -148,6 +154,12 @@ module Zippendo
         self.status = attributes[:'status']
       else
         self.status = nil
+      end
+
+      if attributes.key?(:'brand_id')
+        self.brand_id = attributes[:'brand_id']
+      else
+        self.brand_id = nil
       end
 
       if attributes.key?(:'address')
@@ -301,6 +313,7 @@ module Zippendo
           type == o.type &&
           carrier_settings == o.carrier_settings &&
           status == o.status &&
+          brand_id == o.brand_id &&
           address == o.address &&
           created_at == o.created_at &&
           updated_at == o.updated_at
@@ -315,7 +328,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, reference, type, carrier_settings, status, address, created_at, updated_at].hash
+      [id, reference, type, carrier_settings, status, brand_id, address, created_at, updated_at].hash
     end
 
     # Builds the object from hash

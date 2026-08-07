@@ -548,7 +548,8 @@ api_instance = Zippendo::ShipmentsApi.new
 org_id = 'org_8f3kd92ld0' # String | Organization ID
 opts = {
   page: 1, # Integer | Page number (1-based)
-  limit: 20 # Integer | Items per page (max 100)
+  limit: 20, # Integer | Items per page (max 100)
+  brand_id: 'brnd_8f3kd92ld0' # String | Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.
 }
 
 begin
@@ -585,6 +586,7 @@ end
 | **org_id** | **String** | Organization ID |  |
 | **page** | **Integer** | Page number (1-based) | [optional][default to 1] |
 | **limit** | **Integer** | Items per page (max 100) | [optional][default to 20] |
+| **brand_id** | **String** | Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand. | [optional] |
 
 ### Return type
 

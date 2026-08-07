@@ -1,7 +1,7 @@
 =begin
 #Zippendo Public API
 
-#Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).
+#Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.
 
 The version of the OpenAPI document: 1.0.0
 Contact: support@zippendo.com
@@ -23,6 +23,9 @@ module Zippendo
 
     # Token expiry in days (optional, max 365)
     attr_accessor :expires_in_days
+
+    # Restrict this token to a single brand. Requests made with it can only read and write that brand's data. Omit for organization-wide access.
+    attr_accessor :brand_id
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -51,7 +54,8 @@ module Zippendo
       {
         :'name' => :'name',
         :'scopes' => :'scopes',
-        :'expires_in_days' => :'expiresInDays'
+        :'expires_in_days' => :'expiresInDays',
+        :'brand_id' => :'brandId'
       }
     end
 
@@ -70,13 +74,15 @@ module Zippendo
       {
         :'name' => :'String',
         :'scopes' => :'Array<String>',
-        :'expires_in_days' => :'Integer'
+        :'expires_in_days' => :'Integer',
+        :'brand_id' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'brand_id'
       ])
     end
 
@@ -112,6 +118,10 @@ module Zippendo
 
       if attributes.key?(:'expires_in_days')
         self.expires_in_days = attributes[:'expires_in_days']
+      end
+
+      if attributes.key?(:'brand_id')
+        self.brand_id = attributes[:'brand_id']
       end
     end
 
@@ -208,7 +218,8 @@ module Zippendo
       self.class == o.class &&
           name == o.name &&
           scopes == o.scopes &&
-          expires_in_days == o.expires_in_days
+          expires_in_days == o.expires_in_days &&
+          brand_id == o.brand_id
     end
 
     # @see the `==` method
@@ -220,7 +231,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, scopes, expires_in_days].hash
+      [name, scopes, expires_in_days, brand_id].hash
     end
 
     # Builds the object from hash
