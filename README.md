@@ -43,7 +43,7 @@ which one the request acts on.
 ## Brands
 
 A brand is a sub-account inside your organization — one company running several consumer-facing labels
-(Pitaya, Kiwi) keeps each label's orders and shipments separate, with its own company name, address and
+(Acme, Globex) keeps each label's orders and shipments separate, with its own company name, address and
 logo on the documents its shipments produce. Any call can be scoped to one brand by sending the
 `X-Zippendo-Brand` header with the brand's ID or slug.
 
@@ -55,18 +55,18 @@ Zippendo.configure do |config|
   config.access_token = ENV["ZIPPENDO_API_TOKEN"]
 end
 
-Zippendo::ApiClient.default.default_headers["X-Zippendo-Brand"] = "pitaya"  # brand ID or slug
+Zippendo::ApiClient.default.default_headers["X-Zippendo-Brand"] = "acme"  # brand ID or slug
 
 shipments = Zippendo::ShipmentsApi.new
-shipments.list_shipments("org_8f3kd92ld0", limit: 50)   # Pitaya's shipments only
+shipments.list_shipments("org_8f3kd92ld0", limit: 50)   # Acme's shipments only
 ```
 
 To address two brands from one process, give each its own `ApiClient`:
 
 ```ruby
-kiwi = Zippendo::ApiClient.new
-kiwi.default_headers["X-Zippendo-Brand"] = "brnd_8f3kd92ld0"
-Zippendo::OrdersApi.new(kiwi).list_orders("org_8f3kd92ld0")
+globex = Zippendo::ApiClient.new
+globex.default_headers["X-Zippendo-Brand"] = "brnd_8f3kd92ld0"
+Zippendo::OrdersApi.new(globex).list_orders("org_8f3kd92ld0")
 ```
 
 Omit the header and the request covers the whole organization — the behaviour of every existing token.
@@ -76,8 +76,32 @@ A token created with a `brand_id` (see `CreateApiTokenRequest`) is permanently c
 needs no header. Sending `X-Zippendo-Brand` naming a *different* brand on such a token is refused with
 `403 BRAND_ACCESS_DENIED` — the binding is never widened.
 
-Creating, updating and deleting brands is done in the Zippendo dashboard; brand management is not part of
-this SDK.
+### Managing brands
+
+Brands are managed with `BrandsApi`. Use an organization-wide client for this — you are administering
+brands, not acting inside one:
+
+```ruby
+brands = Zippendo::BrandsApi.new
+
+created = brands.create_org_brand(
+  "org_8f3kd92ld0",
+  Zippendo::CreateOrgBrandRequest.new(name: "Acme", company_name: "Acme ApS")
+)
+
+page = brands.list_org_brands("org_8f3kd92ld0")
+brands.update_org_brand(
+  "org_8f3kd92ld0",
+  created.id,
+  Zippendo::UpdateOrgBrandRequest.new(vat_number: "DK12345678")
+)
+brands.archive_org_brand("org_8f3kd92ld0", created.id)
+```
+
+Retire a brand with `archive_org_brand` — archived brands keep their slug and can be restored with
+`unarchive_org_brand`. Permanent deletion is dashboard-only: it is refused while any order, shipment,
+member or token still references the brand. Brands require a plan that includes them; creating one past
+your plan's limit returns `403`.
 
 ## Listing & pagination
 
