@@ -1,4 +1,4 @@
-# Zippendo::ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue
+# Zippendo::ListShippingRules200ResponseDataInnerAdditionalParametersValue
 
 ## Properties
 
@@ -7,14 +7,14 @@
 | **id** | **String** | Identifier of the selected service point. |  |
 | **name** | **String** | Display name of the service point. |  |
 | **address** | **String** | Formatted address of the service point. |  |
-| **coordinates** | [**Array&lt;CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInner&gt;**](CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInner.md) | Latitude/longitude of the service point. | [optional] |
+| **coordinates** | [**Array&lt;ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner&gt;**](ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner.md) | Latitude/longitude of the service point. | [optional] |
 
 ## Example
 
 ```ruby
 require 'zippendo'
 
-instance = Zippendo::ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue.new(
+instance = Zippendo::ListShippingRules200ResponseDataInnerAdditionalParametersValue.new(
   id: sp_pn_4521,
   name: Føtex Nørrebro,
   address: Nørrebrogade 20, 2200 København N,

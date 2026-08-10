@@ -53,7 +53,7 @@ module Zippendo
         :'carrier_id' => :'String',
         :'product_id' => :'String',
         :'services' => :'Array<String>',
-        :'additional_parameters' => :'Hash<String, ListShipments200ResponseDataInnerCarrierSettingsAdditionalParametersValue>'
+        :'additional_parameters' => :'Hash<String, ListShippingRules200ResponseDataInnerAdditionalParametersValue>'
       }
     end
 

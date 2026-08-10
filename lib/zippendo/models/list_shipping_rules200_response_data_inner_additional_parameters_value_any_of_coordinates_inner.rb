@@ -14,15 +14,12 @@ require 'date'
 require 'time'
 
 module Zippendo
-  module CreateShippingRuleRequestAdditionalParametersAnyOfValue
+  module ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner
     class << self
       # List of class defined in anyOf (OpenAPI v3)
       def openapi_any_of
         [
-          :'Boolean',
-          :'CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOf',
-          :'Float',
-          :'String'
+          :'Float'
         ]
       end
 

@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module Zippendo
-  class CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOf < ApiModelBase
+  class ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOf < ApiModelBase
     # Identifier of the selected service point.
     attr_accessor :id
 
@@ -53,7 +53,7 @@ module Zippendo
         :'id' => :'String',
         :'name' => :'String',
         :'address' => :'String',
-        :'coordinates' => :'Array<CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOfCoordinatesInner>'
+        :'coordinates' => :'Array<ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner>'
       }
     end
 
@@ -67,14 +67,14 @@ module Zippendo
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOf` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOf` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::CreateShippingRuleRequestAdditionalParametersAnyOfValueAnyOf`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOf`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }

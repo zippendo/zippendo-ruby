@@ -255,7 +255,7 @@ end
 
 api_instance = Zippendo::ShipmentsApi.new
 org_id = 'org_8f3kd92ld0' # String | Organization ID
-create_shipment_request = Zippendo::CreateShipmentRequest.new({type: 'outbound', carrier_settings: Zippendo::CreateShipmentRequestCarrierSettings.new({carrier_id: 'car_pn_001', product_id: 'prod_mypack_home', services: ["A7"], additional_parameters: { key: Zippendo::CreateShippingRuleRequestAdditionalParametersAnyOfValue.new({id: 'sp_pn_4521', name: 'Føtex Nørrebro', address: 'Nørrebrogade 20, 2200 København N'})}})}) # CreateShipmentRequest | 
+create_shipment_request = Zippendo::CreateShipmentRequest.new({type: 'outbound', carrier_settings: Zippendo::CreateShipmentRequestCarrierSettings.new({carrier_id: 'car_pn_001', product_id: 'prod_mypack_home', services: ["A7"], additional_parameters: { key: Zippendo::CreateShippingRuleRequestAdditionalParametersValue.new({id: 'sp_pn_4521', name: 'Føtex Nørrebro', address: 'Nørrebrogade 20, 2200 København N'})}})}) # CreateShipmentRequest | 
 
 begin
   # Create shipment

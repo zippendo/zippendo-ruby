@@ -33,6 +33,7 @@ module Zippendo
     # List of selected services
     attr_accessor :services
 
+    # Carrier-specific extra parameters, keyed by the carrier parameter `key` from the product's `additionalParameters[].key` (e.g. `returnFunctionality`).
     attr_accessor :additional_parameters
 
     # Sender address ID
@@ -161,7 +162,7 @@ module Zippendo
         :'carrier_id' => :'String',
         :'product_id' => :'String',
         :'services' => :'Array<String>',
-        :'additional_parameters' => :'CreateShippingRuleRequestAdditionalParameters',
+        :'additional_parameters' => :'Hash<String, CreateShippingRuleRequestAdditionalParametersValue>',
         :'address_id' => :'String',
         :'receiving_countries' => :'Array<String>',
         :'email_notification' => :'Boolean',
@@ -249,7 +250,9 @@ module Zippendo
       end
 
       if attributes.key?(:'additional_parameters')
-        self.additional_parameters = attributes[:'additional_parameters']
+        if (value = attributes[:'additional_parameters']).is_a?(Hash)
+          self.additional_parameters = value
+        end
       end
 
       if attributes.key?(:'address_id')

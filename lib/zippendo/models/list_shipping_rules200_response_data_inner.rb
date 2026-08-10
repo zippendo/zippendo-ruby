@@ -36,7 +36,7 @@ module Zippendo
     # List of selected services
     attr_accessor :services
 
-    # Carrier-specific extra parameters. DEPRECATED array form `[{ name, val }]` where `name` is the carrier parameter `key` (from the product's `additionalParameters[].key`, e.g. `returnFunctionality`) and `val` is the stringified value. This will change to a `{ key: value }` object in a future version — writes already accept either shape.
+    # Carrier-specific extra parameters, keyed by the carrier parameter `key` from the product's `additionalParameters[].key`.
     attr_accessor :additional_parameters
 
     # Sender address ID
@@ -194,7 +194,7 @@ module Zippendo
         :'carrier_id' => :'String',
         :'product_id' => :'String',
         :'services' => :'Array<String>',
-        :'additional_parameters' => :'Array<ListShippingRules200ResponseDataInnerAdditionalParametersInner>',
+        :'additional_parameters' => :'Hash<String, ListShippingRules200ResponseDataInnerAdditionalParametersValue>',
         :'address_id' => :'String',
         :'receiving_countries' => :'Array<String>',
         :'email_notification' => :'Boolean',
@@ -302,7 +302,7 @@ module Zippendo
       end
 
       if attributes.key?(:'additional_parameters')
-        if (value = attributes[:'additional_parameters']).is_a?(Array)
+        if (value = attributes[:'additional_parameters']).is_a?(Hash)
           self.additional_parameters = value
         end
       else

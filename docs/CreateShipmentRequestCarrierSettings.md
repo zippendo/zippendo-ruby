@@ -7,7 +7,7 @@
 | **carrier_id** | **String** | Identifier of the carrier to use. |  |
 | **product_id** | **String** | Identifier of the carrier product/service. |  |
 | **services** | **Array&lt;String&gt;** | Additional service codes requested from the carrier. |  |
-| **additional_parameters** | [**Hash&lt;String, CreateShippingRuleRequestAdditionalParametersAnyOfValue&gt;**](CreateShippingRuleRequestAdditionalParametersAnyOfValue.md) | Carrier-specific extra parameters as key/value pairs. |  |
+| **additional_parameters** | [**Hash&lt;String, CreateShippingRuleRequestAdditionalParametersValue&gt;**](CreateShippingRuleRequestAdditionalParametersValue.md) | Carrier-specific extra parameters as key/value pairs. |  |
 
 ## Example
 

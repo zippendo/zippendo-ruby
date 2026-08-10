@@ -14,18 +14,26 @@ require 'date'
 require 'time'
 
 module Zippendo
-  class ListShippingRules200ResponseDataInnerAdditionalParametersInner < ApiModelBase
-    # Carrier parameter key
+  class CreateShippingRuleRequestAdditionalParametersValueAnyOf < ApiModelBase
+    # Identifier of the selected service point.
+    attr_accessor :id
+
+    # Display name of the service point.
     attr_accessor :name
 
-    # Parameter value (stringified)
-    attr_accessor :val
+    # Formatted address of the service point.
+    attr_accessor :address
+
+    # Latitude/longitude of the service point.
+    attr_accessor :coordinates
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'id' => :'id',
         :'name' => :'name',
-        :'val' => :'val'
+        :'address' => :'address',
+        :'coordinates' => :'coordinates'
       }
     end
 
@@ -42,8 +50,10 @@ module Zippendo
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'id' => :'String',
         :'name' => :'String',
-        :'val' => :'String'
+        :'address' => :'String',
+        :'coordinates' => :'Array<ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner>'
       }
     end
 
@@ -57,17 +67,23 @@ module Zippendo
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::ListShippingRules200ResponseDataInnerAdditionalParametersInner` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::CreateShippingRuleRequestAdditionalParametersValueAnyOf` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::ListShippingRules200ResponseDataInnerAdditionalParametersInner`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::CreateShippingRuleRequestAdditionalParametersValueAnyOf`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
+
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
+      else
+        self.id = nil
+      end
 
       if attributes.key?(:'name')
         self.name = attributes[:'name']
@@ -75,10 +91,16 @@ module Zippendo
         self.name = nil
       end
 
-      if attributes.key?(:'val')
-        self.val = attributes[:'val']
+      if attributes.key?(:'address')
+        self.address = attributes[:'address']
       else
-        self.val = nil
+        self.address = nil
+      end
+
+      if attributes.key?(:'coordinates')
+        if (value = attributes[:'coordinates']).is_a?(Array)
+          self.coordinates = value
+        end
       end
     end
 
@@ -87,16 +109,24 @@ module Zippendo
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @id.nil?
+        invalid_properties.push('invalid value for "id", id cannot be nil.')
+      end
+
       if @name.nil?
         invalid_properties.push('invalid value for "name", name cannot be nil.')
       end
 
-      if @name.to_s.length < 1
-        invalid_properties.push('invalid value for "name", the character length must be greater than or equal to 1.')
+      if @address.nil?
+        invalid_properties.push('invalid value for "address", address cannot be nil.')
       end
 
-      if @val.nil?
-        invalid_properties.push('invalid value for "val", val cannot be nil.')
+      if !@coordinates.nil? && @coordinates.length > 2
+        invalid_properties.push('invalid value for "coordinates", number of items must be less than or equal to 2.')
+      end
+
+      if !@coordinates.nil? && @coordinates.length < 2
+        invalid_properties.push('invalid value for "coordinates", number of items must be greater than or equal to 2.')
       end
 
       invalid_properties
@@ -106,10 +136,22 @@ module Zippendo
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if @id.nil?
       return false if @name.nil?
-      return false if @name.to_s.length < 1
-      return false if @val.nil?
+      return false if @address.nil?
+      return false if !@coordinates.nil? && @coordinates.length > 2
+      return false if !@coordinates.nil? && @coordinates.length < 2
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] id Value to be assigned
+    def id=(id)
+      if id.nil?
+        fail ArgumentError, 'id cannot be nil'
+      end
+
+      @id = id
     end
 
     # Custom attribute writer method with validation
@@ -119,21 +161,35 @@ module Zippendo
         fail ArgumentError, 'name cannot be nil'
       end
 
-      if name.to_s.length < 1
-        fail ArgumentError, 'invalid value for "name", the character length must be greater than or equal to 1.'
-      end
-
       @name = name
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] val Value to be assigned
-    def val=(val)
-      if val.nil?
-        fail ArgumentError, 'val cannot be nil'
+    # @param [Object] address Value to be assigned
+    def address=(address)
+      if address.nil?
+        fail ArgumentError, 'address cannot be nil'
       end
 
-      @val = val
+      @address = address
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] coordinates Value to be assigned
+    def coordinates=(coordinates)
+      if coordinates.nil?
+        fail ArgumentError, 'coordinates cannot be nil'
+      end
+
+      if coordinates.length > 2
+        fail ArgumentError, 'invalid value for "coordinates", number of items must be less than or equal to 2.'
+      end
+
+      if coordinates.length < 2
+        fail ArgumentError, 'invalid value for "coordinates", number of items must be greater than or equal to 2.'
+      end
+
+      @coordinates = coordinates
     end
 
     # Checks equality by comparing each attribute.
@@ -141,8 +197,10 @@ module Zippendo
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          id == o.id &&
           name == o.name &&
-          val == o.val
+          address == o.address &&
+          coordinates == o.coordinates
     end
 
     # @see the `==` method
@@ -154,7 +212,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, val].hash
+      [id, name, address, coordinates].hash
     end
 
     # Builds the object from hash

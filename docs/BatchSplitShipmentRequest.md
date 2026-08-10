@@ -9,7 +9,7 @@
 | **carrier_id** | **String** | Carrier for all new shipments. Copied from the original if omitted. | [optional] |
 | **product_id** | **String** | Carrier product for all new shipments. Copied from the original if omitted. | [optional] |
 | **services** | **Array&lt;String&gt;** | Service codes for all new shipments. Copied from the original if omitted. | [optional] |
-| **additional_parameters** | **Hash&lt;String, Object&gt;** | Carrier-specific parameters for all new shipments. | [optional] |
+| **additional_parameters** | [**Hash&lt;String, CreateShippingRuleRequestAdditionalParametersValue&gt;**](CreateShippingRuleRequestAdditionalParametersValue.md) | Carrier-specific parameters for all new shipments. Copied from the original if omitted. | [optional] |
 
 ## Example
 

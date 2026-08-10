@@ -14,14 +14,15 @@ require 'date'
 require 'time'
 
 module Zippendo
-  # Carrier-specific extra parameters. Accepts EITHER the `{ key: value }` object (preferred) OR the legacy `[{ name, val }]` array, so you can migrate on your own schedule. Each key / `name` is the carrier parameter `key` from the product's `additionalParameters[].key` (e.g. `returnFunctionality`).
-  module CreateShippingRuleRequestAdditionalParameters
+  module ListShippingRules200ResponseDataInnerAdditionalParametersValue
     class << self
       # List of class defined in anyOf (OpenAPI v3)
       def openapi_any_of
         [
-          :'Array<CreateShippingRuleRequestAdditionalParametersAnyOfInner>',
-          :'Hash<String, CreateShippingRuleRequestAdditionalParametersAnyOfValue>'
+          :'Boolean',
+          :'Float',
+          :'ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOf',
+          :'String'
         ]
       end
 

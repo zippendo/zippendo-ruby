@@ -11,7 +11,7 @@
 | **carrier_id** | **String** | Carrier ID |  |
 | **product_id** | **String** | Product ID from carrier |  |
 | **services** | **Array&lt;String&gt;** | List of selected services |  |
-| **additional_parameters** | [**Array&lt;ListShippingRules200ResponseDataInnerAdditionalParametersInner&gt;**](ListShippingRules200ResponseDataInnerAdditionalParametersInner.md) | Carrier-specific extra parameters. DEPRECATED array form &#x60;[{ name, val }]&#x60; where &#x60;name&#x60; is the carrier parameter &#x60;key&#x60; (from the product&#39;s &#x60;additionalParameters[].key&#x60;, e.g. &#x60;returnFunctionality&#x60;) and &#x60;val&#x60; is the stringified value. This will change to a &#x60;{ key: value }&#x60; object in a future version — writes already accept either shape. |  |
+| **additional_parameters** | [**Hash&lt;String, ListShippingRules200ResponseDataInnerAdditionalParametersValue&gt;**](ListShippingRules200ResponseDataInnerAdditionalParametersValue.md) | Carrier-specific extra parameters, keyed by the carrier parameter &#x60;key&#x60; from the product&#39;s &#x60;additionalParameters[].key&#x60;. |  |
 | **address_id** | **String** | Sender address ID |  |
 | **receiving_countries** | **Array&lt;String&gt;** | List of supported country codes |  |
 | **email_notification** | **Boolean** | Send email notification to recipient | [default to false] |
@@ -47,7 +47,7 @@ instance = Zippendo::CreateShippingRule201Response.new(
   carrier_id: carr_01HZX9K2QF,
   product_id: PNL13,
   services: [&quot;EMAIL_NOTIFICATION&quot;],
-  additional_parameters: [{&quot;name&quot;:&quot;returnFunctionality&quot;,&quot;val&quot;:&quot;LABELLESS&quot;}],
+  additional_parameters: {&quot;returnFunctionality&quot;:&quot;LABELLESS&quot;,&quot;returnQrEmail&quot;:true},
   address_id: addr_01HZX9K2QF,
   receiving_countries: [&quot;DK&quot;,&quot;SE&quot;],
   email_notification: true,

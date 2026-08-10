@@ -30,7 +30,7 @@ module Zippendo
     # Service codes for all new shipments. Copied from the original if omitted.
     attr_accessor :services
 
-    # Carrier-specific parameters for all new shipments.
+    # Carrier-specific parameters for all new shipments. Copied from the original if omitted.
     attr_accessor :additional_parameters
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -63,7 +63,7 @@ module Zippendo
         :'carrier_id' => :'String',
         :'product_id' => :'String',
         :'services' => :'Array<String>',
-        :'additional_parameters' => :'Hash<String, Object>'
+        :'additional_parameters' => :'Hash<String, CreateShippingRuleRequestAdditionalParametersValue>'
       }
     end
 

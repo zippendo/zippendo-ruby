@@ -10,7 +10,7 @@
 | **carrier_id** | **String** | Carrier ID | [optional] |
 | **product_id** | **String** | Product ID from carrier | [optional] |
 | **services** | **Array&lt;String&gt;** | List of selected services | [optional] |
-| **additional_parameters** | [**CreateShippingRuleRequestAdditionalParameters**](CreateShippingRuleRequestAdditionalParameters.md) |  | [optional] |
+| **additional_parameters** | [**Hash&lt;String, CreateShippingRuleRequestAdditionalParametersValue&gt;**](CreateShippingRuleRequestAdditionalParametersValue.md) | Carrier-specific extra parameters, keyed by the carrier parameter &#x60;key&#x60; from the product&#39;s &#x60;additionalParameters[].key&#x60;. Omit to leave the rule&#39;s parameters unchanged. | [optional] |
 | **address_id** | **String** | Sender address ID | [optional] |
 | **receiving_countries** | **Array&lt;String&gt;** | List of supported country codes | [optional] |
 | **email_notification** | **Boolean** | Send email notification to recipient | [optional][default to false] |
@@ -42,7 +42,7 @@ instance = Zippendo::UpdateShippingRuleRequest.new(
   carrier_id: carr_01HZX9K2QF,
   product_id: PNL13,
   services: [&quot;EMAIL_NOTIFICATION&quot;],
-  additional_parameters: null,
+  additional_parameters: {&quot;returnFunctionality&quot;:&quot;LABELLESS&quot;},
   address_id: addr_01HZX9K2QF,
   receiving_countries: [&quot;DK&quot;,&quot;SE&quot;],
   email_notification: true,
