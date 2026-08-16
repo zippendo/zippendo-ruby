@@ -8,6 +8,7 @@
 | **shipments** | [**GetBillingUsage200ResponseShipments**](GetBillingUsage200ResponseShipments.md) |  |  |
 | **limits** | [**GetBillingUsage200ResponseLimits**](GetBillingUsage200ResponseLimits.md) |  |  |
 | **add_ons** | [**Array&lt;GetBillingUsage200ResponseAddOnsInner&gt;**](GetBillingUsage200ResponseAddOnsInner.md) | Active add-ons on the subscription |  |
+| **zippy_messages** | [**GetBillingUsage200ResponseZippyMessages**](GetBillingUsage200ResponseZippyMessages.md) |  | [optional] |
 
 ## Example
 
@@ -18,7 +19,8 @@ instance = Zippendo::GetBillingUsage200Response.new(
   current_period: null,
   shipments: null,
   limits: null,
-  add_ons: []
+  add_ons: [],
+  zippy_messages: null
 )
 ```
 

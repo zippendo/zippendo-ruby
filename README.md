@@ -76,6 +76,17 @@ A token created with a `brand_id` (see `CreateApiTokenRequest`) is permanently c
 needs no header. Sending `X-Zippendo-Brand` naming a *different* brand on such a token is refused with
 `403 BRAND_ACCESS_DENIED` — the binding is never widened.
 
+List operations also take a `brand_scope` query parameter (`"own"` / `"shared"` / `"both"`) to narrow
+further within whichever brand context already applies: `"own"` returns only that brand's rows and needs
+a brand context (otherwise `400`); `"shared"` returns only the unassigned rows (equivalent to
+`brand_id=none`). Set `X-Zippendo-Brand-Scope` as a default header the same way to cover every call:
+
+```ruby
+Zippendo::ApiClient.default.default_headers["X-Zippendo-Brand-Scope"] = "own"
+```
+
+An explicit `brand_scope` parameter passed to a call still wins over the header.
+
 ### Managing brands
 
 Brands are managed with `BrandsApi`. Use an organization-wide client for this — you are administering

@@ -31,6 +31,7 @@
 | **return_shipping_rule_id** | **String** | ID of the return shipping rule |  |
 | **auto_create_return_shipment** | **Boolean** | Automatically create and send a return shipment on dispatch | [default to false] |
 | **org_id** | **String** | Owning organization ID |  |
+| **brand_id** | **String** | Brand this record belongs to, or null when it is organization-wide |  |
 | **created_at** | **String** | Creation timestamp (ISO 8601) |  |
 | **updated_at** | **String** | Last update timestamp (ISO 8601) |  |
 | **carrier** | [**ListShippingRules200ResponseDataInnerCarrier**](ListShippingRules200ResponseDataInnerCarrier.md) |  |  |
@@ -72,6 +73,7 @@ instance = Zippendo::ListShippingRules200ResponseDataInner.new(
   return_shipping_rule_id: null,
   auto_create_return_shipment: false,
   org_id: org_01HZX9K2QF,
+  brand_id: brnd_8f3kd92ld0,
   created_at: 2026-06-22T09:00:00.000Z,
   updated_at: 2026-06-22T09:00:00.000Z,
   carrier: null,

@@ -29,6 +29,7 @@
 | **document_printer_id** | **String** | ID of the document printer | [optional] |
 | **return_shipping_rule_id** | **String** | ID of the return shipping rule | [optional] |
 | **auto_create_return_shipment** | **Boolean** | Automatically create and send a return shipment on dispatch | [optional][default to false] |
+| **brand_id** | **String** | Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide | [optional] |
 
 ## Example
 
@@ -60,7 +61,8 @@ instance = Zippendo::CreateShippingRuleRequest.new(
   label_printer_id: null,
   document_printer_id: null,
   return_shipping_rule_id: null,
-  auto_create_return_shipment: false
+  auto_create_return_shipment: false,
+  brand_id: brnd_8f3kd92ld0
 )
 ```
 

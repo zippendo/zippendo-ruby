@@ -16,6 +16,7 @@
 | **email** | **String** | Email address | [optional] |
 | **customs** | **Hash&lt;String, String&gt;** | Customs identifiers | [optional] |
 | **address_types** | **Array&lt;String&gt;** | Address types (sender, pickup, return) | [optional] |
+| **brand_id** | **String** | Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide | [optional] |
 
 ## Example
 
@@ -34,7 +35,8 @@ instance = Zippendo::UpdateAddressRequest.new(
   state: Hovedstaden,
   email: lager@example.dk,
   customs: {&quot;eori&quot;:&quot;DK12345678&quot;},
-  address_types: [&quot;sender&quot;]
+  address_types: [&quot;sender&quot;],
+  brand_id: brnd_8f3kd92ld0
 )
 ```
 

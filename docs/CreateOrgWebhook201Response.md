@@ -10,6 +10,7 @@
 | **secret** | **String** | Signing secret used to verify webhook payloads |  |
 | **events** | **Array&lt;String&gt;** | Events the webhook is subscribed to |  |
 | **is_active** | **Boolean** | Whether the webhook is active |  |
+| **brand_id** | **String** | Brand this record belongs to, or null when it is organization-wide |  |
 | **created_at** | **String** | Creation timestamp (ISO 8601) |  |
 | **updated_at** | **String** | Last update timestamp (ISO 8601) |  |
 
@@ -25,6 +26,7 @@ instance = Zippendo::CreateOrgWebhook201Response.new(
   secret: whsec_8f3a1c2b9d4e5f6a,
   events: [&quot;shipment.created&quot;],
   is_active: true,
+  brand_id: brnd_8f3kd92ld0,
   created_at: 2026-06-01T09:30:00.000Z,
   updated_at: 2026-06-10T11:15:00.000Z
 )

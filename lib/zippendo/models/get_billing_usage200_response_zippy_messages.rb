@@ -14,26 +14,19 @@ require 'date'
 require 'time'
 
 module Zippendo
-  class ConnectCarrierRequest < ApiModelBase
-    # Carrier display name
-    attr_accessor :name
+  # Zippy AI message usage this period (present when Zippy access is enabled)
+  class GetBillingUsage200ResponseZippyMessages < ApiModelBase
+    # Zippy messages used this period
+    attr_accessor :used
 
-    # Carrier slug identifier
-    attr_accessor :carrier_slug
-
-    # Carrier configuration (required and optional fields)
-    attr_accessor :config
-
-    # Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide
-    attr_accessor :brand_id
+    # Zippy message charges so far, in øre
+    attr_accessor :charges
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'name' => :'name',
-        :'carrier_slug' => :'carrierSlug',
-        :'config' => :'config',
-        :'brand_id' => :'brandId'
+        :'used' => :'used',
+        :'charges' => :'charges'
       }
     end
 
@@ -50,17 +43,14 @@ module Zippendo
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'name' => :'String',
-        :'carrier_slug' => :'String',
-        :'config' => :'Hash<String, ListCarriers200ResponseDataInnerConfigValue>',
-        :'brand_id' => :'String'
+        :'used' => :'Float',
+        :'charges' => :'Float'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'brand_id'
       ])
     end
 
@@ -68,40 +58,28 @@ module Zippendo
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::ConnectCarrierRequest` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::GetBillingUsage200ResponseZippyMessages` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::ConnectCarrierRequest`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::GetBillingUsage200ResponseZippyMessages`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'name')
-        self.name = attributes[:'name']
+      if attributes.key?(:'used')
+        self.used = attributes[:'used']
       else
-        self.name = nil
+        self.used = nil
       end
 
-      if attributes.key?(:'carrier_slug')
-        self.carrier_slug = attributes[:'carrier_slug']
+      if attributes.key?(:'charges')
+        self.charges = attributes[:'charges']
       else
-        self.carrier_slug = nil
-      end
-
-      if attributes.key?(:'config')
-        if (value = attributes[:'config']).is_a?(Hash)
-          self.config = value
-        end
-      else
-        self.config = nil
-      end
-
-      if attributes.key?(:'brand_id')
-        self.brand_id = attributes[:'brand_id']
+        self.charges = nil
       end
     end
 
@@ -110,28 +88,12 @@ module Zippendo
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @name.nil?
-        invalid_properties.push('invalid value for "name", name cannot be nil.')
+      if @used.nil?
+        invalid_properties.push('invalid value for "used", used cannot be nil.')
       end
 
-      if @name.to_s.length < 1
-        invalid_properties.push('invalid value for "name", the character length must be greater than or equal to 1.')
-      end
-
-      if @carrier_slug.nil?
-        invalid_properties.push('invalid value for "carrier_slug", carrier_slug cannot be nil.')
-      end
-
-      if @carrier_slug.to_s.length < 1
-        invalid_properties.push('invalid value for "carrier_slug", the character length must be greater than or equal to 1.')
-      end
-
-      if @config.nil?
-        invalid_properties.push('invalid value for "config", config cannot be nil.')
-      end
-
-      if !@brand_id.nil? && @brand_id.to_s.length < 1
-        invalid_properties.push('invalid value for "brand_id", the character length must be greater than or equal to 1.')
+      if @charges.nil?
+        invalid_properties.push('invalid value for "charges", charges cannot be nil.')
       end
 
       invalid_properties
@@ -141,61 +103,29 @@ module Zippendo
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @name.nil?
-      return false if @name.to_s.length < 1
-      return false if @carrier_slug.nil?
-      return false if @carrier_slug.to_s.length < 1
-      return false if @config.nil?
-      return false if !@brand_id.nil? && @brand_id.to_s.length < 1
+      return false if @used.nil?
+      return false if @charges.nil?
       true
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] name Value to be assigned
-    def name=(name)
-      if name.nil?
-        fail ArgumentError, 'name cannot be nil'
+    # @param [Object] used Value to be assigned
+    def used=(used)
+      if used.nil?
+        fail ArgumentError, 'used cannot be nil'
       end
 
-      if name.to_s.length < 1
-        fail ArgumentError, 'invalid value for "name", the character length must be greater than or equal to 1.'
-      end
-
-      @name = name
+      @used = used
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] carrier_slug Value to be assigned
-    def carrier_slug=(carrier_slug)
-      if carrier_slug.nil?
-        fail ArgumentError, 'carrier_slug cannot be nil'
+    # @param [Object] charges Value to be assigned
+    def charges=(charges)
+      if charges.nil?
+        fail ArgumentError, 'charges cannot be nil'
       end
 
-      if carrier_slug.to_s.length < 1
-        fail ArgumentError, 'invalid value for "carrier_slug", the character length must be greater than or equal to 1.'
-      end
-
-      @carrier_slug = carrier_slug
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] config Value to be assigned
-    def config=(config)
-      if config.nil?
-        fail ArgumentError, 'config cannot be nil'
-      end
-
-      @config = config
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] brand_id Value to be assigned
-    def brand_id=(brand_id)
-      if !brand_id.nil? && brand_id.to_s.length < 1
-        fail ArgumentError, 'invalid value for "brand_id", the character length must be greater than or equal to 1.'
-      end
-
-      @brand_id = brand_id
+      @charges = charges
     end
 
     # Checks equality by comparing each attribute.
@@ -203,10 +133,8 @@ module Zippendo
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          name == o.name &&
-          carrier_slug == o.carrier_slug &&
-          config == o.config &&
-          brand_id == o.brand_id
+          used == o.used &&
+          charges == o.charges
     end
 
     # @see the `==` method
@@ -218,7 +146,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, carrier_slug, config, brand_id].hash
+      [used, charges].hash
     end
 
     # Builds the object from hash

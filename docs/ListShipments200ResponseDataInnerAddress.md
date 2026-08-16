@@ -18,6 +18,7 @@
 | **customs** | **Hash&lt;String, String&gt;** | Customs identifiers keyed by type | [optional] |
 | **address_types** | **Array&lt;String&gt;** | Address types (sender, pickup, return) |  |
 | **org_id** | **String** | Owning organization ID |  |
+| **brand_id** | **String** | Brand this record belongs to, or null when it is organization-wide |  |
 | **created_at** | **String** | Creation timestamp (ISO 8601) |  |
 | **updated_at** | **String** | Last update timestamp (ISO 8601) |  |
 
@@ -41,6 +42,7 @@ instance = Zippendo::ListShipments200ResponseDataInnerAddress.new(
   customs: {&quot;eori&quot;:&quot;DK12345678&quot;},
   address_types: [&quot;sender&quot;],
   org_id: org_01HZX9K2QF,
+  brand_id: brnd_8f3kd92ld0,
   created_at: 2026-06-22T09:00:00.000Z,
   updated_at: 2026-06-22T09:00:00.000Z
 )

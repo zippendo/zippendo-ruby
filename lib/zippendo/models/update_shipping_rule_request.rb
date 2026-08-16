@@ -1,7 +1,7 @@
 =begin
 #Zippendo Public API
 
-#Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.  Brands themselves are managed under the **Brands** tag. Retiring a brand is done with `POST /orgs/{orgId}/brands/{brandId}/archive` — permanent deletion is a dashboard-only action, since it is refused while any order, shipment, member or token still references the brand. Brands require a plan that includes them; creating one beyond your plan's limit returns `403`.
+#Public API documentation for Zippendo. Authenticate using your API token (Bearer token prefixed with zipp_).  **Brands (sub-accounts).** An organization can be split into brands, each keeping its own orders, shipments and configuration separate. There are two ways to scope requests to one brand, and NEITHER changes any request body:  1. **Bind the token.** Create an API token with a `brandId` and every request it makes is confined    to that brand — reads filtered, writes stamped. This is the recommended way to give a single    brand's team its own credential. 2. **Send the `X-Zippendo-Brand` header.** An organization-wide token can scope an individual    request by sending the brand's id or slug in this header. Most SDKs let you set it once on the    client so every call inherits it.  A brand-bound token that receives an `X-Zippendo-Brand` header naming a different brand is rejected with `403 BRAND_ACCESS_DENIED` — the binding is never widened. Omit both and requests cover the whole organization, which is the behaviour of every existing token.  Records that belong to no brand carry `brandId: null`. Configuration (carriers, shipping rules, addresses) with a null brand is organization-wide and remains visible inside every brand; orders and shipments with a null brand are only visible organization-wide.  List endpoints additionally take a `?brandScope=own|shared|both` parameter to narrow further within whichever brand context already applies. `own` returns only rows assigned to that brand, and requires a brand context — a brand-bound token, a resolved brand session, or the `X-Zippendo-Brand` header above — otherwise `400`. `shared` returns only the organization-wide rows (equivalent to filtering `brandId=none`). The default, `both`, keeps the existing behaviour: a brand context sees its own rows plus the organization-wide ones. Set `X-Zippendo-Brand-Scope` as a client default to apply the same choice to every request instead of repeating the query parameter on each call — an explicit `brandScope` query parameter always wins over the header, and a blank header value is ignored.  Brands themselves are managed under the **Brands** tag. Retiring a brand is done with `POST /orgs/{orgId}/brands/{brandId}/archive` — permanent deletion is a dashboard-only action, since it is refused while any order, shipment, member or token still references the brand. Brands require a plan that includes them; creating one beyond your plan's limit returns `403`.
 
 The version of the OpenAPI document: 1.0.0
 Contact: support@zippendo.com
@@ -90,6 +90,9 @@ module Zippendo
     # Automatically create and send a return shipment on dispatch
     attr_accessor :auto_create_return_shipment
 
+    # Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide
+    attr_accessor :brand_id
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -139,7 +142,8 @@ module Zippendo
         :'label_printer_id' => :'labelPrinterId',
         :'document_printer_id' => :'documentPrinterId',
         :'return_shipping_rule_id' => :'returnShippingRuleId',
-        :'auto_create_return_shipment' => :'autoCreateReturnShipment'
+        :'auto_create_return_shipment' => :'autoCreateReturnShipment',
+        :'brand_id' => :'brandId'
       }
     end
 
@@ -180,7 +184,8 @@ module Zippendo
         :'label_printer_id' => :'String',
         :'document_printer_id' => :'String',
         :'return_shipping_rule_id' => :'String',
-        :'auto_create_return_shipment' => :'Boolean'
+        :'auto_create_return_shipment' => :'Boolean',
+        :'brand_id' => :'String'
       }
     end
 
@@ -194,6 +199,7 @@ module Zippendo
         :'label_printer_id',
         :'document_printer_id',
         :'return_shipping_rule_id',
+        :'brand_id'
       ])
     end
 
@@ -338,6 +344,10 @@ module Zippendo
       else
         self.auto_create_return_shipment = false
       end
+
+      if attributes.key?(:'brand_id')
+        self.brand_id = attributes[:'brand_id']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -365,6 +375,10 @@ module Zippendo
         invalid_properties.push('invalid value for "max_order_value", must be greater than or equal to 0.')
       end
 
+      if !@brand_id.nil? && @brand_id.to_s.length < 1
+        invalid_properties.push('invalid value for "brand_id", the character length must be greater than or equal to 1.')
+      end
+
       invalid_properties
     end
 
@@ -379,6 +393,7 @@ module Zippendo
       return false if !@max_weight.nil? && @max_weight < 0
       return false if !@min_order_value.nil? && @min_order_value < 0
       return false if !@max_order_value.nil? && @max_order_value < 0
+      return false if !@brand_id.nil? && @brand_id.to_s.length < 1
       true
     end
 
@@ -446,6 +461,16 @@ module Zippendo
       @max_order_value = max_order_value
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] brand_id Value to be assigned
+    def brand_id=(brand_id)
+      if !brand_id.nil? && brand_id.to_s.length < 1
+        fail ArgumentError, 'invalid value for "brand_id", the character length must be greater than or equal to 1.'
+      end
+
+      @brand_id = brand_id
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -475,7 +500,8 @@ module Zippendo
           label_printer_id == o.label_printer_id &&
           document_printer_id == o.document_printer_id &&
           return_shipping_rule_id == o.return_shipping_rule_id &&
-          auto_create_return_shipment == o.auto_create_return_shipment
+          auto_create_return_shipment == o.auto_create_return_shipment &&
+          brand_id == o.brand_id
     end
 
     # @see the `==` method
@@ -487,7 +513,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, description, direction, carrier_id, product_id, services, additional_parameters, address_id, receiving_countries, email_notification, phone_notification, min_weight, max_weight, min_order_value, max_order_value, conditions, generate_proforma_invoice, generate_commercial_invoice, generate_packing_list, auto_print_labels, auto_print_documents, label_printer_id, document_printer_id, return_shipping_rule_id, auto_create_return_shipment].hash
+      [name, description, direction, carrier_id, product_id, services, additional_parameters, address_id, receiving_countries, email_notification, phone_notification, min_weight, max_weight, min_order_value, max_order_value, conditions, generate_proforma_invoice, generate_commercial_invoice, generate_packing_list, auto_print_labels, auto_print_documents, label_printer_id, document_printer_id, return_shipping_rule_id, auto_create_return_shipment, brand_id].hash
     end
 
     # Builds the object from hash
