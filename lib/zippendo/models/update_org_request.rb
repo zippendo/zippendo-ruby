@@ -33,6 +33,9 @@ module Zippendo
     # Allow shipments beyond plan limit (overage charges apply)
     attr_accessor :overage_enabled
 
+    # Billing/contact phone number
+    attr_accessor :phone
+
     # Billing email for invoices
     attr_accessor :billing_email
 
@@ -88,6 +91,7 @@ module Zippendo
         :'currency' => :'currency',
         :'vat_number' => :'vatNumber',
         :'overage_enabled' => :'overageEnabled',
+        :'phone' => :'phone',
         :'billing_email' => :'billingEmail',
         :'company_name' => :'companyName',
         :'address_line1' => :'addressLine1',
@@ -118,6 +122,7 @@ module Zippendo
         :'currency' => :'String',
         :'vat_number' => :'String',
         :'overage_enabled' => :'Boolean',
+        :'phone' => :'String',
         :'billing_email' => :'String',
         :'company_name' => :'String',
         :'address_line1' => :'String',
@@ -133,6 +138,7 @@ module Zippendo
     def self.openapi_nullable
       Set.new([
         :'vat_number',
+        :'phone',
         :'billing_email',
         :'company_name',
         :'address_line1',
@@ -182,6 +188,10 @@ module Zippendo
 
       if attributes.key?(:'overage_enabled')
         self.overage_enabled = attributes[:'overage_enabled']
+      end
+
+      if attributes.key?(:'phone')
+        self.phone = attributes[:'phone']
       end
 
       if attributes.key?(:'billing_email')
@@ -237,6 +247,15 @@ module Zippendo
         invalid_properties.push("invalid value for \"slug\", must conform to the pattern #{pattern}.")
       end
 
+      if !@phone.nil? && @phone.to_s.length > 32
+        invalid_properties.push('invalid value for "phone", the character length must be smaller than or equal to 32.')
+      end
+
+      pattern = Regexp.new(/^\+?[\d\s()-]{4,31}$/)
+      if !@phone.nil? && @phone !~ pattern
+        invalid_properties.push("invalid value for \"phone\", must conform to the pattern #{pattern}.")
+      end
+
       pattern = Regexp.new(/^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/)
       if !@billing_email.nil? && @billing_email !~ pattern
         invalid_properties.push("invalid value for \"billing_email\", must conform to the pattern #{pattern}.")
@@ -254,6 +273,8 @@ module Zippendo
       return false if !@slug.nil? && @slug !~ Regexp.new(/^[a-z0-9-]+$/)
       currency_validator = EnumAttributeValidator.new('String', ["DKK", "EUR", "USD", "GBP", "SEK", "NOK"])
       return false unless currency_validator.valid?(@currency)
+      return false if !@phone.nil? && @phone.to_s.length > 32
+      return false if !@phone.nil? && @phone !~ Regexp.new(/^\+?[\d\s()-]{4,31}$/)
       return false if !@billing_email.nil? && @billing_email !~ Regexp.new(/^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/)
       true
     end
@@ -302,6 +323,21 @@ module Zippendo
     end
 
     # Custom attribute writer method with validation
+    # @param [Object] phone Value to be assigned
+    def phone=(phone)
+      if !phone.nil? && phone.to_s.length > 32
+        fail ArgumentError, 'invalid value for "phone", the character length must be smaller than or equal to 32.'
+      end
+
+      pattern = Regexp.new(/^\+?[\d\s()-]{4,31}$/)
+      if !phone.nil? && phone !~ pattern
+        fail ArgumentError, "invalid value for \"phone\", must conform to the pattern #{pattern}."
+      end
+
+      @phone = phone
+    end
+
+    # Custom attribute writer method with validation
     # @param [Object] billing_email Value to be assigned
     def billing_email=(billing_email)
       pattern = Regexp.new(/^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/)
@@ -323,6 +359,7 @@ module Zippendo
           currency == o.currency &&
           vat_number == o.vat_number &&
           overage_enabled == o.overage_enabled &&
+          phone == o.phone &&
           billing_email == o.billing_email &&
           company_name == o.company_name &&
           address_line1 == o.address_line1 &&
@@ -342,7 +379,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, slug, description, currency, vat_number, overage_enabled, billing_email, company_name, address_line1, address_line2, city, postal_code, country, customs].hash
+      [name, slug, description, currency, vat_number, overage_enabled, phone, billing_email, company_name, address_line1, address_line2, city, postal_code, country, customs].hash
     end
 
     # Builds the object from hash
