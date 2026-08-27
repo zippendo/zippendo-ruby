@@ -14,27 +14,27 @@ require 'date'
 require 'time'
 
 module Zippendo
-  # Carrier configuration for the shipment. Optional when shippingRuleId is provided.
-  class CreateShipmentRequestCarrierSettings < ApiModelBase
-    # Identifier of the carrier to use.
-    attr_accessor :carrier_id
+  # Display details of the selected service point, stored alongside `servicePointId`. Used when applying a service-point shipping rule (whose parameters otherwise replace the stored droppoint).
+  class UpdateShipmentRequestDroppoint < ApiModelBase
+    # Identifier of the selected service point.
+    attr_accessor :id
 
-    # Identifier of the carrier product/service.
-    attr_accessor :product_id
+    # Display name of the service point.
+    attr_accessor :name
 
-    # Additional service codes requested from the carrier.
-    attr_accessor :services
+    # Formatted address of the service point.
+    attr_accessor :address
 
-    # Carrier-specific extra parameters as key/value pairs.
-    attr_accessor :additional_parameters
+    # Latitude/longitude of the service point.
+    attr_accessor :coordinates
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'carrier_id' => :'carrierId',
-        :'product_id' => :'productId',
-        :'services' => :'services',
-        :'additional_parameters' => :'additionalParameters'
+        :'id' => :'id',
+        :'name' => :'name',
+        :'address' => :'address',
+        :'coordinates' => :'coordinates'
       }
     end
 
@@ -51,10 +51,10 @@ module Zippendo
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'carrier_id' => :'String',
-        :'product_id' => :'String',
-        :'services' => :'Array<String>',
-        :'additional_parameters' => :'Hash<String, CreateShippingRuleRequestAdditionalParametersValue>'
+        :'id' => :'String',
+        :'name' => :'String',
+        :'address' => :'String',
+        :'coordinates' => :'Array<ListShippingRules200ResponseDataInnerAdditionalParametersValueAnyOfCoordinatesInner>'
       }
     end
 
@@ -68,44 +68,40 @@ module Zippendo
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::CreateShipmentRequestCarrierSettings` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::UpdateShipmentRequestDroppoint` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::CreateShipmentRequestCarrierSettings`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::UpdateShipmentRequestDroppoint`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'carrier_id')
-        self.carrier_id = attributes[:'carrier_id']
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
       else
-        self.carrier_id = nil
+        self.id = nil
       end
 
-      if attributes.key?(:'product_id')
-        self.product_id = attributes[:'product_id']
+      if attributes.key?(:'name')
+        self.name = attributes[:'name']
       else
-        self.product_id = nil
+        self.name = nil
       end
 
-      if attributes.key?(:'services')
-        if (value = attributes[:'services']).is_a?(Array)
-          self.services = value
+      if attributes.key?(:'address')
+        self.address = attributes[:'address']
+      else
+        self.address = nil
+      end
+
+      if attributes.key?(:'coordinates')
+        if (value = attributes[:'coordinates']).is_a?(Array)
+          self.coordinates = value
         end
-      else
-        self.services = nil
-      end
-
-      if attributes.key?(:'additional_parameters')
-        if (value = attributes[:'additional_parameters']).is_a?(Hash)
-          self.additional_parameters = value
-        end
-      else
-        self.additional_parameters = nil
       end
     end
 
@@ -114,20 +110,24 @@ module Zippendo
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @carrier_id.nil?
-        invalid_properties.push('invalid value for "carrier_id", carrier_id cannot be nil.')
+      if @id.nil?
+        invalid_properties.push('invalid value for "id", id cannot be nil.')
       end
 
-      if @product_id.nil?
-        invalid_properties.push('invalid value for "product_id", product_id cannot be nil.')
+      if @name.nil?
+        invalid_properties.push('invalid value for "name", name cannot be nil.')
       end
 
-      if @services.nil?
-        invalid_properties.push('invalid value for "services", services cannot be nil.')
+      if @address.nil?
+        invalid_properties.push('invalid value for "address", address cannot be nil.')
       end
 
-      if @additional_parameters.nil?
-        invalid_properties.push('invalid value for "additional_parameters", additional_parameters cannot be nil.')
+      if !@coordinates.nil? && @coordinates.length > 2
+        invalid_properties.push('invalid value for "coordinates", number of items must be less than or equal to 2.')
+      end
+
+      if !@coordinates.nil? && @coordinates.length < 2
+        invalid_properties.push('invalid value for "coordinates", number of items must be greater than or equal to 2.')
       end
 
       invalid_properties
@@ -137,51 +137,60 @@ module Zippendo
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @carrier_id.nil?
-      return false if @product_id.nil?
-      return false if @services.nil?
-      return false if @additional_parameters.nil?
+      return false if @id.nil?
+      return false if @name.nil?
+      return false if @address.nil?
+      return false if !@coordinates.nil? && @coordinates.length > 2
+      return false if !@coordinates.nil? && @coordinates.length < 2
       true
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] carrier_id Value to be assigned
-    def carrier_id=(carrier_id)
-      if carrier_id.nil?
-        fail ArgumentError, 'carrier_id cannot be nil'
+    # @param [Object] id Value to be assigned
+    def id=(id)
+      if id.nil?
+        fail ArgumentError, 'id cannot be nil'
       end
 
-      @carrier_id = carrier_id
+      @id = id
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] product_id Value to be assigned
-    def product_id=(product_id)
-      if product_id.nil?
-        fail ArgumentError, 'product_id cannot be nil'
+    # @param [Object] name Value to be assigned
+    def name=(name)
+      if name.nil?
+        fail ArgumentError, 'name cannot be nil'
       end
 
-      @product_id = product_id
+      @name = name
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] services Value to be assigned
-    def services=(services)
-      if services.nil?
-        fail ArgumentError, 'services cannot be nil'
+    # @param [Object] address Value to be assigned
+    def address=(address)
+      if address.nil?
+        fail ArgumentError, 'address cannot be nil'
       end
 
-      @services = services
+      @address = address
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] additional_parameters Value to be assigned
-    def additional_parameters=(additional_parameters)
-      if additional_parameters.nil?
-        fail ArgumentError, 'additional_parameters cannot be nil'
+    # @param [Object] coordinates Value to be assigned
+    def coordinates=(coordinates)
+      if coordinates.nil?
+        fail ArgumentError, 'coordinates cannot be nil'
       end
 
-      @additional_parameters = additional_parameters
+      if coordinates.length > 2
+        fail ArgumentError, 'invalid value for "coordinates", number of items must be less than or equal to 2.'
+      end
+
+      if coordinates.length < 2
+        fail ArgumentError, 'invalid value for "coordinates", number of items must be greater than or equal to 2.'
+      end
+
+      @coordinates = coordinates
     end
 
     # Checks equality by comparing each attribute.
@@ -189,10 +198,10 @@ module Zippendo
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          carrier_id == o.carrier_id &&
-          product_id == o.product_id &&
-          services == o.services &&
-          additional_parameters == o.additional_parameters
+          id == o.id &&
+          name == o.name &&
+          address == o.address &&
+          coordinates == o.coordinates
     end
 
     # @see the `==` method
@@ -204,7 +213,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [carrier_id, product_id, services, additional_parameters].hash
+      [id, name, address, coordinates].hash
     end
 
     # Builds the object from hash

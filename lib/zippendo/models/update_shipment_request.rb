@@ -55,6 +55,8 @@ module Zippendo
     # Shipping rule to apply to the shipment. Pass null to clear.
     attr_accessor :shipping_rule_id
 
+    attr_accessor :droppoint
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -93,7 +95,8 @@ module Zippendo
         :'order_id' => :'orderId',
         :'label_printer_id' => :'labelPrinterId',
         :'document_printer_id' => :'documentPrinterId',
-        :'shipping_rule_id' => :'shippingRuleId'
+        :'shipping_rule_id' => :'shippingRuleId',
+        :'droppoint' => :'droppoint'
       }
     end
 
@@ -115,7 +118,7 @@ module Zippendo
         :'service_point_id' => :'String',
         :'parties' => :'Array<CreateShipmentRequestPartiesInner>',
         :'type' => :'String',
-        :'carrier_settings' => :'CreateShipmentRequestCarrierSettings',
+        :'carrier_settings' => :'UpdateShipmentRequestCarrierSettings',
         :'parcels' => :'Array<CreateShipmentRequestParcelsInner>',
         :'pickup_details' => :'CreateShipmentRequestPickupDetails',
         :'term_of_trade' => :'String',
@@ -123,7 +126,8 @@ module Zippendo
         :'order_id' => :'String',
         :'label_printer_id' => :'String',
         :'document_printer_id' => :'String',
-        :'shipping_rule_id' => :'String'
+        :'shipping_rule_id' => :'String',
+        :'droppoint' => :'UpdateShipmentRequestDroppoint'
       }
     end
 
@@ -136,7 +140,7 @@ module Zippendo
         :'order_id',
         :'label_printer_id',
         :'document_printer_id',
-        :'shipping_rule_id'
+        :'shipping_rule_id',
       ])
     end
 
@@ -218,6 +222,10 @@ module Zippendo
 
       if attributes.key?(:'shipping_rule_id')
         self.shipping_rule_id = attributes[:'shipping_rule_id']
+      end
+
+      if attributes.key?(:'droppoint')
+        self.droppoint = attributes[:'droppoint']
       end
     end
 
@@ -335,7 +343,8 @@ module Zippendo
           order_id == o.order_id &&
           label_printer_id == o.label_printer_id &&
           document_printer_id == o.document_printer_id &&
-          shipping_rule_id == o.shipping_rule_id
+          shipping_rule_id == o.shipping_rule_id &&
+          droppoint == o.droppoint
     end
 
     # @see the `==` method
@@ -347,7 +356,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [reference, address_id, service_point_id, parties, type, carrier_settings, parcels, pickup_details, term_of_trade, status, order_id, label_printer_id, document_printer_id, shipping_rule_id].hash
+      [reference, address_id, service_point_id, parties, type, carrier_settings, parcels, pickup_details, term_of_trade, status, order_id, label_printer_id, document_printer_id, shipping_rule_id, droppoint].hash
     end
 
     # Builds the object from hash

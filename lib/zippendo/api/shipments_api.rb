@@ -243,7 +243,7 @@ module Zippendo
     end
 
     # Create shipment
-    # Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order.
+    # Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order. When shippingRuleId is provided, carrier settings and the sender address derive from the rule.
     # @param org_id [String] Organization ID
     # @param create_shipment_request [CreateShipmentRequest] 
     # @param [Hash] opts the optional parameters
@@ -254,7 +254,7 @@ module Zippendo
     end
 
     # Create shipment
-    # Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order.
+    # Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order. When shippingRuleId is provided, carrier settings and the sender address derive from the rule.
     # @param org_id [String] Organization ID
     # @param create_shipment_request [CreateShipmentRequest] 
     # @param [Hash] opts the optional parameters

@@ -18,7 +18,7 @@ module Zippendo
     # Unique order line identifier.
     attr_accessor :id
 
-    # Stock keeping unit of the product.
+    # Stock keeping unit of the product. Optional — not every webshop assigns SKUs.
     attr_accessor :sku
 
     # Number of units in this order line.
@@ -90,6 +90,7 @@ module Zippendo
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'sku',
         :'description',
         :'unit_price',
         :'currency',
@@ -121,8 +122,6 @@ module Zippendo
 
       if attributes.key?(:'sku')
         self.sku = attributes[:'sku']
-      else
-        self.sku = nil
       end
 
       if attributes.key?(:'quantity')
@@ -165,11 +164,7 @@ module Zippendo
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @sku.nil?
-        invalid_properties.push('invalid value for "sku", sku cannot be nil.')
-      end
-
-      if @sku.to_s.length < 1
+      if !@sku.nil? && @sku.to_s.length < 1
         invalid_properties.push('invalid value for "sku", the character length must be greater than or equal to 1.')
       end
 
@@ -220,8 +215,7 @@ module Zippendo
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @sku.nil?
-      return false if @sku.to_s.length < 1
+      return false if !@sku.nil? && @sku.to_s.length < 1
       return false if @quantity.nil?
       return false if @quantity > 9007199254740991
       return false if @quantity < 1
@@ -238,11 +232,7 @@ module Zippendo
     # Custom attribute writer method with validation
     # @param [Object] sku Value to be assigned
     def sku=(sku)
-      if sku.nil?
-        fail ArgumentError, 'sku cannot be nil'
-      end
-
-      if sku.to_s.length < 1
+      if !sku.nil? && sku.to_s.length < 1
         fail ArgumentError, 'invalid value for "sku", the character length must be greater than or equal to 1.'
       end
 

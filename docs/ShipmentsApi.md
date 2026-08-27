@@ -240,7 +240,7 @@ end
 
 Create shipment
 
-Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order.
+Create a new shipment for an organization. When orderId is provided, parties and parcels are derived from the order. When shippingRuleId is provided, carrier settings and the sender address derive from the rule.
 
 ### Examples
 
@@ -255,7 +255,7 @@ end
 
 api_instance = Zippendo::ShipmentsApi.new
 org_id = 'org_8f3kd92ld0' # String | Organization ID
-create_shipment_request = Zippendo::CreateShipmentRequest.new({type: 'outbound', carrier_settings: Zippendo::CreateShipmentRequestCarrierSettings.new({carrier_id: 'car_pn_001', product_id: 'prod_mypack_home', services: ["A7"], additional_parameters: { key: Zippendo::CreateShippingRuleRequestAdditionalParametersValue.new({id: 'sp_pn_4521', name: 'Føtex Nørrebro', address: 'Nørrebrogade 20, 2200 København N'})}})}) # CreateShipmentRequest | 
+create_shipment_request = Zippendo::CreateShipmentRequest.new({type: 'outbound'}) # CreateShipmentRequest | 
 
 begin
   # Create shipment

@@ -9,7 +9,7 @@
 | **service_point_id** | **String** | Selected carrier service point identifier. | [optional] |
 | **parties** | [**Array&lt;CreateShipmentRequestPartiesInner&gt;**](CreateShipmentRequestPartiesInner.md) | Parties involved in the shipment. Optional when orderId is provided. | [optional] |
 | **type** | **String** | Direction of the shipment relative to the organization. | [optional] |
-| **carrier_settings** | [**CreateShipmentRequestCarrierSettings**](CreateShipmentRequestCarrierSettings.md) |  | [optional] |
+| **carrier_settings** | [**UpdateShipmentRequestCarrierSettings**](UpdateShipmentRequestCarrierSettings.md) |  | [optional] |
 | **parcels** | [**Array&lt;CreateShipmentRequestParcelsInner&gt;**](CreateShipmentRequestParcelsInner.md) | Parcels to include. Optional when orderId is provided. | [optional] |
 | **pickup_details** | [**CreateShipmentRequestPickupDetails**](CreateShipmentRequestPickupDetails.md) |  | [optional] |
 | **term_of_trade** | **String** | Incoterm governing the shipment. | [optional][default to &#39;DAP&#39;] |
@@ -18,6 +18,7 @@
 | **label_printer_id** | **String** | Printer to assign for labels. | [optional] |
 | **document_printer_id** | **String** | Printer to assign for documents. | [optional] |
 | **shipping_rule_id** | **String** | Shipping rule to apply to the shipment. Pass null to clear. | [optional] |
+| **droppoint** | [**UpdateShipmentRequestDroppoint**](UpdateShipmentRequestDroppoint.md) |  | [optional] |
 
 ## Example
 
@@ -38,7 +39,8 @@ instance = Zippendo::UpdateShipmentRequest.new(
   order_id: ord_5e6f7a8b,
   label_printer_id: prn_label_01,
   document_printer_id: prn_doc_01,
-  shipping_rule_id: rule_3c4d5e6f
+  shipping_rule_id: rule_3c4d5e6f,
+  droppoint: null
 )
 ```
 

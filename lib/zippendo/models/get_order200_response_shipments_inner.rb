@@ -31,6 +31,9 @@ module Zippendo
 
     attr_accessor :carrier_settings
 
+    # Selected carrier service point identifier.
+    attr_accessor :service_point_id
+
     # Timestamp when the shipment was created.
     attr_accessor :created_at
 
@@ -74,6 +77,7 @@ module Zippendo
         :'type' => :'type',
         :'tracking' => :'tracking',
         :'carrier_settings' => :'carrierSettings',
+        :'service_point_id' => :'servicePointId',
         :'created_at' => :'createdAt',
         :'updated_at' => :'updatedAt',
         :'shipping_rule_id' => :'shippingRuleId',
@@ -100,6 +104,7 @@ module Zippendo
         :'type' => :'String',
         :'tracking' => :'CreateShipment201ResponseTracking',
         :'carrier_settings' => :'ListShipments200ResponseDataInnerCarrierSettings',
+        :'service_point_id' => :'String',
         :'created_at' => :'String',
         :'updated_at' => :'String',
         :'shipping_rule_id' => :'String',
@@ -111,6 +116,7 @@ module Zippendo
     def self.openapi_nullable
       Set.new([
         :'tracking',
+        :'service_point_id',
         :'shipping_rule_id',
       ])
     end
@@ -163,6 +169,10 @@ module Zippendo
         self.carrier_settings = attributes[:'carrier_settings']
       else
         self.carrier_settings = nil
+      end
+
+      if attributes.key?(:'service_point_id')
+        self.service_point_id = attributes[:'service_point_id']
       end
 
       if attributes.key?(:'created_at')
@@ -323,6 +333,7 @@ module Zippendo
           type == o.type &&
           tracking == o.tracking &&
           carrier_settings == o.carrier_settings &&
+          service_point_id == o.service_point_id &&
           created_at == o.created_at &&
           updated_at == o.updated_at &&
           shipping_rule_id == o.shipping_rule_id &&
@@ -338,7 +349,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, reference, status, type, tracking, carrier_settings, created_at, updated_at, shipping_rule_id, documents].hash
+      [id, reference, status, type, tracking, carrier_settings, service_point_id, created_at, updated_at, shipping_rule_id, documents].hash
     end
 
     # Builds the object from hash

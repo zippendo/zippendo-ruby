@@ -52,6 +52,11 @@ module Zippendo
     # Printer to assign for documents.
     attr_accessor :document_printer_id
 
+    # Create the shipment from this shipping rule: carrier settings and the sender address derive from the rule (explicit carrierSettings and addressId are then ignored).
+    attr_accessor :shipping_rule_id
+
+    attr_accessor :droppoint
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -89,7 +94,9 @@ module Zippendo
         :'status' => :'status',
         :'order_id' => :'orderId',
         :'label_printer_id' => :'labelPrinterId',
-        :'document_printer_id' => :'documentPrinterId'
+        :'document_printer_id' => :'documentPrinterId',
+        :'shipping_rule_id' => :'shippingRuleId',
+        :'droppoint' => :'droppoint'
       }
     end
 
@@ -118,7 +125,9 @@ module Zippendo
         :'status' => :'String',
         :'order_id' => :'String',
         :'label_printer_id' => :'String',
-        :'document_printer_id' => :'String'
+        :'document_printer_id' => :'String',
+        :'shipping_rule_id' => :'String',
+        :'droppoint' => :'CreateShipmentRequestDroppoint'
       }
     end
 
@@ -130,7 +139,7 @@ module Zippendo
         :'pickup_details',
         :'order_id',
         :'label_printer_id',
-        :'document_printer_id'
+        :'document_printer_id',
       ])
     end
 
@@ -176,8 +185,6 @@ module Zippendo
 
       if attributes.key?(:'carrier_settings')
         self.carrier_settings = attributes[:'carrier_settings']
-      else
-        self.carrier_settings = nil
       end
 
       if attributes.key?(:'parcels')
@@ -213,6 +220,14 @@ module Zippendo
       if attributes.key?(:'document_printer_id')
         self.document_printer_id = attributes[:'document_printer_id']
       end
+
+      if attributes.key?(:'shipping_rule_id')
+        self.shipping_rule_id = attributes[:'shipping_rule_id']
+      end
+
+      if attributes.key?(:'droppoint')
+        self.droppoint = attributes[:'droppoint']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -232,10 +247,6 @@ module Zippendo
         invalid_properties.push('invalid value for "type", type cannot be nil.')
       end
 
-      if @carrier_settings.nil?
-        invalid_properties.push('invalid value for "carrier_settings", carrier_settings cannot be nil.')
-      end
-
       if !@parcels.nil? && @parcels.length < 1
         invalid_properties.push('invalid value for "parcels", number of items must be greater than or equal to 1.')
       end
@@ -252,7 +263,6 @@ module Zippendo
       return false if @type.nil?
       type_validator = EnumAttributeValidator.new('String', ["outbound", "inbound"])
       return false unless type_validator.valid?(@type)
-      return false if @carrier_settings.nil?
       return false if !@parcels.nil? && @parcels.length < 1
       status_validator = EnumAttributeValidator.new('String', ["draft", "pending", "processing", "dispatched", "partly_dispatched", "error", "cancelled", "on_hold"])
       return false unless status_validator.valid?(@status)
@@ -298,16 +308,6 @@ module Zippendo
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] carrier_settings Value to be assigned
-    def carrier_settings=(carrier_settings)
-      if carrier_settings.nil?
-        fail ArgumentError, 'carrier_settings cannot be nil'
-      end
-
-      @carrier_settings = carrier_settings
-    end
-
-    # Custom attribute writer method with validation
     # @param [Object] parcels Value to be assigned
     def parcels=(parcels)
       if parcels.nil?
@@ -348,7 +348,9 @@ module Zippendo
           status == o.status &&
           order_id == o.order_id &&
           label_printer_id == o.label_printer_id &&
-          document_printer_id == o.document_printer_id
+          document_printer_id == o.document_printer_id &&
+          shipping_rule_id == o.shipping_rule_id &&
+          droppoint == o.droppoint
     end
 
     # @see the `==` method
@@ -360,7 +362,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [reference, address_id, service_point_id, parties, type, carrier_settings, parcels, pickup_details, term_of_trade, status, order_id, label_printer_id, document_printer_id].hash
+      [reference, address_id, service_point_id, parties, type, carrier_settings, parcels, pickup_details, term_of_trade, status, order_id, label_printer_id, document_printer_id, shipping_rule_id, droppoint].hash
     end
 
     # Builds the object from hash
