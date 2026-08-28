@@ -16,21 +16,25 @@ require 'time'
 module Zippendo
   # Aggregate counts for the batch.
   class BatchSendShipments200ResponseSummary < ApiModelBase
-    # Number of unique shipments processed.
+    # Number of unique shipments requested.
     attr_accessor :total
 
     # How many were successfully booked.
     attr_accessor :sent
 
-    # How many failed.
+    # How many the carrier or Zippendo rejected.
     attr_accessor :failed
+
+    # How many the batch ran out of time to attempt. Submit these again.
+    attr_accessor :skipped
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'total' => :'total',
         :'sent' => :'sent',
-        :'failed' => :'failed'
+        :'failed' => :'failed',
+        :'skipped' => :'skipped'
       }
     end
 
@@ -49,7 +53,8 @@ module Zippendo
       {
         :'total' => :'Integer',
         :'sent' => :'Integer',
-        :'failed' => :'Integer'
+        :'failed' => :'Integer',
+        :'skipped' => :'Integer'
       }
     end
 
@@ -91,6 +96,12 @@ module Zippendo
         self.failed = attributes[:'failed']
       else
         self.failed = nil
+      end
+
+      if attributes.key?(:'skipped')
+        self.skipped = attributes[:'skipped']
+      else
+        self.skipped = nil
       end
     end
 
@@ -135,6 +146,18 @@ module Zippendo
         invalid_properties.push('invalid value for "failed", must be greater than or equal to -9007199254740991.')
       end
 
+      if @skipped.nil?
+        invalid_properties.push('invalid value for "skipped", skipped cannot be nil.')
+      end
+
+      if @skipped > 9007199254740991
+        invalid_properties.push('invalid value for "skipped", must be smaller than or equal to 9007199254740991.')
+      end
+
+      if @skipped < -9007199254740991
+        invalid_properties.push('invalid value for "skipped", must be greater than or equal to -9007199254740991.')
+      end
+
       invalid_properties
     end
 
@@ -151,6 +174,9 @@ module Zippendo
       return false if @failed.nil?
       return false if @failed > 9007199254740991
       return false if @failed < -9007199254740991
+      return false if @skipped.nil?
+      return false if @skipped > 9007199254740991
+      return false if @skipped < -9007199254740991
       true
     end
 
@@ -208,6 +234,24 @@ module Zippendo
       @failed = failed
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] skipped Value to be assigned
+    def skipped=(skipped)
+      if skipped.nil?
+        fail ArgumentError, 'skipped cannot be nil'
+      end
+
+      if skipped > 9007199254740991
+        fail ArgumentError, 'invalid value for "skipped", must be smaller than or equal to 9007199254740991.'
+      end
+
+      if skipped < -9007199254740991
+        fail ArgumentError, 'invalid value for "skipped", must be greater than or equal to -9007199254740991.'
+      end
+
+      @skipped = skipped
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -215,7 +259,8 @@ module Zippendo
       self.class == o.class &&
           total == o.total &&
           sent == o.sent &&
-          failed == o.failed
+          failed == o.failed &&
+          skipped == o.skipped
     end
 
     # @see the `==` method
@@ -227,7 +272,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [total, sent, failed].hash
+      [total, sent, failed, skipped].hash
     end
 
     # Builds the object from hash
