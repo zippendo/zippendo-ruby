@@ -22,11 +22,15 @@ module Zippendo
     # Zippy message charges so far, in øre
     attr_accessor :charges
 
+    # Maximum Zippy messages per month (-1 for unlimited)
+    attr_accessor :limit
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'used' => :'used',
-        :'charges' => :'charges'
+        :'charges' => :'charges',
+        :'limit' => :'limit'
       }
     end
 
@@ -44,7 +48,8 @@ module Zippendo
     def self.openapi_types
       {
         :'used' => :'Float',
-        :'charges' => :'Float'
+        :'charges' => :'Float',
+        :'limit' => :'Float'
       }
     end
 
@@ -81,6 +86,12 @@ module Zippendo
       else
         self.charges = nil
       end
+
+      if attributes.key?(:'limit')
+        self.limit = attributes[:'limit']
+      else
+        self.limit = nil
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -96,6 +107,10 @@ module Zippendo
         invalid_properties.push('invalid value for "charges", charges cannot be nil.')
       end
 
+      if @limit.nil?
+        invalid_properties.push('invalid value for "limit", limit cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -105,6 +120,7 @@ module Zippendo
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @used.nil?
       return false if @charges.nil?
+      return false if @limit.nil?
       true
     end
 
@@ -128,13 +144,24 @@ module Zippendo
       @charges = charges
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] limit Value to be assigned
+    def limit=(limit)
+      if limit.nil?
+        fail ArgumentError, 'limit cannot be nil'
+      end
+
+      @limit = limit
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
           used == o.used &&
-          charges == o.charges
+          charges == o.charges &&
+          limit == o.limit
     end
 
     # @see the `==` method
@@ -146,7 +173,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [used, charges].hash
+      [used, charges, limit].hash
     end
 
     # Builds the object from hash
