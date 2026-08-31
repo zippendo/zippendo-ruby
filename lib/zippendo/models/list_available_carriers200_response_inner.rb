@@ -48,6 +48,12 @@ module Zippendo
     # Guidance shown alongside the deprecated tag (e.g. what to migrate to)
     attr_accessor :deprecation_message
 
+    # Whether the carrier produces the customs declaration (CN22/CN23) itself and returns it with the label.
+    attr_accessor :generates_customs_documents
+
+    # Whether the carrier produces the commercial invoice itself and returns it with the label, e.g. via electronic trade documents.
+    attr_accessor :generates_commercial_invoice
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -61,7 +67,9 @@ module Zippendo
         :'required_fields' => :'requiredFields',
         :'optional_fields' => :'optionalFields',
         :'deprecated' => :'deprecated',
-        :'deprecation_message' => :'deprecationMessage'
+        :'deprecation_message' => :'deprecationMessage',
+        :'generates_customs_documents' => :'generatesCustomsDocuments',
+        :'generates_commercial_invoice' => :'generatesCommercialInvoice'
       }
     end
 
@@ -88,7 +96,9 @@ module Zippendo
         :'required_fields' => :'Array<ListAvailableCarriers200ResponseInnerRequiredFieldsInner>',
         :'optional_fields' => :'Array<ListAvailableCarriers200ResponseInnerRequiredFieldsInner>',
         :'deprecated' => :'Boolean',
-        :'deprecation_message' => :'String'
+        :'deprecation_message' => :'String',
+        :'generates_customs_documents' => :'Boolean',
+        :'generates_commercial_invoice' => :'Boolean'
       }
     end
 
@@ -165,6 +175,14 @@ module Zippendo
       if attributes.key?(:'deprecation_message')
         self.deprecation_message = attributes[:'deprecation_message']
       end
+
+      if attributes.key?(:'generates_customs_documents')
+        self.generates_customs_documents = attributes[:'generates_customs_documents']
+      end
+
+      if attributes.key?(:'generates_commercial_invoice')
+        self.generates_commercial_invoice = attributes[:'generates_commercial_invoice']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -227,7 +245,9 @@ module Zippendo
           required_fields == o.required_fields &&
           optional_fields == o.optional_fields &&
           deprecated == o.deprecated &&
-          deprecation_message == o.deprecation_message
+          deprecation_message == o.deprecation_message &&
+          generates_customs_documents == o.generates_customs_documents &&
+          generates_commercial_invoice == o.generates_commercial_invoice
     end
 
     # @see the `==` method
@@ -239,7 +259,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, slug, group, description, logo, brand_color, learn_more_url, required_fields, optional_fields, deprecated, deprecation_message].hash
+      [name, slug, group, description, logo, brand_color, learn_more_url, required_fields, optional_fields, deprecated, deprecation_message, generates_customs_documents, generates_commercial_invoice].hash
     end
 
     # Builds the object from hash

@@ -16,6 +16,8 @@
 | **brand_color** | **String** | Carrier brand color (hex) | [optional] |
 | **deprecated** | **Boolean** | Whether this carrier integration is deprecated (still works, but discouraged) | [optional] |
 | **deprecation_message** | **String** | Guidance shown alongside the deprecated tag (e.g. what to migrate to) | [optional] |
+| **generates_customs_documents** | **Boolean** | Whether the carrier produces the customs declaration (CN22/CN23) itself and returns it with the label. | [optional] |
+| **generates_commercial_invoice** | **Boolean** | Whether the carrier produces the commercial invoice itself and returns it with the label, e.g. via electronic trade documents. | [optional] |
 
 ## Example
 
@@ -34,7 +36,9 @@ instance = Zippendo::ListCarriers200ResponseDataInner.new(
   logo: https://cdn.zippendo.com/logos/postnord.svg,
   brand_color: #005BAA,
   deprecated: true,
-  deprecation_message: The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration.
+  deprecation_message: The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration.,
+  generates_customs_documents: true,
+  generates_commercial_invoice: true
 )
 ```
 
