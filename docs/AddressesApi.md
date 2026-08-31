@@ -249,6 +249,8 @@ opts = {
   page: 1, # Integer | Page number (1-based)
   limit: 20, # Integer | Items per page (max 100)
   type: 'sender', # String | Filter by address type (sender, pickup, return)
+  country_code: 'DK', # String | Filter by ISO 3166-1 alpha-2 country code.
+  search: 'Copenhagen', # String | Search by address name, contact or city.
   brand_id: 'brnd_8f3kd92ld0', # String | Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.
   brand_scope: 'own' # String | How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.
 }
@@ -288,6 +290,8 @@ end
 | **page** | **Integer** | Page number (1-based) | [optional][default to 1] |
 | **limit** | **Integer** | Items per page (max 100) | [optional][default to 20] |
 | **type** | **String** | Filter by address type (sender, pickup, return) | [optional] |
+| **country_code** | **String** | Filter by ISO 3166-1 alpha-2 country code. | [optional] |
+| **search** | **String** | Search by address name, contact or city. | [optional] |
 | **brand_id** | **String** | Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand. | [optional] |
 | **brand_scope** | **String** | How the brand context narrows this list: \&quot;own\&quot; returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \&quot;shared\&quot; returns only unassigned organization-wide rows, \&quot;both\&quot; (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \&quot;shared\&quot; returns no rows, since those records are never visible organization-wide from within a brand context. | [optional] |
 

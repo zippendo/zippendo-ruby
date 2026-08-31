@@ -330,6 +330,8 @@ module Zippendo
     # @option opts [Integer] :limit Items per page (max 100) (default to 20)
     # @option opts [String] :brand_id Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand.
     # @option opts [String] :brand_scope How the brand context narrows this list: \&quot;own\&quot; returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \&quot;shared\&quot; returns only unassigned organization-wide rows, \&quot;both\&quot; (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \&quot;shared\&quot; returns no rows, since those records are never visible organization-wide from within a brand context.
+    # @option opts [String] :is_active Filter by active state.
+    # @option opts [String] :search Search by webhook name or URL.
     # @return [ListOrgWebhooks200Response]
     def list_org_webhooks(org_id, opts = {})
       data, _status_code, _headers = list_org_webhooks_with_http_info(org_id, opts)
@@ -344,6 +346,8 @@ module Zippendo
     # @option opts [Integer] :limit Items per page (max 100) (default to 20)
     # @option opts [String] :brand_id Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand.
     # @option opts [String] :brand_scope How the brand context narrows this list: \&quot;own\&quot; returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \&quot;shared\&quot; returns only unassigned organization-wide rows, \&quot;both\&quot; (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \&quot;shared\&quot; returns no rows, since those records are never visible organization-wide from within a brand context.
+    # @option opts [String] :is_active Filter by active state.
+    # @option opts [String] :search Search by webhook name or URL.
     # @return [Array<(ListOrgWebhooks200Response, Integer, Hash)>] ListOrgWebhooks200Response data, response status code and response headers
     def list_org_webhooks_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -382,6 +386,8 @@ module Zippendo
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'brandId'] = opts[:'brand_id'] if !opts[:'brand_id'].nil?
       query_params[:'brandScope'] = opts[:'brand_scope'] if !opts[:'brand_scope'].nil?
+      query_params[:'isActive'] = opts[:'is_active'] if !opts[:'is_active'].nil?
+      query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}

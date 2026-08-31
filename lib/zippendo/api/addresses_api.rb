@@ -238,6 +238,8 @@ module Zippendo
     # @option opts [Integer] :page Page number (1-based) (default to 1)
     # @option opts [Integer] :limit Items per page (max 100) (default to 20)
     # @option opts [String] :type Filter by address type (sender, pickup, return)
+    # @option opts [String] :country_code Filter by ISO 3166-1 alpha-2 country code.
+    # @option opts [String] :search Search by address name, contact or city.
     # @option opts [String] :brand_id Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand.
     # @option opts [String] :brand_scope How the brand context narrows this list: \&quot;own\&quot; returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \&quot;shared\&quot; returns only unassigned organization-wide rows, \&quot;both\&quot; (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \&quot;shared\&quot; returns no rows, since those records are never visible organization-wide from within a brand context.
     # @return [ListAddresses200Response]
@@ -253,6 +255,8 @@ module Zippendo
     # @option opts [Integer] :page Page number (1-based) (default to 1)
     # @option opts [Integer] :limit Items per page (max 100) (default to 20)
     # @option opts [String] :type Filter by address type (sender, pickup, return)
+    # @option opts [String] :country_code Filter by ISO 3166-1 alpha-2 country code.
+    # @option opts [String] :search Search by address name, contact or city.
     # @option opts [String] :brand_id Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand.
     # @option opts [String] :brand_scope How the brand context narrows this list: \&quot;own\&quot; returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \&quot;shared\&quot; returns only unassigned organization-wide rows, \&quot;both\&quot; (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \&quot;shared\&quot; returns no rows, since those records are never visible organization-wide from within a brand context.
     # @return [Array<(ListAddresses200Response, Integer, Hash)>] ListAddresses200Response data, response status code and response headers
@@ -284,6 +288,14 @@ module Zippendo
       if @api_client.config.client_side_validation && opts[:'type'] && !allowable_values.include?(opts[:'type'])
         fail ArgumentError, "invalid value for \"type\", must be one of #{allowable_values}"
       end
+      if @api_client.config.client_side_validation && !opts[:'country_code'].nil? && opts[:'country_code'].to_s.length > 2
+        fail ArgumentError, 'invalid value for "opts[:"country_code"]" when calling AddressesApi.list_addresses, the character length must be smaller than or equal to 2.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'country_code'].nil? && opts[:'country_code'].to_s.length < 2
+        fail ArgumentError, 'invalid value for "opts[:"country_code"]" when calling AddressesApi.list_addresses, the character length must be greater than or equal to 2.'
+      end
+
       allowable_values = ["own", "shared", "both"]
       if @api_client.config.client_side_validation && opts[:'brand_scope'] && !allowable_values.include?(opts[:'brand_scope'])
         fail ArgumentError, "invalid value for \"brand_scope\", must be one of #{allowable_values}"
@@ -296,6 +308,8 @@ module Zippendo
       query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'type'] = opts[:'type'] if !opts[:'type'].nil?
+      query_params[:'countryCode'] = opts[:'country_code'] if !opts[:'country_code'].nil?
+      query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
       query_params[:'brandId'] = opts[:'brand_id'] if !opts[:'brand_id'].nil?
       query_params[:'brandScope'] = opts[:'brand_scope'] if !opts[:'brand_scope'].nil?
 

@@ -545,6 +545,9 @@ module Zippendo
     # @option opts [Integer] :limit Items per page (max 100) (default to 20)
     # @option opts [String] :brand_id Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand.
     # @option opts [String] :brand_scope How the brand context narrows this list: \&quot;own\&quot; returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \&quot;shared\&quot; returns only unassigned organization-wide rows, \&quot;both\&quot; (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \&quot;shared\&quot; returns no rows, since those records are never visible organization-wide from within a brand context.
+    # @option opts [String] :status Filter by shipment status.
+    # @option opts [String] :type Filter by direction.
+    # @option opts [String] :search Search by shipment reference or parcel tracking number.
     # @return [ListShipments200Response]
     def list_shipments(org_id, opts = {})
       data, _status_code, _headers = list_shipments_with_http_info(org_id, opts)
@@ -559,6 +562,9 @@ module Zippendo
     # @option opts [Integer] :limit Items per page (max 100) (default to 20)
     # @option opts [String] :brand_id Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand.
     # @option opts [String] :brand_scope How the brand context narrows this list: \&quot;own\&quot; returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \&quot;shared\&quot; returns only unassigned organization-wide rows, \&quot;both\&quot; (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \&quot;shared\&quot; returns no rows, since those records are never visible organization-wide from within a brand context.
+    # @option opts [String] :status Filter by shipment status.
+    # @option opts [String] :type Filter by direction.
+    # @option opts [String] :search Search by shipment reference or parcel tracking number.
     # @return [Array<(ListShipments200Response, Integer, Hash)>] ListShipments200Response data, response status code and response headers
     def list_shipments_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -588,6 +594,14 @@ module Zippendo
       if @api_client.config.client_side_validation && opts[:'brand_scope'] && !allowable_values.include?(opts[:'brand_scope'])
         fail ArgumentError, "invalid value for \"brand_scope\", must be one of #{allowable_values}"
       end
+      allowable_values = ["draft", "pending", "processing", "dispatched", "partly_dispatched", "error", "cancelled", "on_hold"]
+      if @api_client.config.client_side_validation && opts[:'status'] && !allowable_values.include?(opts[:'status'])
+        fail ArgumentError, "invalid value for \"status\", must be one of #{allowable_values}"
+      end
+      allowable_values = ["outbound", "inbound"]
+      if @api_client.config.client_side_validation && opts[:'type'] && !allowable_values.include?(opts[:'type'])
+        fail ArgumentError, "invalid value for \"type\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/shipments'.sub('{orgId}', CGI.escape(org_id.to_s))
 
@@ -597,6 +611,9 @@ module Zippendo
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'brandId'] = opts[:'brand_id'] if !opts[:'brand_id'].nil?
       query_params[:'brandScope'] = opts[:'brand_scope'] if !opts[:'brand_scope'].nil?
+      query_params[:'status'] = opts[:'status'] if !opts[:'status'].nil?
+      query_params[:'type'] = opts[:'type'] if !opts[:'type'].nil?
+      query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
