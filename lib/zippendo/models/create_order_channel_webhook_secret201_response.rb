@@ -14,45 +14,22 @@ require 'date'
 require 'time'
 
 module Zippendo
-  # Summary of the order's source channel.
-  class ListOrders200ResponseDataInnerOrderChannel < ApiModelBase
-    # Order channel ID.
-    attr_accessor :id
+  class CreateOrderChannelWebhookSecret201Response < ApiModelBase
+    # The webhook signing secret. Returned only once — store it in your system; every push to the ingest URL must carry an HMAC-SHA256 hex signature of the raw body computed with it.
+    attr_accessor :secret
 
-    # Order channel name.
-    attr_accessor :name
+    # The ingest URL your system pushes signed order events to.
+    attr_accessor :webhook_url
 
-    # Type of the order channel (sales platform).
-    attr_accessor :type
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    # When this secret was issued (ISO 8601).
+    attr_accessor :created_at
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'name' => :'name',
-        :'type' => :'type'
+        :'secret' => :'secret',
+        :'webhook_url' => :'webhookUrl',
+        :'created_at' => :'createdAt'
       }
     end
 
@@ -69,9 +46,9 @@ module Zippendo
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'name' => :'String',
-        :'type' => :'String'
+        :'secret' => :'String',
+        :'webhook_url' => :'String',
+        :'created_at' => :'Time'
       }
     end
 
@@ -85,34 +62,34 @@ module Zippendo
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::ListOrders200ResponseDataInnerOrderChannel` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::CreateOrderChannelWebhookSecret201Response` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::ListOrders200ResponseDataInnerOrderChannel`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::CreateOrderChannelWebhookSecret201Response`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
+      if attributes.key?(:'secret')
+        self.secret = attributes[:'secret']
       else
-        self.id = nil
+        self.secret = nil
       end
 
-      if attributes.key?(:'name')
-        self.name = attributes[:'name']
+      if attributes.key?(:'webhook_url')
+        self.webhook_url = attributes[:'webhook_url']
       else
-        self.name = nil
+        self.webhook_url = nil
       end
 
-      if attributes.key?(:'type')
-        self.type = attributes[:'type']
+      if attributes.key?(:'created_at')
+        self.created_at = attributes[:'created_at']
       else
-        self.type = nil
+        self.created_at = nil
       end
     end
 
@@ -121,16 +98,21 @@ module Zippendo
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @id.nil?
-        invalid_properties.push('invalid value for "id", id cannot be nil.')
+      if @secret.nil?
+        invalid_properties.push('invalid value for "secret", secret cannot be nil.')
       end
 
-      if @name.nil?
-        invalid_properties.push('invalid value for "name", name cannot be nil.')
+      if @webhook_url.nil?
+        invalid_properties.push('invalid value for "webhook_url", webhook_url cannot be nil.')
       end
 
-      if @type.nil?
-        invalid_properties.push('invalid value for "type", type cannot be nil.')
+      if @created_at.nil?
+        invalid_properties.push('invalid value for "created_at", created_at cannot be nil.')
+      end
+
+      pattern = Regexp.new(/^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$/)
+      if @created_at !~ pattern
+        invalid_properties.push("invalid value for \"created_at\", must conform to the pattern #{pattern}.")
       end
 
       invalid_properties
@@ -140,42 +122,46 @@ module Zippendo
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @id.nil?
-      return false if @name.nil?
-      return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ["shopify", "woocommerce", "manual", "custom"])
-      return false unless type_validator.valid?(@type)
+      return false if @secret.nil?
+      return false if @webhook_url.nil?
+      return false if @created_at.nil?
+      return false if @created_at !~ Regexp.new(/^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$/)
       true
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
+    # @param [Object] secret Value to be assigned
+    def secret=(secret)
+      if secret.nil?
+        fail ArgumentError, 'secret cannot be nil'
       end
 
-      @id = id
+      @secret = secret
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] name Value to be assigned
-    def name=(name)
-      if name.nil?
-        fail ArgumentError, 'name cannot be nil'
+    # @param [Object] webhook_url Value to be assigned
+    def webhook_url=(webhook_url)
+      if webhook_url.nil?
+        fail ArgumentError, 'webhook_url cannot be nil'
       end
 
-      @name = name
+      @webhook_url = webhook_url
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] type Object to be assigned
-    def type=(type)
-      validator = EnumAttributeValidator.new('String', ["shopify", "woocommerce", "manual", "custom"])
-      unless validator.valid?(type)
-        fail ArgumentError, "invalid value for \"type\", must be one of #{validator.allowable_values}."
+    # Custom attribute writer method with validation
+    # @param [Object] created_at Value to be assigned
+    def created_at=(created_at)
+      if created_at.nil?
+        fail ArgumentError, 'created_at cannot be nil'
       end
-      @type = type
+
+      pattern = Regexp.new(/^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$/)
+      if created_at !~ pattern
+        fail ArgumentError, "invalid value for \"created_at\", must conform to the pattern #{pattern}."
+      end
+
+      @created_at = created_at
     end
 
     # Checks equality by comparing each attribute.
@@ -183,9 +169,9 @@ module Zippendo
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          name == o.name &&
-          type == o.type
+          secret == o.secret &&
+          webhook_url == o.webhook_url &&
+          created_at == o.created_at
     end
 
     # @see the `==` method
@@ -197,7 +183,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, type].hash
+      [secret, webhook_url, created_at].hash
     end
 
     # Builds the object from hash

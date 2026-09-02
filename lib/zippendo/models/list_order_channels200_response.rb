@@ -14,45 +14,30 @@ require 'date'
 require 'time'
 
 module Zippendo
-  # Summary of the order's source channel.
-  class ListOrders200ResponseDataInnerOrderChannel < ApiModelBase
-    # Order channel ID.
-    attr_accessor :id
+  class ListOrderChannels200Response < ApiModelBase
+    # Page of results
+    attr_accessor :data
 
-    # Order channel name.
-    attr_accessor :name
+    # Total matching items across all pages
+    attr_accessor :total
 
-    # Type of the order channel (sales platform).
-    attr_accessor :type
+    # Current page number (1-based)
+    attr_accessor :page
 
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
+    # Items per page
+    attr_accessor :limit
 
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    # Total number of pages
+    attr_accessor :total_pages
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'name' => :'name',
-        :'type' => :'type'
+        :'data' => :'data',
+        :'total' => :'total',
+        :'page' => :'page',
+        :'limit' => :'limit',
+        :'total_pages' => :'totalPages'
       }
     end
 
@@ -69,9 +54,11 @@ module Zippendo
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'name' => :'String',
-        :'type' => :'String'
+        :'data' => :'Array<ListOrderChannels200ResponseDataInner>',
+        :'total' => :'Float',
+        :'page' => :'Float',
+        :'limit' => :'Float',
+        :'total_pages' => :'Float'
       }
     end
 
@@ -85,34 +72,48 @@ module Zippendo
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::ListOrders200ResponseDataInnerOrderChannel` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::ListOrderChannels200Response` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::ListOrders200ResponseDataInnerOrderChannel`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::ListOrderChannels200Response`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
+      if attributes.key?(:'data')
+        if (value = attributes[:'data']).is_a?(Array)
+          self.data = value
+        end
       else
-        self.id = nil
+        self.data = nil
       end
 
-      if attributes.key?(:'name')
-        self.name = attributes[:'name']
+      if attributes.key?(:'total')
+        self.total = attributes[:'total']
       else
-        self.name = nil
+        self.total = nil
       end
 
-      if attributes.key?(:'type')
-        self.type = attributes[:'type']
+      if attributes.key?(:'page')
+        self.page = attributes[:'page']
       else
-        self.type = nil
+        self.page = nil
+      end
+
+      if attributes.key?(:'limit')
+        self.limit = attributes[:'limit']
+      else
+        self.limit = nil
+      end
+
+      if attributes.key?(:'total_pages')
+        self.total_pages = attributes[:'total_pages']
+      else
+        self.total_pages = nil
       end
     end
 
@@ -121,16 +122,24 @@ module Zippendo
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @id.nil?
-        invalid_properties.push('invalid value for "id", id cannot be nil.')
+      if @data.nil?
+        invalid_properties.push('invalid value for "data", data cannot be nil.')
       end
 
-      if @name.nil?
-        invalid_properties.push('invalid value for "name", name cannot be nil.')
+      if @total.nil?
+        invalid_properties.push('invalid value for "total", total cannot be nil.')
       end
 
-      if @type.nil?
-        invalid_properties.push('invalid value for "type", type cannot be nil.')
+      if @page.nil?
+        invalid_properties.push('invalid value for "page", page cannot be nil.')
+      end
+
+      if @limit.nil?
+        invalid_properties.push('invalid value for "limit", limit cannot be nil.')
+      end
+
+      if @total_pages.nil?
+        invalid_properties.push('invalid value for "total_pages", total_pages cannot be nil.')
       end
 
       invalid_properties
@@ -140,42 +149,62 @@ module Zippendo
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @id.nil?
-      return false if @name.nil?
-      return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ["shopify", "woocommerce", "manual", "custom"])
-      return false unless type_validator.valid?(@type)
+      return false if @data.nil?
+      return false if @total.nil?
+      return false if @page.nil?
+      return false if @limit.nil?
+      return false if @total_pages.nil?
       true
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
+    # @param [Object] data Value to be assigned
+    def data=(data)
+      if data.nil?
+        fail ArgumentError, 'data cannot be nil'
       end
 
-      @id = id
+      @data = data
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] name Value to be assigned
-    def name=(name)
-      if name.nil?
-        fail ArgumentError, 'name cannot be nil'
+    # @param [Object] total Value to be assigned
+    def total=(total)
+      if total.nil?
+        fail ArgumentError, 'total cannot be nil'
       end
 
-      @name = name
+      @total = total
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] type Object to be assigned
-    def type=(type)
-      validator = EnumAttributeValidator.new('String', ["shopify", "woocommerce", "manual", "custom"])
-      unless validator.valid?(type)
-        fail ArgumentError, "invalid value for \"type\", must be one of #{validator.allowable_values}."
+    # Custom attribute writer method with validation
+    # @param [Object] page Value to be assigned
+    def page=(page)
+      if page.nil?
+        fail ArgumentError, 'page cannot be nil'
       end
-      @type = type
+
+      @page = page
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] limit Value to be assigned
+    def limit=(limit)
+      if limit.nil?
+        fail ArgumentError, 'limit cannot be nil'
+      end
+
+      @limit = limit
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] total_pages Value to be assigned
+    def total_pages=(total_pages)
+      if total_pages.nil?
+        fail ArgumentError, 'total_pages cannot be nil'
+      end
+
+      @total_pages = total_pages
     end
 
     # Checks equality by comparing each attribute.
@@ -183,9 +212,11 @@ module Zippendo
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          name == o.name &&
-          type == o.type
+          data == o.data &&
+          total == o.total &&
+          page == o.page &&
+          limit == o.limit &&
+          total_pages == o.total_pages
     end
 
     # @see the `==` method
@@ -197,7 +228,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, type].hash
+      [data, total, page, limit, total_pages].hash
     end
 
     # Builds the object from hash

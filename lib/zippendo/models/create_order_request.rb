@@ -47,6 +47,12 @@ module Zippendo
     # Free-form internal notes.
     attr_accessor :notes
 
+    # Shipping rule to ship this order with. When set, a shipment is created immediately (and dispatched if the channel has autoShipOnCreate enabled).
+    attr_accessor :shipping_rule_id
+
+    # Shipping-method title from the source checkout; matched against the order channel's shipping-method mappings to pick a shipping rule.
+    attr_accessor :shipping_method_title
+
     # Raw platform-specific payload for reference.
     attr_accessor :external_data
 
@@ -64,6 +70,8 @@ module Zippendo
         :'total_amount' => :'totalAmount',
         :'currency' => :'currency',
         :'notes' => :'notes',
+        :'shipping_rule_id' => :'shippingRuleId',
+        :'shipping_method_title' => :'shippingMethodTitle',
         :'external_data' => :'externalData'
       }
     end
@@ -92,6 +100,8 @@ module Zippendo
         :'total_amount' => :'Float',
         :'currency' => :'String',
         :'notes' => :'String',
+        :'shipping_rule_id' => :'String',
+        :'shipping_method_title' => :'String',
         :'external_data' => :'Hash<String, Object>'
       }
     end
@@ -107,6 +117,8 @@ module Zippendo
         :'total_amount',
         :'currency',
         :'notes',
+        :'shipping_rule_id',
+        :'shipping_method_title',
         :'external_data'
       ])
     end
@@ -177,6 +189,14 @@ module Zippendo
 
       if attributes.key?(:'notes')
         self.notes = attributes[:'notes']
+      end
+
+      if attributes.key?(:'shipping_rule_id')
+        self.shipping_rule_id = attributes[:'shipping_rule_id']
+      end
+
+      if attributes.key?(:'shipping_method_title')
+        self.shipping_method_title = attributes[:'shipping_method_title']
       end
 
       if attributes.key?(:'external_data')
@@ -351,6 +371,8 @@ module Zippendo
           total_amount == o.total_amount &&
           currency == o.currency &&
           notes == o.notes &&
+          shipping_rule_id == o.shipping_rule_id &&
+          shipping_method_title == o.shipping_method_title &&
           external_data == o.external_data
     end
 
@@ -363,7 +385,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [order_number, external_id, order_channel_id, customer_name, customer_email, shipping_address, order_lines, subtotal_amount, total_amount, currency, notes, external_data].hash
+      [order_number, external_id, order_channel_id, customer_name, customer_email, shipping_address, order_lines, subtotal_amount, total_amount, currency, notes, shipping_rule_id, shipping_method_title, external_data].hash
     end
 
     # Builds the object from hash

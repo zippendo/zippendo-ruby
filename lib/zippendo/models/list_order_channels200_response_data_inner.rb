@@ -14,16 +14,47 @@ require 'date'
 require 'time'
 
 module Zippendo
-  # Summary of the order's source channel.
-  class ListOrders200ResponseDataInnerOrderChannel < ApiModelBase
-    # Order channel ID.
+  class ListOrderChannels200ResponseDataInner < ApiModelBase
+    # Unique order channel ID.
     attr_accessor :id
 
-    # Order channel name.
+    # Display name of the channel.
     attr_accessor :name
 
     # Type of the order channel (sales platform).
     attr_accessor :type
+
+    # Whether the channel is active.
+    attr_accessor :enabled
+
+    # Brand this channel belongs to, or null for organization-wide. Orders synced from this channel inherit it, and so do the shipments and documents made from them.
+    attr_accessor :brand_id
+
+    # Whether credentials are configured (values are never exposed).
+    attr_accessor :has_credentials
+
+    attr_accessor :settings
+
+    # Whether real-time webhooks are enabled.
+    attr_accessor :webhooks_enabled
+
+    # Timestamp of the last successful sync.
+    attr_accessor :last_sync_at
+
+    # Error message from the last failed sync.
+    attr_accessor :last_sync_error
+
+    # IDs of shipping rules linked to this channel.
+    attr_accessor :shipping_rule_ids
+
+    # Owning organization ID.
+    attr_accessor :org_id
+
+    # Creation timestamp (ISO 8601).
+    attr_accessor :created_at
+
+    # Last update timestamp (ISO 8601).
+    attr_accessor :updated_at
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -52,7 +83,18 @@ module Zippendo
       {
         :'id' => :'id',
         :'name' => :'name',
-        :'type' => :'type'
+        :'type' => :'type',
+        :'enabled' => :'enabled',
+        :'brand_id' => :'brandId',
+        :'has_credentials' => :'hasCredentials',
+        :'settings' => :'settings',
+        :'webhooks_enabled' => :'webhooksEnabled',
+        :'last_sync_at' => :'lastSyncAt',
+        :'last_sync_error' => :'lastSyncError',
+        :'shipping_rule_ids' => :'shippingRuleIds',
+        :'org_id' => :'orgId',
+        :'created_at' => :'createdAt',
+        :'updated_at' => :'updatedAt'
       }
     end
 
@@ -71,13 +113,27 @@ module Zippendo
       {
         :'id' => :'String',
         :'name' => :'String',
-        :'type' => :'String'
+        :'type' => :'String',
+        :'enabled' => :'Boolean',
+        :'brand_id' => :'String',
+        :'has_credentials' => :'Boolean',
+        :'settings' => :'ListOrderChannels200ResponseDataInnerSettings',
+        :'webhooks_enabled' => :'Boolean',
+        :'last_sync_at' => :'Time',
+        :'last_sync_error' => :'String',
+        :'shipping_rule_ids' => :'Array<String>',
+        :'org_id' => :'String',
+        :'created_at' => :'String',
+        :'updated_at' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'brand_id',
+        :'last_sync_at',
+        :'last_sync_error',
       ])
     end
 
@@ -85,14 +141,14 @@ module Zippendo
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::ListOrders200ResponseDataInnerOrderChannel` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::ListOrderChannels200ResponseDataInner` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::ListOrders200ResponseDataInnerOrderChannel`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::ListOrderChannels200ResponseDataInner`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
@@ -114,6 +170,66 @@ module Zippendo
       else
         self.type = nil
       end
+
+      if attributes.key?(:'enabled')
+        self.enabled = attributes[:'enabled']
+      else
+        self.enabled = nil
+      end
+
+      if attributes.key?(:'brand_id')
+        self.brand_id = attributes[:'brand_id']
+      else
+        self.brand_id = nil
+      end
+
+      if attributes.key?(:'has_credentials')
+        self.has_credentials = attributes[:'has_credentials']
+      else
+        self.has_credentials = nil
+      end
+
+      if attributes.key?(:'settings')
+        self.settings = attributes[:'settings']
+      else
+        self.settings = nil
+      end
+
+      if attributes.key?(:'webhooks_enabled')
+        self.webhooks_enabled = attributes[:'webhooks_enabled']
+      end
+
+      if attributes.key?(:'last_sync_at')
+        self.last_sync_at = attributes[:'last_sync_at']
+      end
+
+      if attributes.key?(:'last_sync_error')
+        self.last_sync_error = attributes[:'last_sync_error']
+      end
+
+      if attributes.key?(:'shipping_rule_ids')
+        if (value = attributes[:'shipping_rule_ids']).is_a?(Array)
+          self.shipping_rule_ids = value
+        end
+      end
+
+      if attributes.key?(:'org_id')
+        self.org_id = attributes[:'org_id']
+      else
+        self.org_id = nil
+      end
+
+      if attributes.key?(:'created_at')
+        self.created_at = attributes[:'created_at']
+      else
+        self.created_at = nil
+      end
+
+      if attributes.key?(:'updated_at')
+        self.updated_at = attributes[:'updated_at']
+      else
+        self.updated_at = nil
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -133,6 +249,35 @@ module Zippendo
         invalid_properties.push('invalid value for "type", type cannot be nil.')
       end
 
+      if @enabled.nil?
+        invalid_properties.push('invalid value for "enabled", enabled cannot be nil.')
+      end
+
+      if @has_credentials.nil?
+        invalid_properties.push('invalid value for "has_credentials", has_credentials cannot be nil.')
+      end
+
+      if @settings.nil?
+        invalid_properties.push('invalid value for "settings", settings cannot be nil.')
+      end
+
+      pattern = Regexp.new(/^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$/)
+      if !@last_sync_at.nil? && @last_sync_at !~ pattern
+        invalid_properties.push("invalid value for \"last_sync_at\", must conform to the pattern #{pattern}.")
+      end
+
+      if @org_id.nil?
+        invalid_properties.push('invalid value for "org_id", org_id cannot be nil.')
+      end
+
+      if @created_at.nil?
+        invalid_properties.push('invalid value for "created_at", created_at cannot be nil.')
+      end
+
+      if @updated_at.nil?
+        invalid_properties.push('invalid value for "updated_at", updated_at cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -145,6 +290,13 @@ module Zippendo
       return false if @type.nil?
       type_validator = EnumAttributeValidator.new('String', ["shopify", "woocommerce", "manual", "custom"])
       return false unless type_validator.valid?(@type)
+      return false if @enabled.nil?
+      return false if @has_credentials.nil?
+      return false if @settings.nil?
+      return false if !@last_sync_at.nil? && @last_sync_at !~ Regexp.new(/^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$/)
+      return false if @org_id.nil?
+      return false if @created_at.nil?
+      return false if @updated_at.nil?
       true
     end
 
@@ -178,6 +330,77 @@ module Zippendo
       @type = type
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] enabled Value to be assigned
+    def enabled=(enabled)
+      if enabled.nil?
+        fail ArgumentError, 'enabled cannot be nil'
+      end
+
+      @enabled = enabled
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] has_credentials Value to be assigned
+    def has_credentials=(has_credentials)
+      if has_credentials.nil?
+        fail ArgumentError, 'has_credentials cannot be nil'
+      end
+
+      @has_credentials = has_credentials
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] settings Value to be assigned
+    def settings=(settings)
+      if settings.nil?
+        fail ArgumentError, 'settings cannot be nil'
+      end
+
+      @settings = settings
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] last_sync_at Value to be assigned
+    def last_sync_at=(last_sync_at)
+      pattern = Regexp.new(/^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$/)
+      if !last_sync_at.nil? && last_sync_at !~ pattern
+        fail ArgumentError, "invalid value for \"last_sync_at\", must conform to the pattern #{pattern}."
+      end
+
+      @last_sync_at = last_sync_at
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] org_id Value to be assigned
+    def org_id=(org_id)
+      if org_id.nil?
+        fail ArgumentError, 'org_id cannot be nil'
+      end
+
+      @org_id = org_id
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] created_at Value to be assigned
+    def created_at=(created_at)
+      if created_at.nil?
+        fail ArgumentError, 'created_at cannot be nil'
+      end
+
+      @created_at = created_at
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] updated_at Value to be assigned
+    def updated_at=(updated_at)
+      if updated_at.nil?
+        fail ArgumentError, 'updated_at cannot be nil'
+      end
+
+      @updated_at = updated_at
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -185,7 +408,18 @@ module Zippendo
       self.class == o.class &&
           id == o.id &&
           name == o.name &&
-          type == o.type
+          type == o.type &&
+          enabled == o.enabled &&
+          brand_id == o.brand_id &&
+          has_credentials == o.has_credentials &&
+          settings == o.settings &&
+          webhooks_enabled == o.webhooks_enabled &&
+          last_sync_at == o.last_sync_at &&
+          last_sync_error == o.last_sync_error &&
+          shipping_rule_ids == o.shipping_rule_ids &&
+          org_id == o.org_id &&
+          created_at == o.created_at &&
+          updated_at == o.updated_at
     end
 
     # @see the `==` method
@@ -197,7 +431,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, type].hash
+      [id, name, type, enabled, brand_id, has_credentials, settings, webhooks_enabled, last_sync_at, last_sync_error, shipping_rule_ids, org_id, created_at, updated_at].hash
     end
 
     # Builds the object from hash

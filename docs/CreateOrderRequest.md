@@ -15,6 +15,8 @@
 | **total_amount** | **Float** | Order grand total. | [optional] |
 | **currency** | **String** | ISO 4217 currency code. | [optional] |
 | **notes** | **String** | Free-form internal notes. | [optional] |
+| **shipping_rule_id** | **String** | Shipping rule to ship this order with. When set, a shipment is created immediately (and dispatched if the channel has autoShipOnCreate enabled). | [optional] |
+| **shipping_method_title** | **String** | Shipping-method title from the source checkout; matched against the order channel&#39;s shipping-method mappings to pick a shipping rule. | [optional] |
 | **external_data** | **Hash&lt;String, Object&gt;** | Raw platform-specific payload for reference. | [optional] |
 
 ## Example
@@ -34,6 +36,8 @@ instance = Zippendo::CreateOrderRequest.new(
   total_amount: 1047,
   currency: DKK,
   notes: Leave at front desk,
+  shipping_rule_id: clz9k2f0a0007abcd2468qrst,
+  shipping_method_title: GLS Hjemmelevering,
   external_data: null
 )
 ```

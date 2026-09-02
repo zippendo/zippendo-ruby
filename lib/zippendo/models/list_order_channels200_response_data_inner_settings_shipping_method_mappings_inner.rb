@@ -14,16 +14,15 @@ require 'date'
 require 'time'
 
 module Zippendo
-  # Summary of the order's source channel.
-  class ListOrders200ResponseDataInnerOrderChannel < ApiModelBase
-    # Order channel ID.
-    attr_accessor :id
+  class ListOrderChannels200ResponseDataInnerSettingsShippingMethodMappingsInner < ApiModelBase
+    # Shipping-method title to match against imported orders (trimmed, case-insensitive, exact).
+    attr_accessor :match
 
-    # Order channel name.
-    attr_accessor :name
+    # Shipping rule applied to orders whose shipping-method title matches.
+    attr_accessor :shipping_rule_id
 
-    # Type of the order channel (sales platform).
-    attr_accessor :type
+    # For rules whose product delivers to a service point: 'nearest' auto-selects the closest point to the recipient address; 'manual' keeps the shipment in draft for manual selection.
+    attr_accessor :service_point_selection
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -50,9 +49,9 @@ module Zippendo
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'name' => :'name',
-        :'type' => :'type'
+        :'match' => :'match',
+        :'shipping_rule_id' => :'shippingRuleId',
+        :'service_point_selection' => :'servicePointSelection'
       }
     end
 
@@ -69,9 +68,9 @@ module Zippendo
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'name' => :'String',
-        :'type' => :'String'
+        :'match' => :'String',
+        :'shipping_rule_id' => :'String',
+        :'service_point_selection' => :'String'
       }
     end
 
@@ -85,34 +84,32 @@ module Zippendo
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::ListOrders200ResponseDataInnerOrderChannel` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::ListOrderChannels200ResponseDataInnerSettingsShippingMethodMappingsInner` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::ListOrders200ResponseDataInnerOrderChannel`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::ListOrderChannels200ResponseDataInnerSettingsShippingMethodMappingsInner`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
+      if attributes.key?(:'match')
+        self.match = attributes[:'match']
       else
-        self.id = nil
+        self.match = nil
       end
 
-      if attributes.key?(:'name')
-        self.name = attributes[:'name']
+      if attributes.key?(:'shipping_rule_id')
+        self.shipping_rule_id = attributes[:'shipping_rule_id']
       else
-        self.name = nil
+        self.shipping_rule_id = nil
       end
 
-      if attributes.key?(:'type')
-        self.type = attributes[:'type']
-      else
-        self.type = nil
+      if attributes.key?(:'service_point_selection')
+        self.service_point_selection = attributes[:'service_point_selection']
       end
     end
 
@@ -121,16 +118,20 @@ module Zippendo
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @id.nil?
-        invalid_properties.push('invalid value for "id", id cannot be nil.')
+      if @match.nil?
+        invalid_properties.push('invalid value for "match", match cannot be nil.')
       end
 
-      if @name.nil?
-        invalid_properties.push('invalid value for "name", name cannot be nil.')
+      if @match.to_s.length < 1
+        invalid_properties.push('invalid value for "match", the character length must be greater than or equal to 1.')
       end
 
-      if @type.nil?
-        invalid_properties.push('invalid value for "type", type cannot be nil.')
+      if @shipping_rule_id.nil?
+        invalid_properties.push('invalid value for "shipping_rule_id", shipping_rule_id cannot be nil.')
+      end
+
+      if @shipping_rule_id.to_s.length < 1
+        invalid_properties.push('invalid value for "shipping_rule_id", the character length must be greater than or equal to 1.')
       end
 
       invalid_properties
@@ -140,42 +141,51 @@ module Zippendo
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @id.nil?
-      return false if @name.nil?
-      return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ["shopify", "woocommerce", "manual", "custom"])
-      return false unless type_validator.valid?(@type)
+      return false if @match.nil?
+      return false if @match.to_s.length < 1
+      return false if @shipping_rule_id.nil?
+      return false if @shipping_rule_id.to_s.length < 1
+      service_point_selection_validator = EnumAttributeValidator.new('String', ["nearest", "manual"])
+      return false unless service_point_selection_validator.valid?(@service_point_selection)
       true
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
+    # @param [Object] match Value to be assigned
+    def match=(match)
+      if match.nil?
+        fail ArgumentError, 'match cannot be nil'
       end
 
-      @id = id
+      if match.to_s.length < 1
+        fail ArgumentError, 'invalid value for "match", the character length must be greater than or equal to 1.'
+      end
+
+      @match = match
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] name Value to be assigned
-    def name=(name)
-      if name.nil?
-        fail ArgumentError, 'name cannot be nil'
+    # @param [Object] shipping_rule_id Value to be assigned
+    def shipping_rule_id=(shipping_rule_id)
+      if shipping_rule_id.nil?
+        fail ArgumentError, 'shipping_rule_id cannot be nil'
       end
 
-      @name = name
+      if shipping_rule_id.to_s.length < 1
+        fail ArgumentError, 'invalid value for "shipping_rule_id", the character length must be greater than or equal to 1.'
+      end
+
+      @shipping_rule_id = shipping_rule_id
     end
 
     # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] type Object to be assigned
-    def type=(type)
-      validator = EnumAttributeValidator.new('String', ["shopify", "woocommerce", "manual", "custom"])
-      unless validator.valid?(type)
-        fail ArgumentError, "invalid value for \"type\", must be one of #{validator.allowable_values}."
+    # @param [Object] service_point_selection Object to be assigned
+    def service_point_selection=(service_point_selection)
+      validator = EnumAttributeValidator.new('String', ["nearest", "manual"])
+      unless validator.valid?(service_point_selection)
+        fail ArgumentError, "invalid value for \"service_point_selection\", must be one of #{validator.allowable_values}."
       end
-      @type = type
+      @service_point_selection = service_point_selection
     end
 
     # Checks equality by comparing each attribute.
@@ -183,9 +193,9 @@ module Zippendo
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          name == o.name &&
-          type == o.type
+          match == o.match &&
+          shipping_rule_id == o.shipping_rule_id &&
+          service_point_selection == o.service_point_selection
     end
 
     # @see the `==` method
@@ -197,7 +207,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, type].hash
+      [match, shipping_rule_id, service_point_selection].hash
     end
 
     # Builds the object from hash

@@ -14,16 +14,20 @@ require 'date'
 require 'time'
 
 module Zippendo
-  # Summary of the order's source channel.
-  class ListOrders200ResponseDataInnerOrderChannel < ApiModelBase
-    # Order channel ID.
-    attr_accessor :id
-
-    # Order channel name.
+  class CreateOrderChannelRequest < ApiModelBase
+    # Display name for the channel.
     attr_accessor :name
 
-    # Type of the order channel (sales platform).
+    # Type of the order channel. Platform channels (Shopify, WooCommerce) are created via their connect flows.
     attr_accessor :type
+
+    # Brand this channel belongs to; null for organization-wide
+    attr_accessor :brand_id
+
+    # Whether the channel is active.
+    attr_accessor :enabled
+
+    attr_accessor :settings
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -50,9 +54,11 @@ module Zippendo
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
         :'name' => :'name',
-        :'type' => :'type'
+        :'type' => :'type',
+        :'brand_id' => :'brandId',
+        :'enabled' => :'enabled',
+        :'settings' => :'settings'
       }
     end
 
@@ -69,15 +75,18 @@ module Zippendo
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
         :'name' => :'String',
-        :'type' => :'String'
+        :'type' => :'String',
+        :'brand_id' => :'String',
+        :'enabled' => :'Boolean',
+        :'settings' => :'CreateOrderChannelRequestSettings'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'brand_id',
       ])
     end
 
@@ -85,23 +94,17 @@ module Zippendo
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::ListOrders200ResponseDataInnerOrderChannel` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::CreateOrderChannelRequest` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::ListOrders200ResponseDataInnerOrderChannel`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::CreateOrderChannelRequest`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
-
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
-      else
-        self.id = nil
-      end
 
       if attributes.key?(:'name')
         self.name = attributes[:'name']
@@ -114,6 +117,20 @@ module Zippendo
       else
         self.type = nil
       end
+
+      if attributes.key?(:'brand_id')
+        self.brand_id = attributes[:'brand_id']
+      end
+
+      if attributes.key?(:'enabled')
+        self.enabled = attributes[:'enabled']
+      else
+        self.enabled = true
+      end
+
+      if attributes.key?(:'settings')
+        self.settings = attributes[:'settings']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -121,12 +138,16 @@ module Zippendo
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @id.nil?
-        invalid_properties.push('invalid value for "id", id cannot be nil.')
-      end
-
       if @name.nil?
         invalid_properties.push('invalid value for "name", name cannot be nil.')
+      end
+
+      if @name.to_s.length > 100
+        invalid_properties.push('invalid value for "name", the character length must be smaller than or equal to 100.')
+      end
+
+      if @name.to_s.length < 1
+        invalid_properties.push('invalid value for "name", the character length must be greater than or equal to 1.')
       end
 
       if @type.nil?
@@ -140,22 +161,13 @@ module Zippendo
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @id.nil?
       return false if @name.nil?
+      return false if @name.to_s.length > 100
+      return false if @name.to_s.length < 1
       return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ["shopify", "woocommerce", "manual", "custom"])
+      type_validator = EnumAttributeValidator.new('String', ["manual", "custom"])
       return false unless type_validator.valid?(@type)
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
-      end
-
-      @id = id
     end
 
     # Custom attribute writer method with validation
@@ -165,13 +177,21 @@ module Zippendo
         fail ArgumentError, 'name cannot be nil'
       end
 
+      if name.to_s.length > 100
+        fail ArgumentError, 'invalid value for "name", the character length must be smaller than or equal to 100.'
+      end
+
+      if name.to_s.length < 1
+        fail ArgumentError, 'invalid value for "name", the character length must be greater than or equal to 1.'
+      end
+
       @name = name
     end
 
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] type Object to be assigned
     def type=(type)
-      validator = EnumAttributeValidator.new('String', ["shopify", "woocommerce", "manual", "custom"])
+      validator = EnumAttributeValidator.new('String', ["manual", "custom"])
       unless validator.valid?(type)
         fail ArgumentError, "invalid value for \"type\", must be one of #{validator.allowable_values}."
       end
@@ -183,9 +203,11 @@ module Zippendo
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
           name == o.name &&
-          type == o.type
+          type == o.type &&
+          brand_id == o.brand_id &&
+          enabled == o.enabled &&
+          settings == o.settings
     end
 
     # @see the `==` method
@@ -197,7 +219,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, type].hash
+      [name, type, brand_id, enabled, settings].hash
     end
 
     # Builds the object from hash
