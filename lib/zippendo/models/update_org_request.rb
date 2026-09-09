@@ -30,9 +30,6 @@ module Zippendo
     # Company VAT/tax ID for invoices
     attr_accessor :vat_number
 
-    # Allow shipments beyond plan limit (overage charges apply)
-    attr_accessor :overage_enabled
-
     # Billing/contact phone number
     attr_accessor :phone
 
@@ -90,7 +87,6 @@ module Zippendo
         :'description' => :'description',
         :'currency' => :'currency',
         :'vat_number' => :'vatNumber',
-        :'overage_enabled' => :'overageEnabled',
         :'phone' => :'phone',
         :'billing_email' => :'billingEmail',
         :'company_name' => :'companyName',
@@ -121,7 +117,6 @@ module Zippendo
         :'description' => :'String',
         :'currency' => :'String',
         :'vat_number' => :'String',
-        :'overage_enabled' => :'Boolean',
         :'phone' => :'String',
         :'billing_email' => :'String',
         :'company_name' => :'String',
@@ -184,10 +179,6 @@ module Zippendo
 
       if attributes.key?(:'vat_number')
         self.vat_number = attributes[:'vat_number']
-      end
-
-      if attributes.key?(:'overage_enabled')
-        self.overage_enabled = attributes[:'overage_enabled']
       end
 
       if attributes.key?(:'phone')
@@ -358,7 +349,6 @@ module Zippendo
           description == o.description &&
           currency == o.currency &&
           vat_number == o.vat_number &&
-          overage_enabled == o.overage_enabled &&
           phone == o.phone &&
           billing_email == o.billing_email &&
           company_name == o.company_name &&
@@ -379,7 +369,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, slug, description, currency, vat_number, overage_enabled, phone, billing_email, company_name, address_line1, address_line2, city, postal_code, country, customs].hash
+      [name, slug, description, currency, vat_number, phone, billing_email, company_name, address_line1, address_line2, city, postal_code, country, customs].hash
     end
 
     # Builds the object from hash

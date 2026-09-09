@@ -9,7 +9,6 @@
 | **description** | **String** | Organization description | [optional] |
 | **currency** | **String** | Billing currency (ISO 4217 code) | [optional] |
 | **vat_number** | **String** | Company VAT/tax ID for invoices | [optional] |
-| **overage_enabled** | **Boolean** | Allow shipments beyond plan limit (overage charges apply) | [optional] |
 | **phone** | **String** | Billing/contact phone number | [optional] |
 | **billing_email** | **String** | Billing email for invoices | [optional] |
 | **company_name** | **String** | Legal company name | [optional] |
@@ -31,7 +30,6 @@ instance = Zippendo::UpdateOrgRequest.new(
   description: Parcel and freight logistics across the Nordics,
   currency: DKK,
   vat_number: DK12345678,
-  overage_enabled: false,
   phone: +45 50 47 02 20,
   billing_email: billing@nordic-logistics.dk,
   company_name: Nordic Logistics ApS,
