@@ -47,6 +47,9 @@ module Zippendo
     # ID of the shipping rule to apply.
     attr_accessor :shipping_rule_id
 
+    # Service point (parcel shop) ID to apply to unsent outbound shipments.
+    attr_accessor :service_point_id
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -82,7 +85,8 @@ module Zippendo
         :'currency' => :'currency',
         :'notes' => :'notes',
         :'status' => :'status',
-        :'shipping_rule_id' => :'shippingRuleId'
+        :'shipping_rule_id' => :'shippingRuleId',
+        :'service_point_id' => :'servicePointId'
       }
     end
 
@@ -109,7 +113,8 @@ module Zippendo
         :'currency' => :'String',
         :'notes' => :'String',
         :'status' => :'String',
-        :'shipping_rule_id' => :'String'
+        :'shipping_rule_id' => :'String',
+        :'service_point_id' => :'String'
       }
     end
 
@@ -123,7 +128,8 @@ module Zippendo
         :'total_amount',
         :'currency',
         :'notes',
-        :'shipping_rule_id'
+        :'shipping_rule_id',
+        :'service_point_id'
       ])
     end
 
@@ -187,6 +193,10 @@ module Zippendo
 
       if attributes.key?(:'shipping_rule_id')
         self.shipping_rule_id = attributes[:'shipping_rule_id']
+      end
+
+      if attributes.key?(:'service_point_id')
+        self.service_point_id = attributes[:'service_point_id']
       end
     end
 
@@ -341,7 +351,8 @@ module Zippendo
           currency == o.currency &&
           notes == o.notes &&
           status == o.status &&
-          shipping_rule_id == o.shipping_rule_id
+          shipping_rule_id == o.shipping_rule_id &&
+          service_point_id == o.service_point_id
     end
 
     # @see the `==` method
@@ -353,7 +364,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [order_number, customer_name, customer_email, shipping_address, order_lines, subtotal_amount, total_amount, currency, notes, status, shipping_rule_id].hash
+      [order_number, customer_name, customer_email, shipping_address, order_lines, subtotal_amount, total_amount, currency, notes, status, shipping_rule_id, service_point_id].hash
     end
 
     # Builds the object from hash

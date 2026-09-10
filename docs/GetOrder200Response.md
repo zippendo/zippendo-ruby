@@ -10,7 +10,7 @@
 | **customer_name** | **String** | Customer full name. | [optional] |
 | **customer_email** | **String** | Customer email address. | [optional] |
 | **shipping_address** | [**CreateOrder201ResponseShippingAddress**](CreateOrder201ResponseShippingAddress.md) |  | [optional] |
-| **order_lines** | [**Array&lt;CreateOrder201ResponseOrderLinesInner&gt;**](CreateOrder201ResponseOrderLinesInner.md) | Line items in the order. |  |
+| **order_lines** | [**Array&lt;GetOrder200ResponseOrderLinesInner&gt;**](GetOrder200ResponseOrderLinesInner.md) | Sold line items with quantity already allocated to outbound shipments. |  |
 | **subtotal_amount** | **Float** | Order subtotal before shipping and tax. | [optional] |
 | **total_amount** | **Float** | Order grand total. | [optional] |
 | **currency** | **String** | ISO 4217 currency code. | [optional] |

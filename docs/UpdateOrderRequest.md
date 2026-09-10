@@ -15,6 +15,7 @@
 | **notes** | **String** | Free-form internal notes. | [optional] |
 | **status** | **String** | Order fulfilment status derived from its shipments. | [optional] |
 | **shipping_rule_id** | **String** | ID of the shipping rule to apply. | [optional] |
+| **service_point_id** | **String** | Service point (parcel shop) ID to apply to unsent outbound shipments. | [optional] |
 
 ## Example
 
@@ -32,7 +33,8 @@ instance = Zippendo::UpdateOrderRequest.new(
   currency: DKK,
   notes: Leave at front desk,
   status: processing,
-  shipping_rule_id: clz9k2f0a0002abcd5678ijkl
+  shipping_rule_id: clz9k2f0a0002abcd5678ijkl,
+  service_point_id: SP-1234
 )
 ```
 

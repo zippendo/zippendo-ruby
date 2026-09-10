@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module Zippendo
-  class CreateOrder201ResponseOrderLinesInner < ApiModelBase
+  class GetOrder200ResponseOrderLinesInner < ApiModelBase
     # Stock keeping unit identifier.
     attr_accessor :sku
 
@@ -72,6 +72,9 @@ module Zippendo
     # Vendor or brand name.
     attr_accessor :vendor
 
+    # Quantity already allocated to outbound shipments.
+    attr_accessor :packed_quantity
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -115,7 +118,8 @@ module Zippendo
         :'requires_shipping' => :'requiresShipping',
         :'taxable' => :'taxable',
         :'gift_card' => :'giftCard',
-        :'vendor' => :'vendor'
+        :'vendor' => :'vendor',
+        :'packed_quantity' => :'packedQuantity'
       }
     end
 
@@ -150,7 +154,8 @@ module Zippendo
         :'requires_shipping' => :'Boolean',
         :'taxable' => :'Boolean',
         :'gift_card' => :'Boolean',
-        :'vendor' => :'String'
+        :'vendor' => :'String',
+        :'packed_quantity' => :'Integer'
       }
     end
 
@@ -173,7 +178,7 @@ module Zippendo
         :'requires_shipping',
         :'taxable',
         :'gift_card',
-        :'vendor'
+        :'vendor',
       ])
     end
 
@@ -181,14 +186,14 @@ module Zippendo
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::CreateOrder201ResponseOrderLinesInner` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::GetOrder200ResponseOrderLinesInner` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::CreateOrder201ResponseOrderLinesInner`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::GetOrder200ResponseOrderLinesInner`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
@@ -272,6 +277,12 @@ module Zippendo
       if attributes.key?(:'vendor')
         self.vendor = attributes[:'vendor']
       end
+
+      if attributes.key?(:'packed_quantity')
+        self.packed_quantity = attributes[:'packed_quantity']
+      else
+        self.packed_quantity = nil
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -323,6 +334,18 @@ module Zippendo
         invalid_properties.push('invalid value for "country_of_origin", the character length must be greater than or equal to 2.')
       end
 
+      if @packed_quantity.nil?
+        invalid_properties.push('invalid value for "packed_quantity", packed_quantity cannot be nil.')
+      end
+
+      if @packed_quantity > 9007199254740991
+        invalid_properties.push('invalid value for "packed_quantity", must be smaller than or equal to 9007199254740991.')
+      end
+
+      if @packed_quantity < 0
+        invalid_properties.push('invalid value for "packed_quantity", must be greater than or equal to 0.')
+      end
+
       invalid_properties
     end
 
@@ -343,6 +366,9 @@ module Zippendo
       return false unless weight_unit_validator.valid?(@weight_unit)
       return false if !@country_of_origin.nil? && @country_of_origin.to_s.length > 2
       return false if !@country_of_origin.nil? && @country_of_origin.to_s.length < 2
+      return false if @packed_quantity.nil?
+      return false if @packed_quantity > 9007199254740991
+      return false if @packed_quantity < 0
       true
     end
 
@@ -442,6 +468,24 @@ module Zippendo
       @country_of_origin = country_of_origin
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] packed_quantity Value to be assigned
+    def packed_quantity=(packed_quantity)
+      if packed_quantity.nil?
+        fail ArgumentError, 'packed_quantity cannot be nil'
+      end
+
+      if packed_quantity > 9007199254740991
+        fail ArgumentError, 'invalid value for "packed_quantity", must be smaller than or equal to 9007199254740991.'
+      end
+
+      if packed_quantity < 0
+        fail ArgumentError, 'invalid value for "packed_quantity", must be greater than or equal to 0.'
+      end
+
+      @packed_quantity = packed_quantity
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -465,7 +509,8 @@ module Zippendo
           requires_shipping == o.requires_shipping &&
           taxable == o.taxable &&
           gift_card == o.gift_card &&
-          vendor == o.vendor
+          vendor == o.vendor &&
+          packed_quantity == o.packed_quantity
     end
 
     # @see the `==` method
@@ -477,7 +522,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [sku, name, quantity, unit_price, total_price, currency, weight, weight_unit, variant_id, product_id, image_url, hs_code, country_of_origin, province_of_origin, barcode, requires_shipping, taxable, gift_card, vendor].hash
+      [sku, name, quantity, unit_price, total_price, currency, weight, weight_unit, variant_id, product_id, image_url, hs_code, country_of_origin, province_of_origin, barcode, requires_shipping, taxable, gift_card, vendor, packed_quantity].hash
     end
 
     # Builds the object from hash

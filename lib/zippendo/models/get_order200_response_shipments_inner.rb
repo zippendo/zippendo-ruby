@@ -46,6 +46,9 @@ module Zippendo
     # Documents (labels, customs forms) for this shipment.
     attr_accessor :documents
 
+    # Compact parcels for the order fulfillment workspace (no QR/label payloads).
+    attr_accessor :parcels
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -81,7 +84,8 @@ module Zippendo
         :'created_at' => :'createdAt',
         :'updated_at' => :'updatedAt',
         :'shipping_rule_id' => :'shippingRuleId',
-        :'documents' => :'documents'
+        :'documents' => :'documents',
+        :'parcels' => :'parcels'
       }
     end
 
@@ -108,7 +112,8 @@ module Zippendo
         :'created_at' => :'String',
         :'updated_at' => :'String',
         :'shipping_rule_id' => :'String',
-        :'documents' => :'Array<CreateShipment201ResponseDocumentsInner>'
+        :'documents' => :'Array<CreateShipment201ResponseDocumentsInner>',
+        :'parcels' => :'Array<GetOrder200ResponseShipmentsInnerParcelsInner>'
       }
     end
 
@@ -196,6 +201,14 @@ module Zippendo
           self.documents = value
         end
       end
+
+      if attributes.key?(:'parcels')
+        if (value = attributes[:'parcels']).is_a?(Array)
+          self.parcels = value
+        end
+      else
+        self.parcels = nil
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -231,6 +244,10 @@ module Zippendo
         invalid_properties.push('invalid value for "updated_at", updated_at cannot be nil.')
       end
 
+      if @parcels.nil?
+        invalid_properties.push('invalid value for "parcels", parcels cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -249,6 +266,7 @@ module Zippendo
       return false if @carrier_settings.nil?
       return false if @created_at.nil?
       return false if @updated_at.nil?
+      return false if @parcels.nil?
       true
     end
 
@@ -322,6 +340,16 @@ module Zippendo
       @updated_at = updated_at
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] parcels Value to be assigned
+    def parcels=(parcels)
+      if parcels.nil?
+        fail ArgumentError, 'parcels cannot be nil'
+      end
+
+      @parcels = parcels
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -337,7 +365,8 @@ module Zippendo
           created_at == o.created_at &&
           updated_at == o.updated_at &&
           shipping_rule_id == o.shipping_rule_id &&
-          documents == o.documents
+          documents == o.documents &&
+          parcels == o.parcels
     end
 
     # @see the `==` method
@@ -349,7 +378,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, reference, status, type, tracking, carrier_settings, service_point_id, created_at, updated_at, shipping_rule_id, documents].hash
+      [id, reference, status, type, tracking, carrier_settings, service_point_id, created_at, updated_at, shipping_rule_id, documents, parcels].hash
     end
 
     # Builds the object from hash

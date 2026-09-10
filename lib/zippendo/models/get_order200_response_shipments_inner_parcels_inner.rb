@@ -14,63 +14,51 @@ require 'date'
 require 'time'
 
 module Zippendo
-  # Destination shipping address.
-  class CreateOrder201ResponseShippingAddress < ApiModelBase
-    # Recipient full name.
-    attr_accessor :name
+  class GetOrder200ResponseShipmentsInnerParcelsInner < ApiModelBase
+    # Parcel ID.
+    attr_accessor :id
 
-    # Attention / care-of line.
-    attr_accessor :attention
+    # Parcel weight in the given unit.
+    attr_accessor :weight
 
-    # Company name.
-    attr_accessor :company
+    # Unit of measurement for parcel weight.
+    attr_accessor :weight_unit
 
-    # Street address line 1.
-    attr_accessor :address1
+    attr_accessor :dimensions
 
-    # Street address line 2.
-    attr_accessor :address2
+    # Contents of this parcel.
+    attr_accessor :order_lines
 
-    # City name.
-    attr_accessor :city
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
 
-    # Province or region name.
-    attr_accessor :province
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
 
-    # Province or region code.
-    attr_accessor :province_code
-
-    # Postal code.
-    attr_accessor :postal_code
-
-    # Country name.
-    attr_accessor :country
-
-    # ISO 3166-1 alpha-2 country code.
-    attr_accessor :country_code
-
-    # Recipient phone number.
-    attr_accessor :phone
-
-    # Recipient email address.
-    attr_accessor :email
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'name' => :'name',
-        :'attention' => :'attention',
-        :'company' => :'company',
-        :'address1' => :'address1',
-        :'address2' => :'address2',
-        :'city' => :'city',
-        :'province' => :'province',
-        :'province_code' => :'provinceCode',
-        :'postal_code' => :'postalCode',
-        :'country' => :'country',
-        :'country_code' => :'countryCode',
-        :'phone' => :'phone',
-        :'email' => :'email'
+        :'id' => :'id',
+        :'weight' => :'weight',
+        :'weight_unit' => :'weightUnit',
+        :'dimensions' => :'dimensions',
+        :'order_lines' => :'orderLines'
       }
     end
 
@@ -87,33 +75,17 @@ module Zippendo
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'name' => :'String',
-        :'attention' => :'String',
-        :'company' => :'String',
-        :'address1' => :'String',
-        :'address2' => :'String',
-        :'city' => :'String',
-        :'province' => :'String',
-        :'province_code' => :'String',
-        :'postal_code' => :'String',
-        :'country' => :'String',
-        :'country_code' => :'String',
-        :'phone' => :'String',
-        :'email' => :'String'
+        :'id' => :'String',
+        :'weight' => :'Float',
+        :'weight_unit' => :'String',
+        :'dimensions' => :'CreateShipment201ResponseParcelsInnerDimensions',
+        :'order_lines' => :'Array<GetOrder200ResponseShipmentsInnerParcelsInnerOrderLinesInner>'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'attention',
-        :'company',
-        :'address2',
-        :'province',
-        :'province_code',
-        :'country',
-        :'phone',
-        :'email'
       ])
     end
 
@@ -121,78 +93,48 @@ module Zippendo
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::CreateOrder201ResponseShippingAddress` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::GetOrder200ResponseShipmentsInnerParcelsInner` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::CreateOrder201ResponseShippingAddress`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::GetOrder200ResponseShipmentsInnerParcelsInner`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'name')
-        self.name = attributes[:'name']
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
       else
-        self.name = nil
+        self.id = nil
       end
 
-      if attributes.key?(:'attention')
-        self.attention = attributes[:'attention']
-      end
-
-      if attributes.key?(:'company')
-        self.company = attributes[:'company']
-      end
-
-      if attributes.key?(:'address1')
-        self.address1 = attributes[:'address1']
+      if attributes.key?(:'weight')
+        self.weight = attributes[:'weight']
       else
-        self.address1 = nil
+        self.weight = nil
       end
 
-      if attributes.key?(:'address2')
-        self.address2 = attributes[:'address2']
-      end
-
-      if attributes.key?(:'city')
-        self.city = attributes[:'city']
+      if attributes.key?(:'weight_unit')
+        self.weight_unit = attributes[:'weight_unit']
       else
-        self.city = nil
+        self.weight_unit = nil
       end
 
-      if attributes.key?(:'province')
-        self.province = attributes[:'province']
-      end
-
-      if attributes.key?(:'province_code')
-        self.province_code = attributes[:'province_code']
-      end
-
-      if attributes.key?(:'postal_code')
-        self.postal_code = attributes[:'postal_code']
+      if attributes.key?(:'dimensions')
+        self.dimensions = attributes[:'dimensions']
       else
-        self.postal_code = nil
+        self.dimensions = nil
       end
 
-      if attributes.key?(:'country')
-        self.country = attributes[:'country']
-      end
-
-      if attributes.key?(:'country_code')
-        self.country_code = attributes[:'country_code']
+      if attributes.key?(:'order_lines')
+        if (value = attributes[:'order_lines']).is_a?(Array)
+          self.order_lines = value
+        end
       else
-        self.country_code = nil
-      end
-
-      if attributes.key?(:'phone')
-        self.phone = attributes[:'phone']
-      end
-
-      if attributes.key?(:'email')
-        self.email = attributes[:'email']
+        self.order_lines = nil
       end
     end
 
@@ -201,29 +143,28 @@ module Zippendo
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @name.nil?
-        invalid_properties.push('invalid value for "name", name cannot be nil.')
+      if @id.nil?
+        invalid_properties.push('invalid value for "id", id cannot be nil.')
       end
 
-      if @address1.nil?
-        invalid_properties.push('invalid value for "address1", address1 cannot be nil.')
+      if @weight.nil?
+        invalid_properties.push('invalid value for "weight", weight cannot be nil.')
       end
 
-      if @city.nil?
-        invalid_properties.push('invalid value for "city", city cannot be nil.')
+      if @weight < 0
+        invalid_properties.push('invalid value for "weight", must be greater than or equal to 0.')
       end
 
-      if @postal_code.nil?
-        invalid_properties.push('invalid value for "postal_code", postal_code cannot be nil.')
+      if @weight_unit.nil?
+        invalid_properties.push('invalid value for "weight_unit", weight_unit cannot be nil.')
       end
 
-      if @country_code.nil?
-        invalid_properties.push('invalid value for "country_code", country_code cannot be nil.')
+      if @dimensions.nil?
+        invalid_properties.push('invalid value for "dimensions", dimensions cannot be nil.')
       end
 
-      pattern = Regexp.new(/^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/)
-      if !@email.nil? && @email !~ pattern
-        invalid_properties.push("invalid value for \"email\", must conform to the pattern #{pattern}.")
+      if @order_lines.nil?
+        invalid_properties.push('invalid value for "order_lines", order_lines cannot be nil.')
       end
 
       invalid_properties
@@ -233,74 +174,69 @@ module Zippendo
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @name.nil?
-      return false if @address1.nil?
-      return false if @city.nil?
-      return false if @postal_code.nil?
-      return false if @country_code.nil?
-      return false if !@email.nil? && @email !~ Regexp.new(/^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/)
+      return false if @id.nil?
+      return false if @weight.nil?
+      return false if @weight < 0
+      return false if @weight_unit.nil?
+      weight_unit_validator = EnumAttributeValidator.new('String', ["kg", "g", "lb", "oz"])
+      return false unless weight_unit_validator.valid?(@weight_unit)
+      return false if @dimensions.nil?
+      return false if @order_lines.nil?
       true
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] name Value to be assigned
-    def name=(name)
-      if name.nil?
-        fail ArgumentError, 'name cannot be nil'
+    # @param [Object] id Value to be assigned
+    def id=(id)
+      if id.nil?
+        fail ArgumentError, 'id cannot be nil'
       end
 
-      @name = name
+      @id = id
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] address1 Value to be assigned
-    def address1=(address1)
-      if address1.nil?
-        fail ArgumentError, 'address1 cannot be nil'
+    # @param [Object] weight Value to be assigned
+    def weight=(weight)
+      if weight.nil?
+        fail ArgumentError, 'weight cannot be nil'
       end
 
-      @address1 = address1
+      if weight < 0
+        fail ArgumentError, 'invalid value for "weight", must be greater than or equal to 0.'
+      end
+
+      @weight = weight
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] weight_unit Object to be assigned
+    def weight_unit=(weight_unit)
+      validator = EnumAttributeValidator.new('String', ["kg", "g", "lb", "oz"])
+      unless validator.valid?(weight_unit)
+        fail ArgumentError, "invalid value for \"weight_unit\", must be one of #{validator.allowable_values}."
+      end
+      @weight_unit = weight_unit
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] city Value to be assigned
-    def city=(city)
-      if city.nil?
-        fail ArgumentError, 'city cannot be nil'
+    # @param [Object] dimensions Value to be assigned
+    def dimensions=(dimensions)
+      if dimensions.nil?
+        fail ArgumentError, 'dimensions cannot be nil'
       end
 
-      @city = city
+      @dimensions = dimensions
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] postal_code Value to be assigned
-    def postal_code=(postal_code)
-      if postal_code.nil?
-        fail ArgumentError, 'postal_code cannot be nil'
+    # @param [Object] order_lines Value to be assigned
+    def order_lines=(order_lines)
+      if order_lines.nil?
+        fail ArgumentError, 'order_lines cannot be nil'
       end
 
-      @postal_code = postal_code
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] country_code Value to be assigned
-    def country_code=(country_code)
-      if country_code.nil?
-        fail ArgumentError, 'country_code cannot be nil'
-      end
-
-      @country_code = country_code
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] email Value to be assigned
-    def email=(email)
-      pattern = Regexp.new(/^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/)
-      if !email.nil? && email !~ pattern
-        fail ArgumentError, "invalid value for \"email\", must conform to the pattern #{pattern}."
-      end
-
-      @email = email
+      @order_lines = order_lines
     end
 
     # Checks equality by comparing each attribute.
@@ -308,19 +244,11 @@ module Zippendo
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          name == o.name &&
-          attention == o.attention &&
-          company == o.company &&
-          address1 == o.address1 &&
-          address2 == o.address2 &&
-          city == o.city &&
-          province == o.province &&
-          province_code == o.province_code &&
-          postal_code == o.postal_code &&
-          country == o.country &&
-          country_code == o.country_code &&
-          phone == o.phone &&
-          email == o.email
+          id == o.id &&
+          weight == o.weight &&
+          weight_unit == o.weight_unit &&
+          dimensions == o.dimensions &&
+          order_lines == o.order_lines
     end
 
     # @see the `==` method
@@ -332,7 +260,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, attention, company, address1, address2, city, province, province_code, postal_code, country, country_code, phone, email].hash
+      [id, weight, weight_unit, dimensions, order_lines].hash
     end
 
     # Builds the object from hash

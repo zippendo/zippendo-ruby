@@ -32,7 +32,7 @@ module Zippendo
 
     attr_accessor :shipping_address
 
-    # Line items in the order.
+    # Sold line items with quantity already allocated to outbound shipments.
     attr_accessor :order_lines
 
     # Order subtotal before shipping and tax.
@@ -142,7 +142,7 @@ module Zippendo
         :'customer_name' => :'String',
         :'customer_email' => :'String',
         :'shipping_address' => :'CreateOrder201ResponseShippingAddress',
-        :'order_lines' => :'Array<CreateOrder201ResponseOrderLinesInner>',
+        :'order_lines' => :'Array<GetOrder200ResponseOrderLinesInner>',
         :'subtotal_amount' => :'Float',
         :'total_amount' => :'Float',
         :'currency' => :'String',
