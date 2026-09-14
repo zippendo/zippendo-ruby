@@ -23,6 +23,7 @@
 | **taxable** | **Boolean** | Whether the item is taxable. | [optional] |
 | **gift_card** | **Boolean** | Whether the item is a gift card. | [optional] |
 | **vendor** | **String** | Vendor or brand name. | [optional] |
+| **id** | **String** | Order line ID. Present once the line is a row. Absent for jsonb-only lines during the dual-write window — do not synthesise one, or an edit would re-point packed lines. | [optional] |
 | **packed_quantity** | **Integer** | Quantity already allocated to outbound shipments. |  |
 
 ## Example
@@ -50,6 +51,7 @@ instance = Zippendo::GetOrder200ResponseOrderLinesInner.new(
   taxable: true,
   gift_card: false,
   vendor: Norse Knits,
+  id: clz9k2f0a0004abcd3456qrst,
   packed_quantity: 1
 )
 ```

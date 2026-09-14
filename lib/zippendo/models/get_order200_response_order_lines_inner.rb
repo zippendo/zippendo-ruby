@@ -72,6 +72,9 @@ module Zippendo
     # Vendor or brand name.
     attr_accessor :vendor
 
+    # Order line ID. Present once the line is a row. Absent for jsonb-only lines during the dual-write window — do not synthesise one, or an edit would re-point packed lines.
+    attr_accessor :id
+
     # Quantity already allocated to outbound shipments.
     attr_accessor :packed_quantity
 
@@ -119,6 +122,7 @@ module Zippendo
         :'taxable' => :'taxable',
         :'gift_card' => :'giftCard',
         :'vendor' => :'vendor',
+        :'id' => :'id',
         :'packed_quantity' => :'packedQuantity'
       }
     end
@@ -155,6 +159,7 @@ module Zippendo
         :'taxable' => :'Boolean',
         :'gift_card' => :'Boolean',
         :'vendor' => :'String',
+        :'id' => :'String',
         :'packed_quantity' => :'Integer'
       }
     end
@@ -276,6 +281,10 @@ module Zippendo
 
       if attributes.key?(:'vendor')
         self.vendor = attributes[:'vendor']
+      end
+
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
       end
 
       if attributes.key?(:'packed_quantity')
@@ -510,6 +519,7 @@ module Zippendo
           taxable == o.taxable &&
           gift_card == o.gift_card &&
           vendor == o.vendor &&
+          id == o.id &&
           packed_quantity == o.packed_quantity
     end
 
@@ -522,7 +532,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [sku, name, quantity, unit_price, total_price, currency, weight, weight_unit, variant_id, product_id, image_url, hs_code, country_of_origin, province_of_origin, barcode, requires_shipping, taxable, gift_card, vendor, packed_quantity].hash
+      [sku, name, quantity, unit_price, total_price, currency, weight, weight_unit, variant_id, product_id, image_url, hs_code, country_of_origin, province_of_origin, barcode, requires_shipping, taxable, gift_card, vendor, id, packed_quantity].hash
     end
 
     # Builds the object from hash

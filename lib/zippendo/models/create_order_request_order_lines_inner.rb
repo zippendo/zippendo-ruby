@@ -72,6 +72,9 @@ module Zippendo
     # Vendor or brand name.
     attr_accessor :vendor
 
+    # ID of the existing order line this entry edits. Omit to add a new line.
+    attr_accessor :id
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -115,7 +118,8 @@ module Zippendo
         :'requires_shipping' => :'requiresShipping',
         :'taxable' => :'taxable',
         :'gift_card' => :'giftCard',
-        :'vendor' => :'vendor'
+        :'vendor' => :'vendor',
+        :'id' => :'id'
       }
     end
 
@@ -150,7 +154,8 @@ module Zippendo
         :'requires_shipping' => :'Boolean',
         :'taxable' => :'Boolean',
         :'gift_card' => :'Boolean',
-        :'vendor' => :'String'
+        :'vendor' => :'String',
+        :'id' => :'String'
       }
     end
 
@@ -173,7 +178,7 @@ module Zippendo
         :'requires_shipping',
         :'taxable',
         :'gift_card',
-        :'vendor'
+        :'vendor',
       ])
     end
 
@@ -271,6 +276,10 @@ module Zippendo
 
       if attributes.key?(:'vendor')
         self.vendor = attributes[:'vendor']
+      end
+
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
       end
     end
 
@@ -474,7 +483,8 @@ module Zippendo
           requires_shipping == o.requires_shipping &&
           taxable == o.taxable &&
           gift_card == o.gift_card &&
-          vendor == o.vendor
+          vendor == o.vendor &&
+          id == o.id
     end
 
     # @see the `==` method
@@ -486,7 +496,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [sku, name, quantity, unit_price, total_price, currency, weight, weight_unit, variant_id, product_id, image_url, hs_code, country_of_origin, province_of_origin, barcode, requires_shipping, taxable, gift_card, vendor].hash
+      [sku, name, quantity, unit_price, total_price, currency, weight, weight_unit, variant_id, product_id, image_url, hs_code, country_of_origin, province_of_origin, barcode, requires_shipping, taxable, gift_card, vendor, id].hash
     end
 
     # Builds the object from hash

@@ -23,6 +23,7 @@
 | **taxable** | **Boolean** | Whether the item is taxable. | [optional] |
 | **gift_card** | **Boolean** | Whether the item is a gift card. | [optional] |
 | **vendor** | **String** | Vendor or brand name. | [optional] |
+| **id** | **String** | ID of the existing order line this entry edits. Omit to add a new line. | [optional] |
 
 ## Example
 
@@ -48,7 +49,8 @@ instance = Zippendo::CreateOrderRequestOrderLinesInner.new(
   requires_shipping: true,
   taxable: true,
   gift_card: false,
-  vendor: Norse Knits
+  vendor: Norse Knits,
+  id: clz9k2f0a0004abcd3456qrst
 )
 ```
 

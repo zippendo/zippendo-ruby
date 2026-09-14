@@ -18,6 +18,9 @@ module Zippendo
     # Unique order line identifier.
     attr_accessor :id
 
+    # ID of the order line this packed line came from. Null when the item did not originate from an order line, such as a free gift or a replacement part.
+    attr_accessor :order_line_id
+
     # Stock keeping unit of the product. Optional — not every webshop assigns SKUs.
     attr_accessor :sku
 
@@ -42,13 +45,17 @@ module Zippendo
     # ISO 3166-1 alpha-2 country of origin.
     attr_accessor :country_of_origin
 
-    # Customs tariff (HS) code.
+    # Harmonized System customs code.
+    attr_accessor :hs_code
+
+    # Deprecated misspelling of `hsCode`, kept for backwards compatibility.
     attr_accessor :tarrif_number
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'id' => :'id',
+        :'order_line_id' => :'orderLineId',
         :'sku' => :'sku',
         :'quantity' => :'quantity',
         :'description' => :'description',
@@ -57,6 +64,7 @@ module Zippendo
         :'vat_percent' => :'vatPercent',
         :'location' => :'location',
         :'country_of_origin' => :'countryOfOrigin',
+        :'hs_code' => :'hsCode',
         :'tarrif_number' => :'tarrifNumber'
       }
     end
@@ -75,6 +83,7 @@ module Zippendo
     def self.openapi_types
       {
         :'id' => :'String',
+        :'order_line_id' => :'String',
         :'sku' => :'String',
         :'quantity' => :'Integer',
         :'description' => :'String',
@@ -83,6 +92,7 @@ module Zippendo
         :'vat_percent' => :'Float',
         :'location' => :'String',
         :'country_of_origin' => :'String',
+        :'hs_code' => :'String',
         :'tarrif_number' => :'String'
       }
     end
@@ -90,12 +100,14 @@ module Zippendo
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'order_line_id',
         :'sku',
         :'description',
         :'unit_price',
         :'currency',
         :'vat_percent',
         :'location',
+        :'hs_code',
         :'tarrif_number'
       ])
     end
@@ -118,6 +130,10 @@ module Zippendo
 
       if attributes.key?(:'id')
         self.id = attributes[:'id']
+      end
+
+      if attributes.key?(:'order_line_id')
+        self.order_line_id = attributes[:'order_line_id']
       end
 
       if attributes.key?(:'sku')
@@ -152,6 +168,10 @@ module Zippendo
 
       if attributes.key?(:'country_of_origin')
         self.country_of_origin = attributes[:'country_of_origin']
+      end
+
+      if attributes.key?(:'hs_code')
+        self.hs_code = attributes[:'hs_code']
       end
 
       if attributes.key?(:'tarrif_number')
@@ -325,6 +345,7 @@ module Zippendo
       return true if self.equal?(o)
       self.class == o.class &&
           id == o.id &&
+          order_line_id == o.order_line_id &&
           sku == o.sku &&
           quantity == o.quantity &&
           description == o.description &&
@@ -333,6 +354,7 @@ module Zippendo
           vat_percent == o.vat_percent &&
           location == o.location &&
           country_of_origin == o.country_of_origin &&
+          hs_code == o.hs_code &&
           tarrif_number == o.tarrif_number
     end
 
@@ -345,7 +367,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, sku, quantity, description, unit_price, currency, vat_percent, location, country_of_origin, tarrif_number].hash
+      [id, order_line_id, sku, quantity, description, unit_price, currency, vat_percent, location, country_of_origin, hs_code, tarrif_number].hash
     end
 
     # Builds the object from hash
