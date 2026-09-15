@@ -24,6 +24,9 @@ module Zippendo
     # Whether the channel is active.
     attr_accessor :enabled
 
+    # What Zippendo is used for on this channel. `orders_and_rates` (default) imports orders and serves checkout rates. `rates_only` serves checkout rates and service-point selection ONLY — orders are owned by an external system such as a WMS, nothing is imported, and no fulfilment or tracking is pushed back to the platform.
+    attr_accessor :role
+
     # Type-specific platform credentials.
     attr_accessor :credentials
 
@@ -32,12 +35,35 @@ module Zippendo
     # IDs of shipping rules linked to this channel.
     attr_accessor :shipping_rule_ids
 
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'brand_id' => :'brandId',
         :'name' => :'name',
         :'enabled' => :'enabled',
+        :'role' => :'role',
         :'credentials' => :'credentials',
         :'settings' => :'settings',
         :'shipping_rule_ids' => :'shippingRuleIds'
@@ -60,6 +86,7 @@ module Zippendo
         :'brand_id' => :'String',
         :'name' => :'String',
         :'enabled' => :'Boolean',
+        :'role' => :'String',
         :'credentials' => :'Hash<String, Object>',
         :'settings' => :'UpdateOrderChannelRequestSettings',
         :'shipping_rule_ids' => :'Array<String>'
@@ -102,6 +129,10 @@ module Zippendo
         self.enabled = attributes[:'enabled']
       end
 
+      if attributes.key?(:'role')
+        self.role = attributes[:'role']
+      end
+
       if attributes.key?(:'credentials')
         if (value = attributes[:'credentials']).is_a?(Hash)
           self.credentials = value
@@ -141,6 +172,8 @@ module Zippendo
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if !@name.nil? && @name.to_s.length > 100
       return false if !@name.nil? && @name.to_s.length < 1
+      role_validator = EnumAttributeValidator.new('String', ["orders_and_rates", "rates_only"])
+      return false unless role_validator.valid?(@role)
       true
     end
 
@@ -162,6 +195,16 @@ module Zippendo
       @name = name
     end
 
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] role Object to be assigned
+    def role=(role)
+      validator = EnumAttributeValidator.new('String', ["orders_and_rates", "rates_only"])
+      unless validator.valid?(role)
+        fail ArgumentError, "invalid value for \"role\", must be one of #{validator.allowable_values}."
+      end
+      @role = role
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -170,6 +213,7 @@ module Zippendo
           brand_id == o.brand_id &&
           name == o.name &&
           enabled == o.enabled &&
+          role == o.role &&
           credentials == o.credentials &&
           settings == o.settings &&
           shipping_rule_ids == o.shipping_rule_ids
@@ -184,7 +228,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [brand_id, name, enabled, credentials, settings, shipping_rule_ids].hash
+      [brand_id, name, enabled, role, credentials, settings, shipping_rule_ids].hash
     end
 
     # Builds the object from hash

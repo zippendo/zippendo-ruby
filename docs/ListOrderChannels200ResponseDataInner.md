@@ -8,6 +8,7 @@
 | **name** | **String** | Display name of the channel. |  |
 | **type** | **String** | Type of the order channel (sales platform). |  |
 | **enabled** | **Boolean** | Whether the channel is active. |  |
+| **role** | **String** | What Zippendo is used for on this channel. &#x60;orders_and_rates&#x60; (default) imports orders and serves checkout rates. &#x60;rates_only&#x60; serves checkout rates and service-point selection ONLY — orders are owned by an external system such as a WMS, nothing is imported, and no fulfilment or tracking is pushed back to the platform. |  |
 | **brand_id** | **String** | Brand this channel belongs to, or null for organization-wide. Orders synced from this channel inherit it, and so do the shipments and documents made from them. |  |
 | **has_credentials** | **Boolean** | Whether credentials are configured (values are never exposed). |  |
 | **settings** | [**ListOrderChannels200ResponseDataInnerSettings**](ListOrderChannels200ResponseDataInnerSettings.md) |  |  |
@@ -29,6 +30,7 @@ instance = Zippendo::ListOrderChannels200ResponseDataInner.new(
   name: Anna&#39;s Shopify Store,
   type: shopify,
   enabled: true,
+  role: orders_and_rates,
   brand_id: brnd_8f3kd92ld0,
   has_credentials: true,
   settings: null,

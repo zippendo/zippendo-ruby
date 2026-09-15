@@ -27,6 +27,9 @@ module Zippendo
     # Whether the channel is active.
     attr_accessor :enabled
 
+    # What Zippendo is used for on this channel. `orders_and_rates` (default) imports orders and serves checkout rates. `rates_only` serves checkout rates and service-point selection ONLY — orders are owned by an external system such as a WMS, nothing is imported, and no fulfilment or tracking is pushed back to the platform.
+    attr_accessor :role
+
     attr_accessor :settings
 
     class EnumAttributeValidator
@@ -58,6 +61,7 @@ module Zippendo
         :'type' => :'type',
         :'brand_id' => :'brandId',
         :'enabled' => :'enabled',
+        :'role' => :'role',
         :'settings' => :'settings'
       }
     end
@@ -79,6 +83,7 @@ module Zippendo
         :'type' => :'String',
         :'brand_id' => :'String',
         :'enabled' => :'Boolean',
+        :'role' => :'String',
         :'settings' => :'CreateOrderChannelRequestSettings'
       }
     end
@@ -128,6 +133,12 @@ module Zippendo
         self.enabled = true
       end
 
+      if attributes.key?(:'role')
+        self.role = attributes[:'role']
+      else
+        self.role = 'orders_and_rates'
+      end
+
       if attributes.key?(:'settings')
         self.settings = attributes[:'settings']
       end
@@ -167,6 +178,8 @@ module Zippendo
       return false if @type.nil?
       type_validator = EnumAttributeValidator.new('String', ["manual", "custom"])
       return false unless type_validator.valid?(@type)
+      role_validator = EnumAttributeValidator.new('String', ["orders_and_rates", "rates_only"])
+      return false unless role_validator.valid?(@role)
       true
     end
 
@@ -198,6 +211,16 @@ module Zippendo
       @type = type
     end
 
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] role Object to be assigned
+    def role=(role)
+      validator = EnumAttributeValidator.new('String', ["orders_and_rates", "rates_only"])
+      unless validator.valid?(role)
+        fail ArgumentError, "invalid value for \"role\", must be one of #{validator.allowable_values}."
+      end
+      @role = role
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -207,6 +230,7 @@ module Zippendo
           type == o.type &&
           brand_id == o.brand_id &&
           enabled == o.enabled &&
+          role == o.role &&
           settings == o.settings
     end
 
@@ -219,7 +243,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, type, brand_id, enabled, settings].hash
+      [name, type, brand_id, enabled, role, settings].hash
     end
 
     # Builds the object from hash

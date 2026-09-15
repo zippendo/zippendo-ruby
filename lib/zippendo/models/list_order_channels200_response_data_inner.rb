@@ -27,6 +27,9 @@ module Zippendo
     # Whether the channel is active.
     attr_accessor :enabled
 
+    # What Zippendo is used for on this channel. `orders_and_rates` (default) imports orders and serves checkout rates. `rates_only` serves checkout rates and service-point selection ONLY — orders are owned by an external system such as a WMS, nothing is imported, and no fulfilment or tracking is pushed back to the platform.
+    attr_accessor :role
+
     # Brand this channel belongs to, or null for organization-wide. Orders synced from this channel inherit it, and so do the shipments and documents made from them.
     attr_accessor :brand_id
 
@@ -85,6 +88,7 @@ module Zippendo
         :'name' => :'name',
         :'type' => :'type',
         :'enabled' => :'enabled',
+        :'role' => :'role',
         :'brand_id' => :'brandId',
         :'has_credentials' => :'hasCredentials',
         :'settings' => :'settings',
@@ -115,6 +119,7 @@ module Zippendo
         :'name' => :'String',
         :'type' => :'String',
         :'enabled' => :'Boolean',
+        :'role' => :'String',
         :'brand_id' => :'String',
         :'has_credentials' => :'Boolean',
         :'settings' => :'ListOrderChannels200ResponseDataInnerSettings',
@@ -175,6 +180,12 @@ module Zippendo
         self.enabled = attributes[:'enabled']
       else
         self.enabled = nil
+      end
+
+      if attributes.key?(:'role')
+        self.role = attributes[:'role']
+      else
+        self.role = nil
       end
 
       if attributes.key?(:'brand_id')
@@ -253,6 +264,10 @@ module Zippendo
         invalid_properties.push('invalid value for "enabled", enabled cannot be nil.')
       end
 
+      if @role.nil?
+        invalid_properties.push('invalid value for "role", role cannot be nil.')
+      end
+
       if @has_credentials.nil?
         invalid_properties.push('invalid value for "has_credentials", has_credentials cannot be nil.')
       end
@@ -291,6 +306,9 @@ module Zippendo
       type_validator = EnumAttributeValidator.new('String', ["shopify", "woocommerce", "manual", "custom"])
       return false unless type_validator.valid?(@type)
       return false if @enabled.nil?
+      return false if @role.nil?
+      role_validator = EnumAttributeValidator.new('String', ["orders_and_rates", "rates_only"])
+      return false unless role_validator.valid?(@role)
       return false if @has_credentials.nil?
       return false if @settings.nil?
       return false if !@last_sync_at.nil? && @last_sync_at !~ Regexp.new(/^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$/)
@@ -338,6 +356,16 @@ module Zippendo
       end
 
       @enabled = enabled
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] role Object to be assigned
+    def role=(role)
+      validator = EnumAttributeValidator.new('String', ["orders_and_rates", "rates_only"])
+      unless validator.valid?(role)
+        fail ArgumentError, "invalid value for \"role\", must be one of #{validator.allowable_values}."
+      end
+      @role = role
     end
 
     # Custom attribute writer method with validation
@@ -410,6 +438,7 @@ module Zippendo
           name == o.name &&
           type == o.type &&
           enabled == o.enabled &&
+          role == o.role &&
           brand_id == o.brand_id &&
           has_credentials == o.has_credentials &&
           settings == o.settings &&
@@ -431,7 +460,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, type, enabled, brand_id, has_credentials, settings, webhooks_enabled, last_sync_at, last_sync_error, shipping_rule_ids, org_id, created_at, updated_at].hash
+      [id, name, type, enabled, role, brand_id, has_credentials, settings, webhooks_enabled, last_sync_at, last_sync_error, shipping_rule_ids, org_id, created_at, updated_at].hash
     end
 
     # Builds the object from hash
