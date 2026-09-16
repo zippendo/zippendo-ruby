@@ -531,7 +531,7 @@ nil (empty response body)
 
 List shipments
 
-List all shipments for an organization, paginated and ordered by newest first.
+List all shipments for an organization, paginated and ordered by newest first. Accepts an advanced filter definition.
 
 ### Examples
 
@@ -553,7 +553,8 @@ opts = {
   brand_scope: 'own', # String | How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.
   status: 'draft', # String | Filter by shipment status.
   type: 'outbound', # String | Filter by direction.
-  search: 'SHIP-1042' # String | Search by shipment reference or parcel tracking number.
+  search: 'SHIP-1042', # String | Search by shipment reference or parcel tracking number.
+  filter: '{"conjunction":"and","conditions":[{"id":"c_1","field":"status","operator":"in","value":["pending","processing"]}]}' # String | Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.
 }
 
 begin
@@ -595,6 +596,7 @@ end
 | **status** | **String** | Filter by shipment status. | [optional] |
 | **type** | **String** | Filter by direction. | [optional] |
 | **search** | **String** | Search by shipment reference or parcel tracking number. | [optional] |
+| **filter** | **String** | Advanced filter as a JSON-encoded definition: a &#x60;conjunction&#x60; (&#x60;and&#x60;/&#x60;or&#x60;) over &#x60;conditions&#x60;, each &#x60;{ id, field, operator, value }&#x60; or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 &#x60;FILTER_INVALID&#x60;. | [optional] |
 
 ### Return type
 

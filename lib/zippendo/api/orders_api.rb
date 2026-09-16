@@ -232,7 +232,7 @@ module Zippendo
     end
 
     # List orders
-    # Returns a paginated list of orders for an organization, filterable by status, channel, and search term.
+    # Returns a paginated list of orders for an organization, filterable by status, channel, search term and an advanced filter definition.
     # @param org_id [String] Organization ID
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :page Page number (1-based) (default to 1)
@@ -242,6 +242,7 @@ module Zippendo
     # @option opts [String] :status Order fulfilment status derived from its shipments.
     # @option opts [String] :order_channel_id Filter by order channel ID.
     # @option opts [String] :search Search by order number or customer name/email.
+    # @option opts [String] :filter Advanced filter as a JSON-encoded definition: a &#x60;conjunction&#x60; (&#x60;and&#x60;/&#x60;or&#x60;) over &#x60;conditions&#x60;, each &#x60;{ id, field, operator, value }&#x60; or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 &#x60;FILTER_INVALID&#x60;.
     # @return [ListOrders200Response]
     def list_orders(org_id, opts = {})
       data, _status_code, _headers = list_orders_with_http_info(org_id, opts)
@@ -249,7 +250,7 @@ module Zippendo
     end
 
     # List orders
-    # Returns a paginated list of orders for an organization, filterable by status, channel, and search term.
+    # Returns a paginated list of orders for an organization, filterable by status, channel, search term and an advanced filter definition.
     # @param org_id [String] Organization ID
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :page Page number (1-based) (default to 1)
@@ -259,6 +260,7 @@ module Zippendo
     # @option opts [String] :status Order fulfilment status derived from its shipments.
     # @option opts [String] :order_channel_id Filter by order channel ID.
     # @option opts [String] :search Search by order number or customer name/email.
+    # @option opts [String] :filter Advanced filter as a JSON-encoded definition: a &#x60;conjunction&#x60; (&#x60;and&#x60;/&#x60;or&#x60;) over &#x60;conditions&#x60;, each &#x60;{ id, field, operator, value }&#x60; or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 &#x60;FILTER_INVALID&#x60;.
     # @return [Array<(ListOrders200Response, Integer, Hash)>] ListOrders200Response data, response status code and response headers
     def list_orders_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
@@ -292,6 +294,10 @@ module Zippendo
       if @api_client.config.client_side_validation && opts[:'status'] && !allowable_values.include?(opts[:'status'])
         fail ArgumentError, "invalid value for \"status\", must be one of #{allowable_values}"
       end
+      if @api_client.config.client_side_validation && !opts[:'filter'].nil? && opts[:'filter'].to_s.length > 8000
+        fail ArgumentError, 'invalid value for "opts[:"filter"]" when calling OrdersApi.list_orders, the character length must be smaller than or equal to 8000.'
+      end
+
       # resource path
       local_var_path = '/orgs/{orgId}/orders'.sub('{orgId}', CGI.escape(org_id.to_s))
 
@@ -304,6 +310,7 @@ module Zippendo
       query_params[:'status'] = opts[:'status'] if !opts[:'status'].nil?
       query_params[:'orderChannelId'] = opts[:'order_channel_id'] if !opts[:'order_channel_id'].nil?
       query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
+      query_params[:'filter'] = opts[:'filter'] if !opts[:'filter'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
