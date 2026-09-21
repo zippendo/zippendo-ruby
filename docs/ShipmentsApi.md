@@ -9,6 +9,7 @@ All URIs are relative to *https://api.zippendo.com*
 | [**create_return_shipment**](ShipmentsApi.md#create_return_shipment) | **POST** /orgs/{orgId}/shipments/{shipmentId}/create-return | Create return shipment |
 | [**create_shipment**](ShipmentsApi.md#create_shipment) | **POST** /orgs/{orgId}/shipments | Create shipment |
 | [**delete_shipment**](ShipmentsApi.md#delete_shipment) | **DELETE** /orgs/{orgId}/shipments/{shipmentId} | Delete shipment |
+| [**fetch_shipment_label**](ShipmentsApi.md#fetch_shipment_label) | **POST** /orgs/{orgId}/shipments/{shipmentId}/fetch-label | Fetch missing label |
 | [**get_shipment**](ShipmentsApi.md#get_shipment) | **GET** /orgs/{orgId}/shipments/{shipmentId} | Get shipment |
 | [**get_shipment_document_content**](ShipmentsApi.md#get_shipment_document_content) | **GET** /orgs/{orgId}/shipments/{shipmentId}/documents/{documentId}/content | Download shipment document |
 | [**list_shipments**](ShipmentsApi.md#list_shipments) | **GET** /orgs/{orgId}/shipments | List shipments |
@@ -169,7 +170,7 @@ end
 
 Create return shipment
 
-Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule.
+Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with its booking outcome: `dispatched`, or `error` with the carrier's reasons in `errors`.
 
 ### Examples
 
@@ -365,6 +366,77 @@ end
 ### Return type
 
 [**RevokeApiToken200Response**](RevokeApiToken200Response.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## fetch_shipment_label
+
+> <CreateShipment201Response> fetch_shipment_label(org_id, shipment_id)
+
+Fetch missing label
+
+Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED error). Stores the label, clears the error and returns the shipment.
+
+### Examples
+
+```ruby
+require 'time'
+require 'zippendo'
+# setup authorization
+Zippendo.configure do |config|
+  # Configure Bearer authorization (JWT): bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = Zippendo::ShipmentsApi.new
+org_id = 'org_1a2b3c4d' # String | Organization identifier.
+shipment_id = 'shp_4d9e7a2f' # String | Shipment identifier.
+
+begin
+  # Fetch missing label
+  result = api_instance.fetch_shipment_label(org_id, shipment_id)
+  p result
+rescue Zippendo::ApiError => e
+  puts "Error when calling ShipmentsApi->fetch_shipment_label: #{e}"
+end
+```
+
+#### Using the fetch_shipment_label_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<CreateShipment201Response>, Integer, Hash)> fetch_shipment_label_with_http_info(org_id, shipment_id)
+
+```ruby
+begin
+  # Fetch missing label
+  data, status_code, headers = api_instance.fetch_shipment_label_with_http_info(org_id, shipment_id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <CreateShipment201Response>
+rescue Zippendo::ApiError => e
+  puts "Error when calling ShipmentsApi->fetch_shipment_label_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** | Organization identifier. |  |
+| **shipment_id** | **String** | Shipment identifier. |  |
+
+### Return type
+
+[**CreateShipment201Response**](CreateShipment201Response.md)
 
 ### Authorization
 

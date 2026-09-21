@@ -174,7 +174,7 @@ module Zippendo
     end
 
     # Create return shipment
-    # Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule.
+    # Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with its booking outcome: `dispatched`, or `error` with the carrier's reasons in `errors`.
     # @param org_id [String] Organization identifier.
     # @param shipment_id [String] Shipment identifier.
     # @param [Hash] opts the optional parameters
@@ -185,7 +185,7 @@ module Zippendo
     end
 
     # Create return shipment
-    # Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule.
+    # Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with its booking outcome: &#x60;dispatched&#x60;, or &#x60;error&#x60; with the carrier&#39;s reasons in &#x60;errors&#x60;.
     # @param org_id [String] Organization identifier.
     # @param shipment_id [String] Shipment identifier.
     # @param [Hash] opts the optional parameters
@@ -381,6 +381,75 @@ module Zippendo
       data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: ShipmentsApi#delete_shipment\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Fetch missing label
+    # Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED error). Stores the label, clears the error and returns the shipment.
+    # @param org_id [String] Organization identifier.
+    # @param shipment_id [String] Shipment identifier.
+    # @param [Hash] opts the optional parameters
+    # @return [CreateShipment201Response]
+    def fetch_shipment_label(org_id, shipment_id, opts = {})
+      data, _status_code, _headers = fetch_shipment_label_with_http_info(org_id, shipment_id, opts)
+      data
+    end
+
+    # Fetch missing label
+    # Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED error). Stores the label, clears the error and returns the shipment.
+    # @param org_id [String] Organization identifier.
+    # @param shipment_id [String] Shipment identifier.
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreateShipment201Response, Integer, Hash)>] CreateShipment201Response data, response status code and response headers
+    def fetch_shipment_label_with_http_info(org_id, shipment_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: ShipmentsApi.fetch_shipment_label ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling ShipmentsApi.fetch_shipment_label"
+      end
+      # verify the required parameter 'shipment_id' is set
+      if @api_client.config.client_side_validation && shipment_id.nil?
+        fail ArgumentError, "Missing the required parameter 'shipment_id' when calling ShipmentsApi.fetch_shipment_label"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/shipments/{shipmentId}/fetch-label'.sub('{orgId}', CGI.escape(org_id.to_s)).sub('{shipmentId}', CGI.escape(shipment_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreateShipment201Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"ShipmentsApi.fetch_shipment_label",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: ShipmentsApi#fetch_shipment_label\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
