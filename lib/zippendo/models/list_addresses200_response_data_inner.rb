@@ -18,10 +18,13 @@ module Zippendo
     # Unique address identifier
     attr_accessor :id
 
-    # Name of the address
+    # Company or person the parcel is sent from, printed on labels
     attr_accessor :name
 
-    # Attention contact person
+    # Internal label for this address; never printed or sent to a carrier
+    attr_accessor :description
+
+    # Contact person at this address, printed as the att. line
     attr_accessor :att_contact
 
     # Address line 1
@@ -93,6 +96,7 @@ module Zippendo
       {
         :'id' => :'id',
         :'name' => :'name',
+        :'description' => :'description',
         :'att_contact' => :'attContact',
         :'address1' => :'address1',
         :'address2' => :'address2',
@@ -126,6 +130,7 @@ module Zippendo
       {
         :'id' => :'String',
         :'name' => :'String',
+        :'description' => :'String',
         :'att_contact' => :'String',
         :'address1' => :'String',
         :'address2' => :'String',
@@ -147,6 +152,8 @@ module Zippendo
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'description',
+        :'att_contact',
         :'address2',
         :'state',
         :'customs',
@@ -180,6 +187,12 @@ module Zippendo
         self.name = attributes[:'name']
       else
         self.name = nil
+      end
+
+      if attributes.key?(:'description')
+        self.description = attributes[:'description']
+      else
+        self.description = nil
       end
 
       if attributes.key?(:'att_contact')
@@ -288,10 +301,6 @@ module Zippendo
         invalid_properties.push('invalid value for "name", name cannot be nil.')
       end
 
-      if @att_contact.nil?
-        invalid_properties.push('invalid value for "att_contact", att_contact cannot be nil.')
-      end
-
       if @address1.nil?
         invalid_properties.push('invalid value for "address1", address1 cannot be nil.')
       end
@@ -346,7 +355,6 @@ module Zippendo
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @id.nil?
       return false if @name.nil?
-      return false if @att_contact.nil?
       return false if @address1.nil?
       return false if @zipcode.nil?
       return false if @city.nil?
@@ -379,16 +387,6 @@ module Zippendo
       end
 
       @name = name
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] att_contact Value to be assigned
-    def att_contact=(att_contact)
-      if att_contact.nil?
-        fail ArgumentError, 'att_contact cannot be nil'
-      end
-
-      @att_contact = att_contact
     end
 
     # Custom attribute writer method with validation
@@ -493,6 +491,7 @@ module Zippendo
       self.class == o.class &&
           id == o.id &&
           name == o.name &&
+          description == o.description &&
           att_contact == o.att_contact &&
           address1 == o.address1 &&
           address2 == o.address2 &&
@@ -519,7 +518,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, att_contact, address1, address2, zipcode, city, phone, country_code, state, email, customs, address_types, org_id, brand_id, created_at, updated_at].hash
+      [id, name, description, att_contact, address1, address2, zipcode, city, phone, country_code, state, email, customs, address_types, org_id, brand_id, created_at, updated_at].hash
     end
 
     # Builds the object from hash

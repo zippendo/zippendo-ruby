@@ -15,10 +15,13 @@ require 'time'
 
 module Zippendo
   class CreateAddressRequest < ApiModelBase
-    # Name of the address
+    # Company or person the parcel is sent from, printed on labels
     attr_accessor :name
 
-    # Attention contact person
+    # Internal label for this address; never printed or sent to a carrier
+    attr_accessor :description
+
+    # Contact person at this address, printed as the att. line
     attr_accessor :att_contact
 
     # Address line 1
@@ -80,6 +83,7 @@ module Zippendo
     def self.attribute_map
       {
         :'name' => :'name',
+        :'description' => :'description',
         :'att_contact' => :'attContact',
         :'address1' => :'address1',
         :'address2' => :'address2',
@@ -109,6 +113,7 @@ module Zippendo
     def self.openapi_types
       {
         :'name' => :'String',
+        :'description' => :'String',
         :'att_contact' => :'String',
         :'address1' => :'String',
         :'address2' => :'String',
@@ -127,6 +132,10 @@ module Zippendo
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'description',
+        :'att_contact',
+        :'address2',
+        :'state',
         :'brand_id'
       ])
     end
@@ -153,10 +162,12 @@ module Zippendo
         self.name = nil
       end
 
+      if attributes.key?(:'description')
+        self.description = attributes[:'description']
+      end
+
       if attributes.key?(:'att_contact')
         self.att_contact = attributes[:'att_contact']
-      else
-        self.att_contact = nil
       end
 
       if attributes.key?(:'address1')
@@ -233,14 +244,6 @@ module Zippendo
         invalid_properties.push('invalid value for "name", the character length must be greater than or equal to 1.')
       end
 
-      if @att_contact.nil?
-        invalid_properties.push('invalid value for "att_contact", att_contact cannot be nil.')
-      end
-
-      if @att_contact.to_s.length < 1
-        invalid_properties.push('invalid value for "att_contact", the character length must be greater than or equal to 1.')
-      end
-
       if @address1.nil?
         invalid_properties.push('invalid value for "address1", address1 cannot be nil.')
       end
@@ -311,8 +314,6 @@ module Zippendo
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @name.nil?
       return false if @name.to_s.length < 1
-      return false if @att_contact.nil?
-      return false if @att_contact.to_s.length < 1
       return false if @address1.nil?
       return false if @address1.to_s.length < 1
       return false if @zipcode.nil?
@@ -343,20 +344,6 @@ module Zippendo
       end
 
       @name = name
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] att_contact Value to be assigned
-    def att_contact=(att_contact)
-      if att_contact.nil?
-        fail ArgumentError, 'att_contact cannot be nil'
-      end
-
-      if att_contact.to_s.length < 1
-        fail ArgumentError, 'invalid value for "att_contact", the character length must be greater than or equal to 1.'
-      end
-
-      @att_contact = att_contact
     end
 
     # Custom attribute writer method with validation
@@ -464,6 +451,7 @@ module Zippendo
       return true if self.equal?(o)
       self.class == o.class &&
           name == o.name &&
+          description == o.description &&
           att_contact == o.att_contact &&
           address1 == o.address1 &&
           address2 == o.address2 &&
@@ -487,7 +475,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, att_contact, address1, address2, zipcode, city, phone, country_code, state, email, customs, address_types, brand_id].hash
+      [name, description, att_contact, address1, address2, zipcode, city, phone, country_code, state, email, customs, address_types, brand_id].hash
     end
 
     # Builds the object from hash

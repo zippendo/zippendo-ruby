@@ -5,8 +5,9 @@
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **id** | **String** | Unique address identifier |  |
-| **name** | **String** | Name of the address |  |
-| **att_contact** | **String** | Attention contact person |  |
+| **name** | **String** | Company or person the parcel is sent from, printed on labels |  |
+| **description** | **String** | Internal label for this address; never printed or sent to a carrier |  |
+| **att_contact** | **String** | Contact person at this address, printed as the att. line |  |
 | **address1** | **String** | Address line 1 |  |
 | **address2** | **String** | Address line 2 |  |
 | **zipcode** | **String** | Postal/ZIP code |  |
@@ -29,7 +30,8 @@ require 'zippendo'
 
 instance = Zippendo::ListShipments200ResponseDataInnerAddress.new(
   id: addr_01HZX9K2QF,
-  name: Hovedlager,
+  name: Zippendo ApS,
+  description: Main warehouse, Copenhagen,
   att_contact: Mette Hansen,
   address1: Vesterbrogade 1,
   address2: 2. sal,

@@ -4,15 +4,16 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **name** | **String** | Name of the address | [optional] |
-| **att_contact** | **String** | Attention contact person | [optional] |
+| **name** | **String** | Company or person the parcel is sent from, printed on labels | [optional] |
+| **description** | **String** | Internal label for this address; send null or an empty string to clear it | [optional] |
+| **att_contact** | **String** | Contact person at this address; send null or an empty string to clear it | [optional] |
 | **address1** | **String** | Address line 1 | [optional] |
-| **address2** | **String** | Address line 2 | [optional] |
+| **address2** | **String** | Address line 2; send null or an empty string to clear it | [optional] |
 | **zipcode** | **String** | Postal/ZIP code | [optional] |
 | **city** | **String** | City | [optional] |
 | **phone** | **String** | Phone number | [optional] |
 | **country_code** | **String** | ISO country code | [optional] |
-| **state** | **String** | State/Province | [optional] |
+| **state** | **String** | State/Province; send null or an empty string to clear it | [optional] |
 | **email** | **String** | Email address | [optional] |
 | **customs** | **Hash&lt;String, String&gt;** | Customs identifiers | [optional] |
 | **address_types** | **Array&lt;String&gt;** | Address types (sender, pickup, return) | [optional] |
@@ -24,7 +25,8 @@
 require 'zippendo'
 
 instance = Zippendo::UpdateAddressRequest.new(
-  name: Hovedlager,
+  name: Zippendo ApS,
+  description: Main warehouse, Copenhagen,
   att_contact: Mette Hansen,
   address1: Vesterbrogade 1,
   address2: 2. sal,
