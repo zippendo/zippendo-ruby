@@ -24,7 +24,7 @@ module Zippendo
     # Active add-ons on the subscription
     attr_accessor :add_ons
 
-    attr_accessor :zippy_messages
+    attr_accessor :zippy_credits
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -33,7 +33,7 @@ module Zippendo
         :'shipments' => :'shipments',
         :'limits' => :'limits',
         :'add_ons' => :'addOns',
-        :'zippy_messages' => :'zippyMessages'
+        :'zippy_credits' => :'zippyCredits'
       }
     end
 
@@ -54,7 +54,7 @@ module Zippendo
         :'shipments' => :'GetBillingUsage200ResponseShipments',
         :'limits' => :'GetBillingUsage200ResponseLimits',
         :'add_ons' => :'Array<GetBillingUsage200ResponseAddOnsInner>',
-        :'zippy_messages' => :'GetBillingUsage200ResponseZippyMessages'
+        :'zippy_credits' => :'GetBillingUsage200ResponseZippyCredits'
       }
     end
 
@@ -106,8 +106,8 @@ module Zippendo
         self.add_ons = nil
       end
 
-      if attributes.key?(:'zippy_messages')
-        self.zippy_messages = attributes[:'zippy_messages']
+      if attributes.key?(:'zippy_credits')
+        self.zippy_credits = attributes[:'zippy_credits']
       end
     end
 
@@ -195,7 +195,7 @@ module Zippendo
           shipments == o.shipments &&
           limits == o.limits &&
           add_ons == o.add_ons &&
-          zippy_messages == o.zippy_messages
+          zippy_credits == o.zippy_credits
     end
 
     # @see the `==` method
@@ -207,7 +207,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [current_period, shipments, limits, add_ons, zippy_messages].hash
+      [current_period, shipments, limits, add_ons, zippy_credits].hash
     end
 
     # Builds the object from hash

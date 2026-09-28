@@ -14,21 +14,29 @@ require 'date'
 require 'time'
 
 module Zippendo
-  # Zippy AI message usage this period (present when Zippy access is enabled)
-  class GetBillingUsage200ResponseZippyMessages < ApiModelBase
-    # Zippy messages used this period
+  # Zippy AI credit usage this period (present when the Zippy add-on is enabled)
+  class GetBillingUsage200ResponseZippyCredits < ApiModelBase
+    # Zippy credits used this period, included bundle and metered alike
     attr_accessor :used
 
-    # Zippy message charges so far, in øre
+    # Credits included in the add-on bundle this period
+    attr_accessor :included
+
+    # Credits beyond the bundle, metered this period
+    attr_accessor :billed
+
+    # Metered credit charges so far, in øre (whole packs)
     attr_accessor :charges
 
-    # Maximum Zippy messages per month (-1 for unlimited)
+    # Maximum Zippy credits per month (-1 for unlimited)
     attr_accessor :limit
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'used' => :'used',
+        :'included' => :'included',
+        :'billed' => :'billed',
         :'charges' => :'charges',
         :'limit' => :'limit'
       }
@@ -48,6 +56,8 @@ module Zippendo
     def self.openapi_types
       {
         :'used' => :'Float',
+        :'included' => :'Float',
+        :'billed' => :'Float',
         :'charges' => :'Float',
         :'limit' => :'Float'
       }
@@ -63,14 +73,14 @@ module Zippendo
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::GetBillingUsage200ResponseZippyMessages` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Zippendo::GetBillingUsage200ResponseZippyCredits` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::GetBillingUsage200ResponseZippyMessages`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Zippendo::GetBillingUsage200ResponseZippyCredits`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
@@ -79,6 +89,18 @@ module Zippendo
         self.used = attributes[:'used']
       else
         self.used = nil
+      end
+
+      if attributes.key?(:'included')
+        self.included = attributes[:'included']
+      else
+        self.included = nil
+      end
+
+      if attributes.key?(:'billed')
+        self.billed = attributes[:'billed']
+      else
+        self.billed = nil
       end
 
       if attributes.key?(:'charges')
@@ -103,6 +125,14 @@ module Zippendo
         invalid_properties.push('invalid value for "used", used cannot be nil.')
       end
 
+      if @included.nil?
+        invalid_properties.push('invalid value for "included", included cannot be nil.')
+      end
+
+      if @billed.nil?
+        invalid_properties.push('invalid value for "billed", billed cannot be nil.')
+      end
+
       if @charges.nil?
         invalid_properties.push('invalid value for "charges", charges cannot be nil.')
       end
@@ -119,6 +149,8 @@ module Zippendo
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @used.nil?
+      return false if @included.nil?
+      return false if @billed.nil?
       return false if @charges.nil?
       return false if @limit.nil?
       true
@@ -132,6 +164,26 @@ module Zippendo
       end
 
       @used = used
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] included Value to be assigned
+    def included=(included)
+      if included.nil?
+        fail ArgumentError, 'included cannot be nil'
+      end
+
+      @included = included
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] billed Value to be assigned
+    def billed=(billed)
+      if billed.nil?
+        fail ArgumentError, 'billed cannot be nil'
+      end
+
+      @billed = billed
     end
 
     # Custom attribute writer method with validation
@@ -160,6 +212,8 @@ module Zippendo
       return true if self.equal?(o)
       self.class == o.class &&
           used == o.used &&
+          included == o.included &&
+          billed == o.billed &&
           charges == o.charges &&
           limit == o.limit
     end
@@ -173,7 +227,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [used, charges, limit].hash
+      [used, included, billed, charges, limit].hash
     end
 
     # Builds the object from hash
