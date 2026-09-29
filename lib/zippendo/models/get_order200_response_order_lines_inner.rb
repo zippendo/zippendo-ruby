@@ -72,7 +72,7 @@ module Zippendo
     # Vendor or brand name.
     attr_accessor :vendor
 
-    # Order line ID. Present once the line is a row. Absent for jsonb-only lines during the dual-write window — do not synthesise one, or an edit would re-point packed lines.
+    # Order line ID. Send it back as `orderLines[].id` when updating the order to edit this line in place.
     attr_accessor :id
 
     # Quantity already allocated to outbound shipments.

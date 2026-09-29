@@ -23,7 +23,7 @@
 | **taxable** | **Boolean** | Whether the item is taxable. | [optional] |
 | **gift_card** | **Boolean** | Whether the item is a gift card. | [optional] |
 | **vendor** | **String** | Vendor or brand name. | [optional] |
-| **id** | **String** | Order line ID. Present once the line is a row. Absent for jsonb-only lines during the dual-write window — do not synthesise one, or an edit would re-point packed lines. | [optional] |
+| **id** | **String** | Order line ID. Send it back as &#x60;orderLines[].id&#x60; when updating the order to edit this line in place. | [optional] |
 
 ## Example
 
