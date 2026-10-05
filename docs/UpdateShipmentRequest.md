@@ -6,7 +6,7 @@
 | ---- | ---- | ----------- | ----- |
 | **reference** | **String** | Customer-facing shipment reference. | [optional] |
 | **address_id** | **String** | Sender address identifier. | [optional] |
-| **service_point_id** | **String** | Selected carrier service point identifier. | [optional] |
+| **service_point_id** | **String** | Selected service point ID. | [optional] |
 | **parties** | [**Array&lt;CreateShipmentRequestPartiesInner&gt;**](CreateShipmentRequestPartiesInner.md) | Parties involved in the shipment. Optional when orderId is provided. | [optional] |
 | **type** | **String** | Direction of the shipment relative to the organization. | [optional] |
 | **carrier_settings** | [**UpdateShipmentRequestCarrierSettings**](UpdateShipmentRequestCarrierSettings.md) |  | [optional] |

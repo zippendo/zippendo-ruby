@@ -15,7 +15,7 @@ require 'time'
 
 module Zippendo
   class ListCarrierProducts200ResponseInner < ApiModelBase
-    # Display name of the shipping product
+    # Display name of the carrier product
     attr_accessor :name
 
     # Unique carrier product identifier
@@ -24,16 +24,16 @@ module Zippendo
     # Direction of the shipment for this product
     attr_accessor :type
 
-    # Description of the shipping product
+    # Description of the carrier product
     attr_accessor :description
 
-    # Recipient countries supported by this product
+    # Receiver countries this product delivers to
     attr_accessor :available_countries
 
     # Sender countries supported by this product
     attr_accessor :available_sender_countries
 
-    # Whether delivery is to a service point/pickup location
+    # Whether this product delivers to a service point
     attr_accessor :is_service_point
 
     # Whether carrier pickup is available for this product

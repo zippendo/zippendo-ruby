@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module Zippendo
-  # Zippy AI credit usage this period (present when the Zippy add-on is enabled)
+  # Zippy credit usage this period (present when the Zippy add-on is enabled)
   class GetBillingUsage200ResponseZippyCredits < ApiModelBase
     # Zippy credits used this period, included bundle and metered alike
     attr_accessor :used

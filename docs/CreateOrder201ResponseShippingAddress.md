@@ -4,7 +4,7 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **name** | **String** | Recipient full name. |  |
+| **name** | **String** | Receiver full name. |  |
 | **attention** | **String** | Attention / care-of line. | [optional] |
 | **company** | **String** | Company name. | [optional] |
 | **address1** | **String** | Street address line 1. |  |
@@ -15,8 +15,8 @@
 | **postal_code** | **String** | Postal code. |  |
 | **country** | **String** | Country name. | [optional] |
 | **country_code** | **String** | ISO 3166-1 alpha-2 country code. |  |
-| **phone** | **String** | Recipient phone number. | [optional] |
-| **email** | **String** | Recipient email address. | [optional] |
+| **phone** | **String** | Receiver phone number. | [optional] |
+| **email** | **String** | Receiver email address. | [optional] |
 
 ## Example
 

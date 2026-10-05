@@ -19,7 +19,7 @@ module Zippendo
     # Number of unique shipments requested.
     attr_accessor :total
 
-    # How many were successfully booked.
+    # How many were sent successfully.
     attr_accessor :sent
 
     # How many the carrier or Zippendo rejected.

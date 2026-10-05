@@ -44,7 +44,7 @@ module Zippendo
     # ISO 4217 currency code.
     attr_accessor :currency
 
-    # Order fulfilment status derived from its shipments.
+    # Order fulfillment status derived from its shipments.
     attr_accessor :status
 
     # ID of the applied shipping rule.

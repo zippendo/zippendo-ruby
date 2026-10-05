@@ -16,7 +16,7 @@ require 'time'
 module Zippendo
   # Destination shipping address.
   class CreateOrderRequestShippingAddress < ApiModelBase
-    # Recipient full name.
+    # Receiver full name.
     attr_accessor :name
 
     # Attention / care-of line.
@@ -49,10 +49,10 @@ module Zippendo
     # ISO 3166-1 alpha-2 country code.
     attr_accessor :country_code
 
-    # Recipient phone number.
+    # Receiver phone number.
     attr_accessor :phone
 
-    # Recipient email address.
+    # Receiver email address.
     attr_accessor :email
 
     # Attribute mapping from ruby-style variable name to JSON key.

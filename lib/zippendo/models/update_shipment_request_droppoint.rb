@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module Zippendo
-  # Display details of the selected service point, stored alongside `servicePointId`. Used when applying a service-point shipping rule (whose parameters otherwise replace the stored droppoint).
+  # Display details of the selected service point, stored alongside `servicePointId`. Used when applying a service-point shipping rule (whose parameters otherwise replace it).
   class UpdateShipmentRequestDroppoint < ApiModelBase
     # Identifier of the selected service point.
     attr_accessor :id

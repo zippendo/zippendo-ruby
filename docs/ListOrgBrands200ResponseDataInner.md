@@ -12,8 +12,8 @@
 | **city** | **String** | City | [optional] |
 | **postal_code** | **String** | Postal code | [optional] |
 | **country** | **String** | Country (ISO 3166-1 alpha-2) | [optional] |
-| **primary_color** | **String** | Primary brand colour — document title and table headers | [optional] |
-| **secondary_color** | **String** | Secondary brand colour — subtitle, section headings, totals accent | [optional] |
+| **primary_color** | **String** | Primary brand color — document title and table headers | [optional] |
+| **secondary_color** | **String** | Secondary brand color — subtitle, section headings, totals accent | [optional] |
 | **id** | **String** | Unique brand identifier |  |
 | **org_id** | **String** | Owning organization |  |
 | **name** | **String** | Brand display name |  |

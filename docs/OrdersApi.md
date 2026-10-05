@@ -250,7 +250,7 @@ opts = {
   limit: 20, # Integer | Items per page (max 100)
   brand_id: 'brnd_8f3kd92ld0', # String | Filter by brand. Pass a brand ID, or \"none\" for records not assigned to any brand.
   brand_scope: 'own', # String | How the brand context narrows this list: \"own\" returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \"shared\" returns only unassigned organization-wide rows, \"both\" (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \"shared\" returns no rows, since those records are never visible organization-wide from within a brand context.
-  status: 'pending', # String | Order fulfilment status derived from its shipments.
+  status: 'pending', # String | Order fulfillment status derived from its shipments.
   order_channel_id: 'clz9k2f0a0001abcd1234efgh', # String | Filter by order channel ID.
   search: 'Anna', # String | Search by order number or customer name/email.
   filter: '{"conjunction":"and","conditions":[{"id":"c_1","field":"status","operator":"in","value":["pending","processing"]}]}' # String | Advanced filter as a JSON-encoded definition: a `conjunction` (`and`/`or`) over `conditions`, each `{ id, field, operator, value }` or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 `FILTER_INVALID`.
@@ -292,7 +292,7 @@ end
 | **limit** | **Integer** | Items per page (max 100) | [optional][default to 20] |
 | **brand_id** | **String** | Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand. | [optional] |
 | **brand_scope** | **String** | How the brand context narrows this list: \&quot;own\&quot; returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \&quot;shared\&quot; returns only unassigned organization-wide rows, \&quot;both\&quot; (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \&quot;shared\&quot; returns no rows, since those records are never visible organization-wide from within a brand context. | [optional] |
-| **status** | **String** | Order fulfilment status derived from its shipments. | [optional] |
+| **status** | **String** | Order fulfillment status derived from its shipments. | [optional] |
 | **order_channel_id** | **String** | Filter by order channel ID. | [optional] |
 | **search** | **String** | Search by order number or customer name/email. | [optional] |
 | **filter** | **String** | Advanced filter as a JSON-encoded definition: a &#x60;conjunction&#x60; (&#x60;and&#x60;/&#x60;or&#x60;) over &#x60;conditions&#x60;, each &#x60;{ id, field, operator, value }&#x60; or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 &#x60;FILTER_INVALID&#x60;. | [optional] |

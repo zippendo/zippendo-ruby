@@ -41,13 +41,13 @@ module Zippendo
     # Free-form internal notes.
     attr_accessor :notes
 
-    # Order fulfilment status derived from its shipments.
+    # Order fulfillment status derived from its shipments.
     attr_accessor :status
 
     # ID of the shipping rule to apply.
     attr_accessor :shipping_rule_id
 
-    # Service point (parcel shop) ID to apply to unsent outbound shipments.
+    # Service point ID to apply to unsent outbound shipments.
     attr_accessor :service_point_id
 
     class EnumAttributeValidator

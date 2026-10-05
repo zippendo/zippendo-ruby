@@ -39,10 +39,10 @@ module Zippendo
     # Country (ISO 3166-1 alpha-2)
     attr_accessor :country
 
-    # Primary brand colour — document title and table headers
+    # Primary brand color — document title and table headers
     attr_accessor :primary_color
 
-    # Secondary brand colour — subtitle, section headings, totals accent
+    # Secondary brand color — subtitle, section headings, totals accent
     attr_accessor :secondary_color
 
     # Unique brand identifier

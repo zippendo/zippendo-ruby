@@ -21,7 +21,7 @@ module Zippendo
     # Shipping rule applied to orders whose shipping-method title matches.
     attr_accessor :shipping_rule_id
 
-    # For rules whose product delivers to a service point: 'nearest' auto-selects the closest point to the recipient address; 'manual' keeps the shipment in draft for manual selection.
+    # For rules whose product delivers to a service point: 'nearest' auto-selects the closest point to the receiver's address; 'manual' keeps the shipment in draft for manual selection.
     attr_accessor :service_point_selection
 
     class EnumAttributeValidator

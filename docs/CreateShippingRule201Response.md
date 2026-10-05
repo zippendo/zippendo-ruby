@@ -14,8 +14,8 @@
 | **additional_parameters** | [**Hash&lt;String, ListShippingRules200ResponseDataInnerAdditionalParametersValue&gt;**](ListShippingRules200ResponseDataInnerAdditionalParametersValue.md) | Carrier-specific extra parameters, keyed by the carrier parameter &#x60;key&#x60; from the product&#39;s &#x60;additionalParameters[].key&#x60;. |  |
 | **address_id** | **String** | Sender address ID |  |
 | **receiving_countries** | **Array&lt;String&gt;** | List of supported country codes |  |
-| **email_notification** | **Boolean** | Send email notification to recipient | [default to false] |
-| **phone_notification** | **Boolean** | Send SMS notification to recipient | [default to false] |
+| **email_notification** | **Boolean** | Send an email notification to the receiver | [default to false] |
+| **phone_notification** | **Boolean** | Send an SMS notification to the receiver | [default to false] |
 | **min_weight** | **Float** | Minimum required weight in kg. Orders below this are excluded from the rule. |  |
 | **max_weight** | **Float** | Maximum allowed weight in kg. Orders exceeding this are excluded from the rule. |  |
 | **min_order_value** | **Float** | Minimum required order value in currency units. Orders below this are excluded from the rule. |  |
@@ -23,7 +23,7 @@
 | **conditions** | [**Array&lt;ListShippingRules200ResponseDataInnerConditionsInner&gt;**](ListShippingRules200ResponseDataInnerConditionsInner.md) | Rule conditions (weight/price/quantity) |  |
 | **generate_proforma_invoice** | **Boolean** | Generate proforma invoice for shipments | [default to false] |
 | **generate_commercial_invoice** | **Boolean** | Generate commercial invoice for international shipments | [default to false] |
-| **generate_packing_list** | **Boolean** | Generate packing slip with package and item details | [default to false] |
+| **generate_packing_list** | **Boolean** | Generate a packing slip with parcel and item details | [default to false] |
 | **auto_print_labels** | **Boolean** | Automatically print labels when shipment is sent | [default to false] |
 | **auto_print_documents** | **Boolean** | Automatically print documents when shipment is sent | [default to false] |
 | **label_printer_id** | **String** | ID of the label printer |  |

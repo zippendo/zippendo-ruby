@@ -587,7 +587,7 @@ module Zippendo
     end
 
     # Update brand
-    # Updates a brand's name, slug, identity overrides (company name, VAT, customs, address) and document colours. Null clears an override so the organization's value applies again.
+    # Updates a brand's name, slug, identity overrides (company name, VAT, customs, address) and document colors. Null clears an override so the organization's value applies again.
     # @param org_id [String] Organization ID
     # @param brand_id [String] Brand ID
     # @param update_org_brand_request [UpdateOrgBrandRequest] 
@@ -599,7 +599,7 @@ module Zippendo
     end
 
     # Update brand
-    # Updates a brand&#39;s name, slug, identity overrides (company name, VAT, customs, address) and document colours. Null clears an override so the organization&#39;s value applies again.
+    # Updates a brand&#39;s name, slug, identity overrides (company name, VAT, customs, address) and document colors. Null clears an override so the organization&#39;s value applies again.
     # @param org_id [String] Organization ID
     # @param brand_id [String] Brand ID
     # @param update_org_brand_request [UpdateOrgBrandRequest] 

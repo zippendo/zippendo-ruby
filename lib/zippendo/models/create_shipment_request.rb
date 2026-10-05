@@ -21,7 +21,7 @@ module Zippendo
     # Sender address identifier.
     attr_accessor :address_id
 
-    # Selected carrier service point identifier.
+    # Selected service point ID.
     attr_accessor :service_point_id
 
     # Parties involved in the shipment. Optional when orderId is provided.

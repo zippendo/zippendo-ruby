@@ -8,7 +8,7 @@
 | **order_number** | **String** | Human-readable order number. |  |
 | **customer_name** | **String** | Customer full name. | [optional] |
 | **customer_email** | **String** | Customer email address. | [optional] |
-| **status** | **String** | Order fulfilment status derived from its shipments. |  |
+| **status** | **String** | Order fulfillment status derived from its shipments. |  |
 | **brand_id** | **String** | Brand this record belongs to, or null when it is organization-wide |  |
 | **subtotal_amount** | **Float** | Order subtotal before shipping and tax. | [optional] |
 | **total_amount** | **Float** | Order grand total. | [optional] |

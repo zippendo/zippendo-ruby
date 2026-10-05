@@ -318,7 +318,7 @@ module Zippendo
     end
 
     # List carrier products
-    # Returns the shipping products available for a connected carrier.
+    # Returns the carrier products available for a connected carrier.
     # @param org_id [String] Organization ID
     # @param carrier_id [String] Carrier ID
     # @param [Hash] opts the optional parameters
@@ -329,7 +329,7 @@ module Zippendo
     end
 
     # List carrier products
-    # Returns the shipping products available for a connected carrier.
+    # Returns the carrier products available for a connected carrier.
     # @param org_id [String] Organization ID
     # @param carrier_id [String] Carrier ID
     # @param [Hash] opts the optional parameters

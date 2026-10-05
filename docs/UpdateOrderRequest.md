@@ -13,9 +13,9 @@
 | **total_amount** | **Float** | Order grand total. | [optional] |
 | **currency** | **String** | ISO 4217 currency code. | [optional] |
 | **notes** | **String** | Free-form internal notes. | [optional] |
-| **status** | **String** | Order fulfilment status derived from its shipments. | [optional] |
+| **status** | **String** | Order fulfillment status derived from its shipments. | [optional] |
 | **shipping_rule_id** | **String** | ID of the shipping rule to apply. | [optional] |
-| **service_point_id** | **String** | Service point (parcel shop) ID to apply to unsent outbound shipments. | [optional] |
+| **service_point_id** | **String** | Service point ID to apply to unsent outbound shipments. | [optional] |
 
 ## Example
 

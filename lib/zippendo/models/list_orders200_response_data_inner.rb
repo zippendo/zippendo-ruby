@@ -27,7 +27,7 @@ module Zippendo
     # Customer email address.
     attr_accessor :customer_email
 
-    # Order fulfilment status derived from its shipments.
+    # Order fulfillment status derived from its shipments.
     attr_accessor :status
 
     # Brand this record belongs to, or null when it is organization-wide

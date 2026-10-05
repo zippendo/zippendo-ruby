@@ -239,7 +239,7 @@ module Zippendo
     # @option opts [Integer] :limit Items per page (max 100) (default to 20)
     # @option opts [String] :brand_id Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand.
     # @option opts [String] :brand_scope How the brand context narrows this list: \&quot;own\&quot; returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \&quot;shared\&quot; returns only unassigned organization-wide rows, \&quot;both\&quot; (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \&quot;shared\&quot; returns no rows, since those records are never visible organization-wide from within a brand context.
-    # @option opts [String] :status Order fulfilment status derived from its shipments.
+    # @option opts [String] :status Order fulfillment status derived from its shipments.
     # @option opts [String] :order_channel_id Filter by order channel ID.
     # @option opts [String] :search Search by order number or customer name/email.
     # @option opts [String] :filter Advanced filter as a JSON-encoded definition: a &#x60;conjunction&#x60; (&#x60;and&#x60;/&#x60;or&#x60;) over &#x60;conditions&#x60;, each &#x60;{ id, field, operator, value }&#x60; or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 &#x60;FILTER_INVALID&#x60;.
@@ -257,7 +257,7 @@ module Zippendo
     # @option opts [Integer] :limit Items per page (max 100) (default to 20)
     # @option opts [String] :brand_id Filter by brand. Pass a brand ID, or \&quot;none\&quot; for records not assigned to any brand.
     # @option opts [String] :brand_scope How the brand context narrows this list: \&quot;own\&quot; returns only rows assigned to the current brand (requires a brand session, a brand-bound token, or the X-Zippendo-Brand header), \&quot;shared\&quot; returns only unassigned organization-wide rows, \&quot;both\&quot; (default) returns both. The X-Zippendo-Brand-Scope header supplies a default when the parameter is omitted. For strictly brand-owned records (orders, shipments), a brand-scoped request combined with \&quot;shared\&quot; returns no rows, since those records are never visible organization-wide from within a brand context.
-    # @option opts [String] :status Order fulfilment status derived from its shipments.
+    # @option opts [String] :status Order fulfillment status derived from its shipments.
     # @option opts [String] :order_channel_id Filter by order channel ID.
     # @option opts [String] :search Search by order number or customer name/email.
     # @option opts [String] :filter Advanced filter as a JSON-encoded definition: a &#x60;conjunction&#x60; (&#x60;and&#x60;/&#x60;or&#x60;) over &#x60;conditions&#x60;, each &#x60;{ id, field, operator, value }&#x60; or a nested group. Fields and operators per list are documented under Filtering lists in the API overview. An invalid filter returns 400 &#x60;FILTER_INVALID&#x60;.

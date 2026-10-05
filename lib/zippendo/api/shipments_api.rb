@@ -20,7 +20,7 @@ module Zippendo
       @api_client = api_client
     end
     # Batch send shipments
-    # Book multiple pending/error shipments with their carriers in one request. Each shipment is processed independently and reported in `results`; a failure on one shipment never aborts the others. Use it to send every shipment on an order at once.
+    # Send multiple shipments in `pending` or `error` status to their carriers in one request. Each shipment is processed independently and reported in `results`; a failure on one shipment never aborts the others. Use it to send every shipment on an order at once.
     # @param org_id [String] Organization ID
     # @param batch_send_shipments_request [BatchSendShipmentsRequest] 
     # @param [Hash] opts the optional parameters
@@ -31,7 +31,7 @@ module Zippendo
     end
 
     # Batch send shipments
-    # Book multiple pending/error shipments with their carriers in one request. Each shipment is processed independently and reported in &#x60;results&#x60;; a failure on one shipment never aborts the others. Use it to send every shipment on an order at once.
+    # Send multiple shipments in &#x60;pending&#x60; or &#x60;error&#x60; status to their carriers in one request. Each shipment is processed independently and reported in &#x60;results&#x60;; a failure on one shipment never aborts the others. Use it to send every shipment on an order at once.
     # @param org_id [String] Organization ID
     # @param batch_send_shipments_request [BatchSendShipmentsRequest] 
     # @param [Hash] opts the optional parameters
@@ -174,7 +174,7 @@ module Zippendo
     end
 
     # Create return shipment
-    # Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with its booking outcome: `dispatched`, or `error` with the carrier's reasons in `errors`.
+    # Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: `dispatched`, or `error` with the carrier's reasons in `errors`.
     # @param org_id [String] Organization identifier.
     # @param shipment_id [String] Shipment identifier.
     # @param [Hash] opts the optional parameters
@@ -185,7 +185,7 @@ module Zippendo
     end
 
     # Create return shipment
-    # Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with its booking outcome: &#x60;dispatched&#x60;, or &#x60;error&#x60; with the carrier&#39;s reasons in &#x60;errors&#x60;.
+    # Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: &#x60;dispatched&#x60;, or &#x60;error&#x60; with the carrier&#39;s reasons in &#x60;errors&#x60;.
     # @param org_id [String] Organization identifier.
     # @param shipment_id [String] Shipment identifier.
     # @param [Hash] opts the optional parameters
@@ -726,7 +726,7 @@ module Zippendo
     end
 
     # Send shipment
-    # Book a pending or error shipment with the carrier, generating labels and tracking. Returns 422 with carrier errors if booking fails.
+    # Send a shipment in `pending` or `error` status to its carrier, generating labels and tracking. Returns 422 with the carrier's errors if sending fails.
     # @param org_id [String] Organization identifier.
     # @param shipment_id [String] Shipment identifier.
     # @param [Hash] opts the optional parameters
@@ -737,7 +737,7 @@ module Zippendo
     end
 
     # Send shipment
-    # Book a pending or error shipment with the carrier, generating labels and tracking. Returns 422 with carrier errors if booking fails.
+    # Send a shipment in &#x60;pending&#x60; or &#x60;error&#x60; status to its carrier, generating labels and tracking. Returns 422 with the carrier&#39;s errors if sending fails.
     # @param org_id [String] Organization identifier.
     # @param shipment_id [String] Shipment identifier.
     # @param [Hash] opts the optional parameters

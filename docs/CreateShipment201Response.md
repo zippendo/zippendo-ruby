@@ -7,7 +7,7 @@
 | **id** | **String** | Unique shipment identifier. |  |
 | **reference** | **String** | Customer-facing shipment reference. |  |
 | **address_id** | **String** | Sender address identifier. | [optional] |
-| **service_point_id** | **String** | Selected carrier service point identifier. | [optional] |
+| **service_point_id** | **String** | Selected service point ID. | [optional] |
 | **parties** | [**Array&lt;CreateShipment201ResponsePartiesInner&gt;**](CreateShipment201ResponsePartiesInner.md) | Parties involved in the shipment (sender, receiver, etc.). |  |
 | **type** | **String** | Direction of the shipment relative to the organization. |  |
 | **carrier_settings** | [**ListShipments200ResponseDataInnerCarrierSettings**](ListShipments200ResponseDataInnerCarrierSettings.md) |  |  |

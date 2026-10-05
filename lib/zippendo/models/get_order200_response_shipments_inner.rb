@@ -31,7 +31,7 @@ module Zippendo
 
     attr_accessor :carrier_settings
 
-    # Selected carrier service point identifier.
+    # Selected service point ID.
     attr_accessor :service_point_id
 
     # Timestamp when the shipment was created.
@@ -46,7 +46,7 @@ module Zippendo
     # Documents (labels, customs forms) for this shipment.
     attr_accessor :documents
 
-    # Compact parcels for the order fulfillment workspace (no QR/label payloads).
+    # Compact parcels for the order's fulfillment view (no QR/label payloads).
     attr_accessor :parcels
 
     class EnumAttributeValidator

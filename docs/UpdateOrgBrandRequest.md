@@ -12,8 +12,8 @@
 | **city** | **String** | City | [optional] |
 | **postal_code** | **String** | Postal code | [optional] |
 | **country** | **String** | Country (ISO 3166-1 alpha-2) | [optional] |
-| **primary_color** | **String** | Primary brand colour — document title and table headers | [optional] |
-| **secondary_color** | **String** | Secondary brand colour — subtitle, section headings, totals accent | [optional] |
+| **primary_color** | **String** | Primary brand color — document title and table headers | [optional] |
+| **secondary_color** | **String** | Secondary brand color — subtitle, section headings, totals accent | [optional] |
 | **name** | **String** | Brand display name | [optional] |
 | **slug** | **String** | URL-safe identifier, unique within the org | [optional] |
 | **use_org_customs** | **Boolean** | Whether this brand ships under the organization&#39;s fiscal identity. True (the default) declares the organization&#39;s VAT number and customs identifiers and ignores the brand&#39;s own. False makes the brand&#39;s own values the sole source — nothing falls back to the organization, so an identifier the brand has not set is not declared at all. | [optional] |

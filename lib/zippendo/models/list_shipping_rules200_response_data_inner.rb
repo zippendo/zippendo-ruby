@@ -45,10 +45,10 @@ module Zippendo
     # List of supported country codes
     attr_accessor :receiving_countries
 
-    # Send email notification to recipient
+    # Send an email notification to the receiver
     attr_accessor :email_notification
 
-    # Send SMS notification to recipient
+    # Send an SMS notification to the receiver
     attr_accessor :phone_notification
 
     # Minimum required weight in kg. Orders below this are excluded from the rule.
@@ -72,7 +72,7 @@ module Zippendo
     # Generate commercial invoice for international shipments
     attr_accessor :generate_commercial_invoice
 
-    # Generate packing slip with package and item details
+    # Generate a packing slip with parcel and item details
     attr_accessor :generate_packing_list
 
     # Automatically print labels when shipment is sent
