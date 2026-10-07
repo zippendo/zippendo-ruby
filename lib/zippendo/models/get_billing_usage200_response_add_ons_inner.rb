@@ -21,10 +21,10 @@ module Zippendo
     # Number of add-on units purchased
     attr_accessor :quantity
 
-    # Price per unit per month, in øre
+    # Price per unit per month, in minor units of the billing currency
     attr_accessor :unit_price
 
-    # Total price per month, in øre
+    # Total price per month, in minor units of the billing currency
     attr_accessor :total_price
 
     class EnumAttributeValidator

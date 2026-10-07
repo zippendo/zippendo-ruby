@@ -48,6 +48,9 @@ module Zippendo
     # Guidance shown alongside the deprecated tag (e.g. what to migrate to)
     attr_accessor :deprecation_message
 
+    # Whether this integration is newly launched and still being verified in production
+    attr_accessor :beta
+
     # Whether the carrier produces the customs declaration (CN22/CN23) itself and returns it with the label.
     attr_accessor :generates_customs_documents
 
@@ -68,6 +71,7 @@ module Zippendo
         :'optional_fields' => :'optionalFields',
         :'deprecated' => :'deprecated',
         :'deprecation_message' => :'deprecationMessage',
+        :'beta' => :'beta',
         :'generates_customs_documents' => :'generatesCustomsDocuments',
         :'generates_commercial_invoice' => :'generatesCommercialInvoice'
       }
@@ -97,6 +101,7 @@ module Zippendo
         :'optional_fields' => :'Array<ListAvailableCarriers200ResponseInnerRequiredFieldsInner>',
         :'deprecated' => :'Boolean',
         :'deprecation_message' => :'String',
+        :'beta' => :'Boolean',
         :'generates_customs_documents' => :'Boolean',
         :'generates_commercial_invoice' => :'Boolean'
       }
@@ -176,6 +181,10 @@ module Zippendo
         self.deprecation_message = attributes[:'deprecation_message']
       end
 
+      if attributes.key?(:'beta')
+        self.beta = attributes[:'beta']
+      end
+
       if attributes.key?(:'generates_customs_documents')
         self.generates_customs_documents = attributes[:'generates_customs_documents']
       end
@@ -246,6 +255,7 @@ module Zippendo
           optional_fields == o.optional_fields &&
           deprecated == o.deprecated &&
           deprecation_message == o.deprecation_message &&
+          beta == o.beta &&
           generates_customs_documents == o.generates_customs_documents &&
           generates_commercial_invoice == o.generates_commercial_invoice
     end
@@ -259,7 +269,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, slug, group, description, logo, brand_color, learn_more_url, required_fields, optional_fields, deprecated, deprecation_message, generates_customs_documents, generates_commercial_invoice].hash
+      [name, slug, group, description, logo, brand_color, learn_more_url, required_fields, optional_fields, deprecated, deprecation_message, beta, generates_customs_documents, generates_commercial_invoice].hash
     end
 
     # Builds the object from hash

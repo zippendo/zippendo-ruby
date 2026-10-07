@@ -15,6 +15,7 @@
 | **optional_fields** | [**Array&lt;ListAvailableCarriers200ResponseInnerRequiredFieldsInner&gt;**](ListAvailableCarriers200ResponseInnerRequiredFieldsInner.md) | Optional configuration fields for the carrier | [optional] |
 | **deprecated** | **Boolean** | Whether this integration is deprecated (still works, but discouraged) | [optional] |
 | **deprecation_message** | **String** | Guidance shown alongside the deprecated tag (e.g. what to migrate to) | [optional] |
+| **beta** | **Boolean** | Whether this integration is newly launched and still being verified in production | [optional] |
 | **generates_customs_documents** | **Boolean** | Whether the carrier produces the customs declaration (CN22/CN23) itself and returns it with the label. | [optional] |
 | **generates_commercial_invoice** | **Boolean** | Whether the carrier produces the commercial invoice itself and returns it with the label, e.g. via electronic trade documents. | [optional] |
 
@@ -35,6 +36,7 @@ instance = Zippendo::ListAvailableCarriers200ResponseInner.new(
   optional_fields: null,
   deprecated: true,
   deprecation_message: The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration.,
+  beta: true,
   generates_customs_documents: true,
   generates_commercial_invoice: true
 )

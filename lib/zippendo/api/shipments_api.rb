@@ -386,7 +386,7 @@ module Zippendo
     end
 
     # Fetch missing label
-    # Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED error). Stores the label, clears the error and returns the shipment.
+    # Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED or CARRIER_BOOKING_UNCONFIRMED warning). Stores the label, clears the warning and returns the shipment.
     # @param org_id [String] Organization identifier.
     # @param shipment_id [String] Shipment identifier.
     # @param [Hash] opts the optional parameters
@@ -397,7 +397,7 @@ module Zippendo
     end
 
     # Fetch missing label
-    # Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED error). Stores the label, clears the error and returns the shipment.
+    # Ask the carrier again for the label of a dispatched shipment whose label could not be downloaded when it was sent (it carries a LABEL_DOWNLOAD_FAILED or CARRIER_BOOKING_UNCONFIRMED warning). Stores the label, clears the warning and returns the shipment.
     # @param org_id [String] Organization identifier.
     # @param shipment_id [String] Shipment identifier.
     # @param [Hash] opts the optional parameters

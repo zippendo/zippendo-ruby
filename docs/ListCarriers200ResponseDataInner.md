@@ -14,8 +14,9 @@
 | **updated_at** | **String** | Last update timestamp (ISO 8601) |  |
 | **logo** | **String** | Carrier logo URL | [optional] |
 | **brand_color** | **String** | Carrier brand color (hex) | [optional] |
-| **deprecated** | **Boolean** | Whether this carrier integration is deprecated (still works, but discouraged) | [optional] |
+| **deprecated** | **Boolean** | Whether this integration is deprecated (still works, but discouraged) | [optional] |
 | **deprecation_message** | **String** | Guidance shown alongside the deprecated tag (e.g. what to migrate to) | [optional] |
+| **beta** | **Boolean** | Whether this integration is newly launched and still being verified in production | [optional] |
 | **generates_customs_documents** | **Boolean** | Whether the carrier produces the customs declaration (CN22/CN23) itself and returns it with the label. | [optional] |
 | **generates_commercial_invoice** | **Boolean** | Whether the carrier produces the commercial invoice itself and returns it with the label, e.g. via electronic trade documents. | [optional] |
 
@@ -37,6 +38,7 @@ instance = Zippendo::ListCarriers200ResponseDataInner.new(
   brand_color: #005BAA,
   deprecated: true,
   deprecation_message: The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration.,
+  beta: true,
   generates_customs_documents: true,
   generates_commercial_invoice: true
 )

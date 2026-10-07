@@ -7,7 +7,7 @@
 | **used** | **Float** | Shipments created this period |  |
 | **included** | **Float** | Shipments included in the plan |  |
 | **overage** | **Float** | Shipments above the included allowance |  |
-| **overage_charges** | **Float** | Overage charges so far, in øre |  |
+| **overage_charges** | **Float** | Overage charges so far, in minor units of the billing currency |  |
 
 ## Example
 

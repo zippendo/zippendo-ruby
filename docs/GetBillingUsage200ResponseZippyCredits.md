@@ -7,7 +7,7 @@
 | **used** | **Float** | Zippy credits used this period, included bundle and metered alike |  |
 | **included** | **Float** | Credits included in the add-on bundle this period |  |
 | **billed** | **Float** | Credits beyond the bundle, metered this period |  |
-| **charges** | **Float** | Metered credit charges so far, in øre (whole packs) |  |
+| **charges** | **Float** | Metered credit charges so far, in minor units of the billing currency (whole packs) |  |
 | **limit** | **Float** | Maximum Zippy credits per month (-1 for unlimited) |  |
 
 ## Example

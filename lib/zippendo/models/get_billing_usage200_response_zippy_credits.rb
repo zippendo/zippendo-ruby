@@ -25,7 +25,7 @@ module Zippendo
     # Credits beyond the bundle, metered this period
     attr_accessor :billed
 
-    # Metered credit charges so far, in øre (whole packs)
+    # Metered credit charges so far, in minor units of the billing currency (whole packs)
     attr_accessor :charges
 
     # Maximum Zippy credits per month (-1 for unlimited)

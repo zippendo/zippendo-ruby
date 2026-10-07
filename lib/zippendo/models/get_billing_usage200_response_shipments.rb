@@ -24,7 +24,7 @@ module Zippendo
     # Shipments above the included allowance
     attr_accessor :overage
 
-    # Overage charges so far, in øre
+    # Overage charges so far, in minor units of the billing currency
     attr_accessor :overage_charges
 
     # Attribute mapping from ruby-style variable name to JSON key.

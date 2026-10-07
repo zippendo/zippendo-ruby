@@ -45,11 +45,14 @@ module Zippendo
     # Carrier brand color (hex)
     attr_accessor :brand_color
 
-    # Whether this carrier integration is deprecated (still works, but discouraged)
+    # Whether this integration is deprecated (still works, but discouraged)
     attr_accessor :deprecated
 
     # Guidance shown alongside the deprecated tag (e.g. what to migrate to)
     attr_accessor :deprecation_message
+
+    # Whether this integration is newly launched and still being verified in production
+    attr_accessor :beta
 
     # Whether the carrier produces the customs declaration (CN22/CN23) itself and returns it with the label.
     attr_accessor :generates_customs_documents
@@ -72,6 +75,7 @@ module Zippendo
         :'brand_color' => :'brandColor',
         :'deprecated' => :'deprecated',
         :'deprecation_message' => :'deprecationMessage',
+        :'beta' => :'beta',
         :'generates_customs_documents' => :'generatesCustomsDocuments',
         :'generates_commercial_invoice' => :'generatesCommercialInvoice'
       }
@@ -102,6 +106,7 @@ module Zippendo
         :'brand_color' => :'String',
         :'deprecated' => :'Boolean',
         :'deprecation_message' => :'String',
+        :'beta' => :'Boolean',
         :'generates_customs_documents' => :'Boolean',
         :'generates_commercial_invoice' => :'Boolean'
       }
@@ -194,6 +199,10 @@ module Zippendo
 
       if attributes.key?(:'deprecation_message')
         self.deprecation_message = attributes[:'deprecation_message']
+      end
+
+      if attributes.key?(:'beta')
+        self.beta = attributes[:'beta']
       end
 
       if attributes.key?(:'generates_customs_documents')
@@ -342,6 +351,7 @@ module Zippendo
           brand_color == o.brand_color &&
           deprecated == o.deprecated &&
           deprecation_message == o.deprecation_message &&
+          beta == o.beta &&
           generates_customs_documents == o.generates_customs_documents &&
           generates_commercial_invoice == o.generates_commercial_invoice
     end
@@ -355,7 +365,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, carrier_slug, config, org_id, brand_id, created_at, updated_at, logo, brand_color, deprecated, deprecation_message, generates_customs_documents, generates_commercial_invoice].hash
+      [id, name, carrier_slug, config, org_id, brand_id, created_at, updated_at, logo, brand_color, deprecated, deprecation_message, beta, generates_customs_documents, generates_commercial_invoice].hash
     end
 
     # Builds the object from hash
