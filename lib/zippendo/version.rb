@@ -11,5 +11,5 @@ Generator version: 7.24.0
 =end
 
 module Zippendo
-  VERSION = '1.3.10'
+  VERSION = '1.3.11'
 end
