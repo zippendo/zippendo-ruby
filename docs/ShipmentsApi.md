@@ -170,7 +170,7 @@ end
 
 Create return shipment
 
-Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: `dispatched`, or `error` with the carrier's reasons in `errors`.
+Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: `dispatched`, or `error` with the carrier's reasons in `errors`. Returns 409 while a return for the same shipment is already being created.
 
 ### Examples
 
@@ -690,7 +690,7 @@ end
 
 Send shipment
 
-Send a shipment in `pending` or `error` status to its carrier, generating labels and tracking. Returns 422 with the carrier's errors if sending fails.
+Send a shipment in `pending` or `error` status to its carrier, generating labels and tracking. Returns 422 with the carrier's errors if sending fails, and 409 while the same shipment is already being sent.
 
 ### Examples
 

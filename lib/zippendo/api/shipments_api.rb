@@ -174,7 +174,7 @@ module Zippendo
     end
 
     # Create return shipment
-    # Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: `dispatched`, or `error` with the carrier's reasons in `errors`.
+    # Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: `dispatched`, or `error` with the carrier's reasons in `errors`. Returns 409 while a return for the same shipment is already being created.
     # @param org_id [String] Organization identifier.
     # @param shipment_id [String] Shipment identifier.
     # @param [Hash] opts the optional parameters
@@ -185,7 +185,7 @@ module Zippendo
     end
 
     # Create return shipment
-    # Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: &#x60;dispatched&#x60;, or &#x60;error&#x60; with the carrier&#39;s reasons in &#x60;errors&#x60;.
+    # Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: &#x60;dispatched&#x60;, or &#x60;error&#x60; with the carrier&#39;s reasons in &#x60;errors&#x60;. Returns 409 while a return for the same shipment is already being created.
     # @param org_id [String] Organization identifier.
     # @param shipment_id [String] Shipment identifier.
     # @param [Hash] opts the optional parameters
@@ -726,7 +726,7 @@ module Zippendo
     end
 
     # Send shipment
-    # Send a shipment in `pending` or `error` status to its carrier, generating labels and tracking. Returns 422 with the carrier's errors if sending fails.
+    # Send a shipment in `pending` or `error` status to its carrier, generating labels and tracking. Returns 422 with the carrier's errors if sending fails, and 409 while the same shipment is already being sent.
     # @param org_id [String] Organization identifier.
     # @param shipment_id [String] Shipment identifier.
     # @param [Hash] opts the optional parameters
@@ -737,7 +737,7 @@ module Zippendo
     end
 
     # Send shipment
-    # Send a shipment in &#x60;pending&#x60; or &#x60;error&#x60; status to its carrier, generating labels and tracking. Returns 422 with the carrier&#39;s errors if sending fails.
+    # Send a shipment in &#x60;pending&#x60; or &#x60;error&#x60; status to its carrier, generating labels and tracking. Returns 422 with the carrier&#39;s errors if sending fails, and 409 while the same shipment is already being sent.
     # @param org_id [String] Organization identifier.
     # @param shipment_id [String] Shipment identifier.
     # @param [Hash] opts the optional parameters
