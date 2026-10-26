@@ -22,7 +22,7 @@
 require 'zippendo'
 
 instance = Zippendo::ListCarrierProducts200ResponseInner.new(
-  name: PostNord MyPack Home,
+  name: PostNord Home,
   product_id: PNL13,
   type: outbound,
   description: Home delivery within Denmark,
