@@ -7,6 +7,7 @@
 | **id** | **String** | Unique shipping rule identifier |  |
 | **name** | **String** | Shipping rule name |  |
 | **description** | **String** | Optional description |  |
+| **translations** | [**Hash&lt;String, ListShippingRules200ResponseDataInnerTranslationsValue&gt;**](ListShippingRules200ResponseDataInnerTranslationsValue.md) | Checkout name and description per language |  |
 | **direction** | **String** | Whether this rule is for outbound or inbound (return) shipments | [default to &#39;outbound&#39;] |
 | **carrier_id** | **String** | Carrier ID |  |
 | **product_id** | **String** | Product ID from carrier |  |
@@ -49,6 +50,7 @@ instance = Zippendo::ListShippingRules200ResponseDataInner.new(
   id: rule_01HZX9K2QF,
   name: Standard DK,
   description: Standard levering i Danmark,
+  translations: {&quot;da&quot;:{&quot;name&quot;:&quot;Levering til døren&quot;,&quot;description&quot;:&quot;Leveres inden for 1-2 hverdage&quot;},&quot;de&quot;:{&quot;name&quot;:&quot;Lieferung bis zur Haustür&quot;}},
   direction: outbound,
   carrier_id: carr_01HZX9K2QF,
   product_id: PNL13,

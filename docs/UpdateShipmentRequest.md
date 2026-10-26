@@ -12,8 +12,8 @@
 | **carrier_settings** | [**UpdateShipmentRequestCarrierSettings**](UpdateShipmentRequestCarrierSettings.md) |  | [optional] |
 | **parcels** | [**Array&lt;CreateShipmentRequestParcelsInner&gt;**](CreateShipmentRequestParcelsInner.md) | Parcels to include. Optional when orderId is provided. | [optional] |
 | **pickup_details** | [**CreateShipmentRequestPickupDetails**](CreateShipmentRequestPickupDetails.md) |  | [optional] |
-| **term_of_trade** | **String** | Incoterm governing the shipment. | [optional][default to &#39;DAP&#39;] |
-| **status** | **String** | Lifecycle status of the shipment. | [optional][default to &#39;pending&#39;] |
+| **term_of_trade** | **String** | Incoterm governing the shipment. | [optional] |
+| **status** | **String** | Lifecycle status of the shipment. | [optional] |
 | **order_id** | **String** | Order to derive parties and parcels from. | [optional] |
 | **label_printer_id** | **String** | Printer to assign for labels. | [optional] |
 | **document_printer_id** | **String** | Printer to assign for documents. | [optional] |

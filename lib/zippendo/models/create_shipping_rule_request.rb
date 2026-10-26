@@ -21,6 +21,9 @@ module Zippendo
     # Optional description
     attr_accessor :description
 
+    # Checkout name and description per language; a blank field falls back to the rule's own text
+    attr_accessor :translations
+
     # Whether this rule is for outbound or inbound (return) shipments
     attr_accessor :direction
 
@@ -120,6 +123,7 @@ module Zippendo
       {
         :'name' => :'name',
         :'description' => :'description',
+        :'translations' => :'translations',
         :'direction' => :'direction',
         :'carrier_id' => :'carrierId',
         :'product_id' => :'productId',
@@ -162,6 +166,7 @@ module Zippendo
       {
         :'name' => :'String',
         :'description' => :'String',
+        :'translations' => :'Hash<String, CreateShippingRuleRequestTranslationsValue>',
         :'direction' => :'String',
         :'carrier_id' => :'String',
         :'product_id' => :'String',
@@ -227,6 +232,12 @@ module Zippendo
 
       if attributes.key?(:'description')
         self.description = attributes[:'description']
+      end
+
+      if attributes.key?(:'translations')
+        if (value = attributes[:'translations']).is_a?(Hash)
+          self.translations = value
+        end
       end
 
       if attributes.key?(:'direction')
@@ -587,6 +598,7 @@ module Zippendo
       self.class == o.class &&
           name == o.name &&
           description == o.description &&
+          translations == o.translations &&
           direction == o.direction &&
           carrier_id == o.carrier_id &&
           product_id == o.product_id &&
@@ -622,7 +634,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, description, direction, carrier_id, product_id, services, additional_parameters, address_id, receiving_countries, email_notification, phone_notification, min_weight, max_weight, min_order_value, max_order_value, conditions, generate_proforma_invoice, generate_commercial_invoice, generate_packing_list, auto_print_labels, auto_print_documents, label_printer_id, document_printer_id, return_shipping_rule_id, auto_create_return_shipment, brand_id].hash
+      [name, description, translations, direction, carrier_id, product_id, services, additional_parameters, address_id, receiving_countries, email_notification, phone_notification, min_weight, max_weight, min_order_value, max_order_value, conditions, generate_proforma_invoice, generate_commercial_invoice, generate_packing_list, auto_print_labels, auto_print_documents, label_printer_id, document_printer_id, return_shipping_rule_id, auto_create_return_shipment, brand_id].hash
     end
 
     # Builds the object from hash

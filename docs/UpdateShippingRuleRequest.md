@@ -6,29 +6,30 @@
 | ---- | ---- | ----------- | ----- |
 | **name** | **String** | Shipping rule name | [optional] |
 | **description** | **String** | Optional description | [optional] |
-| **direction** | **String** | Whether this rule is for outbound or inbound (return) shipments | [optional][default to &#39;outbound&#39;] |
+| **translations** | [**Hash&lt;String, CreateShippingRuleRequestTranslationsValue&gt;**](CreateShippingRuleRequestTranslationsValue.md) | Checkout name and description per language; a blank field falls back to the rule&#39;s own text | [optional] |
+| **direction** | **String** | Whether this rule is for outbound or inbound (return) shipments | [optional] |
 | **carrier_id** | **String** | Carrier ID | [optional] |
 | **product_id** | **String** | Product ID from carrier | [optional] |
 | **services** | **Array&lt;String&gt;** | List of selected services | [optional] |
 | **additional_parameters** | [**Hash&lt;String, CreateShippingRuleRequestAdditionalParametersValue&gt;**](CreateShippingRuleRequestAdditionalParametersValue.md) | Carrier-specific extra parameters, keyed by the carrier parameter &#x60;key&#x60; from the product&#39;s &#x60;additionalParameters[].key&#x60;. Omit to leave the rule&#39;s parameters unchanged. | [optional] |
 | **address_id** | **String** | Sender address ID | [optional] |
 | **receiving_countries** | **Array&lt;String&gt;** | List of supported country codes | [optional] |
-| **email_notification** | **Boolean** | Send an email notification to the receiver | [optional][default to false] |
-| **phone_notification** | **Boolean** | Send an SMS notification to the receiver | [optional][default to false] |
+| **email_notification** | **Boolean** | Send an email notification to the receiver | [optional] |
+| **phone_notification** | **Boolean** | Send an SMS notification to the receiver | [optional] |
 | **min_weight** | **Float** | Minimum required weight in kg | [optional] |
 | **max_weight** | **Float** | Maximum allowed weight in kg | [optional] |
 | **min_order_value** | **Float** | Minimum required order value in currency units | [optional] |
 | **max_order_value** | **Float** | Maximum allowed order value in currency units | [optional] |
 | **conditions** | [**Array&lt;CreateShippingRuleRequestConditionsInner&gt;**](CreateShippingRuleRequestConditionsInner.md) | Rule conditions (weight/price/quantity) | [optional] |
-| **generate_proforma_invoice** | **Boolean** | Generate proforma invoice for shipments | [optional][default to false] |
-| **generate_commercial_invoice** | **Boolean** | Generate commercial invoice for international shipments | [optional][default to false] |
-| **generate_packing_list** | **Boolean** | Generate a packing slip with parcel and item details | [optional][default to false] |
-| **auto_print_labels** | **Boolean** | Automatically print labels when shipment is sent | [optional][default to false] |
-| **auto_print_documents** | **Boolean** | Automatically print documents when shipment is sent | [optional][default to false] |
+| **generate_proforma_invoice** | **Boolean** | Generate proforma invoice for shipments | [optional] |
+| **generate_commercial_invoice** | **Boolean** | Generate commercial invoice for international shipments | [optional] |
+| **generate_packing_list** | **Boolean** | Generate a packing slip with parcel and item details | [optional] |
+| **auto_print_labels** | **Boolean** | Automatically print labels when shipment is sent | [optional] |
+| **auto_print_documents** | **Boolean** | Automatically print documents when shipment is sent | [optional] |
 | **label_printer_id** | **String** | ID of the label printer | [optional] |
 | **document_printer_id** | **String** | ID of the document printer | [optional] |
 | **return_shipping_rule_id** | **String** | ID of the return shipping rule | [optional] |
-| **auto_create_return_shipment** | **Boolean** | Automatically create and send a return shipment on dispatch | [optional][default to false] |
+| **auto_create_return_shipment** | **Boolean** | Automatically create and send a return shipment on dispatch | [optional] |
 | **brand_id** | **String** | Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide | [optional] |
 
 ## Example
@@ -39,6 +40,7 @@ require 'zippendo'
 instance = Zippendo::UpdateShippingRuleRequest.new(
   name: Standard DK,
   description: Standard levering i Danmark,
+  translations: {&quot;da&quot;:{&quot;name&quot;:&quot;Levering til døren&quot;,&quot;description&quot;:&quot;Leveres inden for 1-2 hverdage&quot;},&quot;de&quot;:{&quot;name&quot;:&quot;Lieferung bis zur Haustür&quot;}},
   direction: outbound,
   carrier_id: carr_01HZX9K2QF,
   product_id: PNL13,

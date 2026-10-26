@@ -198,14 +198,10 @@ module Zippendo
 
       if attributes.key?(:'term_of_trade')
         self.term_of_trade = attributes[:'term_of_trade']
-      else
-        self.term_of_trade = 'DAP'
       end
 
       if attributes.key?(:'status')
         self.status = attributes[:'status']
-      else
-        self.status = 'pending'
       end
 
       if attributes.key?(:'order_id')

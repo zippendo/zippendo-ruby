@@ -24,6 +24,9 @@ module Zippendo
     # Optional description
     attr_accessor :description
 
+    # Checkout name and description per language
+    attr_accessor :translations
+
     # Whether this rule is for outbound or inbound (return) shipments
     attr_accessor :direction
 
@@ -133,6 +136,7 @@ module Zippendo
         :'id' => :'id',
         :'name' => :'name',
         :'description' => :'description',
+        :'translations' => :'translations',
         :'direction' => :'direction',
         :'carrier_id' => :'carrierId',
         :'product_id' => :'productId',
@@ -179,6 +183,7 @@ module Zippendo
         :'id' => :'String',
         :'name' => :'String',
         :'description' => :'String',
+        :'translations' => :'Hash<String, ListShippingRules200ResponseDataInnerTranslationsValue>',
         :'direction' => :'String',
         :'carrier_id' => :'String',
         :'product_id' => :'String',
@@ -256,6 +261,14 @@ module Zippendo
         self.description = attributes[:'description']
       else
         self.description = nil
+      end
+
+      if attributes.key?(:'translations')
+        if (value = attributes[:'translations']).is_a?(Hash)
+          self.translations = value
+        end
+      else
+        self.translations = nil
       end
 
       if attributes.key?(:'direction')
@@ -446,6 +459,10 @@ module Zippendo
         invalid_properties.push('invalid value for "name", the character length must be greater than or equal to 1.')
       end
 
+      if @translations.nil?
+        invalid_properties.push('invalid value for "translations", translations cannot be nil.')
+      end
+
       if @direction.nil?
         invalid_properties.push('invalid value for "direction", direction cannot be nil.')
       end
@@ -548,6 +565,7 @@ module Zippendo
       return false if @id.nil?
       return false if @name.nil?
       return false if @name.to_s.length < 1
+      return false if @translations.nil?
       return false if @direction.nil?
       direction_validator = EnumAttributeValidator.new('String', ["outbound", "inbound"])
       return false unless direction_validator.valid?(@direction)
@@ -598,6 +616,16 @@ module Zippendo
       end
 
       @name = name
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] translations Value to be assigned
+    def translations=(translations)
+      if translations.nil?
+        fail ArgumentError, 'translations cannot be nil'
+      end
+
+      @translations = translations
     end
 
     # Custom attribute writer method checking allowed values (enum).
@@ -838,6 +866,7 @@ module Zippendo
           id == o.id &&
           name == o.name &&
           description == o.description &&
+          translations == o.translations &&
           direction == o.direction &&
           carrier_id == o.carrier_id &&
           product_id == o.product_id &&
@@ -876,7 +905,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, description, direction, carrier_id, product_id, services, additional_parameters, address_id, receiving_countries, email_notification, phone_notification, min_weight, max_weight, min_order_value, max_order_value, conditions, generate_proforma_invoice, generate_commercial_invoice, generate_packing_list, auto_print_labels, auto_print_documents, label_printer_id, document_printer_id, return_shipping_rule_id, auto_create_return_shipment, org_id, brand_id, created_at, updated_at].hash
+      [id, name, description, translations, direction, carrier_id, product_id, services, additional_parameters, address_id, receiving_countries, email_notification, phone_notification, min_weight, max_weight, min_order_value, max_order_value, conditions, generate_proforma_invoice, generate_commercial_invoice, generate_packing_list, auto_print_labels, auto_print_documents, label_printer_id, document_printer_id, return_shipping_rule_id, auto_create_return_shipment, org_id, brand_id, created_at, updated_at].hash
     end
 
     # Builds the object from hash

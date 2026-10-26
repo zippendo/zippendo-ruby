@@ -6,6 +6,7 @@
 | ---- | ---- | ----------- | ----- |
 | **name** | **String** | Shipping rule name |  |
 | **description** | **String** | Optional description | [optional] |
+| **translations** | [**Hash&lt;String, CreateShippingRuleRequestTranslationsValue&gt;**](CreateShippingRuleRequestTranslationsValue.md) | Checkout name and description per language; a blank field falls back to the rule&#39;s own text | [optional] |
 | **direction** | **String** | Whether this rule is for outbound or inbound (return) shipments | [optional][default to &#39;outbound&#39;] |
 | **carrier_id** | **String** | Carrier ID |  |
 | **product_id** | **String** | Product ID from carrier |  |
@@ -39,6 +40,7 @@ require 'zippendo'
 instance = Zippendo::CreateShippingRuleRequest.new(
   name: Standard DK,
   description: Standard levering i Danmark,
+  translations: {&quot;da&quot;:{&quot;name&quot;:&quot;Levering til døren&quot;,&quot;description&quot;:&quot;Leveres inden for 1-2 hverdage&quot;},&quot;de&quot;:{&quot;name&quot;:&quot;Lieferung bis zur Haustür&quot;}},
   direction: outbound,
   carrier_id: carr_01HZX9K2QF,
   product_id: PNL13,

@@ -131,8 +131,6 @@ module Zippendo
 
       if attributes.key?(:'use_webhooks')
         self.use_webhooks = attributes[:'use_webhooks']
-      else
-        self.use_webhooks = true
       end
 
       if attributes.key?(:'site_url')
@@ -145,20 +143,14 @@ module Zippendo
 
       if attributes.key?(:'auto_sync')
         self.auto_sync = attributes[:'auto_sync']
-      else
-        self.auto_sync = false
       end
 
       if attributes.key?(:'sync_interval_minutes')
         self.sync_interval_minutes = attributes[:'sync_interval_minutes']
-      else
-        self.sync_interval_minutes = 15
       end
 
       if attributes.key?(:'auto_ship_on_create')
         self.auto_ship_on_create = attributes[:'auto_ship_on_create']
-      else
-        self.auto_ship_on_create = false
       end
 
       if attributes.key?(:'default_carrier_id')
@@ -181,8 +173,6 @@ module Zippendo
 
       if attributes.key?(:'sync_only_unfulfilled')
         self.sync_only_unfulfilled = attributes[:'sync_only_unfulfilled']
-      else
-        self.sync_only_unfulfilled = true
       end
 
       if attributes.key?(:'sync_orders_since')
@@ -191,8 +181,6 @@ module Zippendo
 
       if attributes.key?(:'service_point_count')
         self.service_point_count = attributes[:'service_point_count']
-      else
-        self.service_point_count = 6
       end
     end
 
