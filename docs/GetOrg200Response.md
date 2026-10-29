@@ -18,6 +18,7 @@
 | **postal_code** | **String** | Postal code | [optional] |
 | **country** | **String** | Country (ISO 3166-1 alpha-2 code) | [optional] |
 | **customs** | **Hash&lt;String, String&gt;** | Customs identifiers keyed by type | [optional] |
+| **packing_slip_scan_code** | **String** | Code printed on packing slips that a scan turns into a print: &#x60;QR&#x60;, &#x60;BARCODE&#x60;, or &#x60;NONE&#x60; for no code. |  |
 | **created_at** | **String** | Creation timestamp (ISO 8601) |  |
 | **updated_at** | **String** | Last update timestamp (ISO 8601) |  |
 | **_count** | [**GetOrg200ResponseCount**](GetOrg200ResponseCount.md) |  |  |
@@ -42,6 +43,7 @@ instance = Zippendo::GetOrg200Response.new(
   postal_code: 1058,
   country: DK,
   customs: {&quot;eori&quot;:&quot;DK12345678&quot;},
+  packing_slip_scan_code: QR,
   created_at: 2026-06-22T14:30:00.000Z,
   updated_at: 2026-06-22T14:30:00.000Z,
   _count: null

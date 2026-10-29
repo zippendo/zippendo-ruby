@@ -57,6 +57,9 @@ module Zippendo
     # Customs identifiers keyed by type
     attr_accessor :customs
 
+    # Code printed on packing slips that a scan turns into a print: `QR`, `BARCODE`, or `NONE` for no code.
+    attr_accessor :packing_slip_scan_code
+
     # Creation timestamp (ISO 8601)
     attr_accessor :created_at
 
@@ -64,6 +67,28 @@ module Zippendo
     attr_accessor :updated_at
 
     attr_accessor :_count
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -82,6 +107,7 @@ module Zippendo
         :'postal_code' => :'postalCode',
         :'country' => :'country',
         :'customs' => :'customs',
+        :'packing_slip_scan_code' => :'packingSlipScanCode',
         :'created_at' => :'createdAt',
         :'updated_at' => :'updatedAt',
         :'_count' => :'_count'
@@ -115,6 +141,7 @@ module Zippendo
         :'postal_code' => :'String',
         :'country' => :'String',
         :'customs' => :'Hash<String, String>',
+        :'packing_slip_scan_code' => :'String',
         :'created_at' => :'String',
         :'updated_at' => :'String',
         :'_count' => :'GetOrg200ResponseCount'
@@ -221,6 +248,12 @@ module Zippendo
         end
       end
 
+      if attributes.key?(:'packing_slip_scan_code')
+        self.packing_slip_scan_code = attributes[:'packing_slip_scan_code']
+      else
+        self.packing_slip_scan_code = nil
+      end
+
       if attributes.key?(:'created_at')
         self.created_at = attributes[:'created_at']
       else
@@ -261,6 +294,10 @@ module Zippendo
         invalid_properties.push('invalid value for "currency", currency cannot be nil.')
       end
 
+      if @packing_slip_scan_code.nil?
+        invalid_properties.push('invalid value for "packing_slip_scan_code", packing_slip_scan_code cannot be nil.')
+      end
+
       if @created_at.nil?
         invalid_properties.push('invalid value for "created_at", created_at cannot be nil.')
       end
@@ -284,6 +321,9 @@ module Zippendo
       return false if @name.nil?
       return false if @slug.nil?
       return false if @currency.nil?
+      return false if @packing_slip_scan_code.nil?
+      packing_slip_scan_code_validator = EnumAttributeValidator.new('String', ["NONE", "QR", "BARCODE"])
+      return false unless packing_slip_scan_code_validator.valid?(@packing_slip_scan_code)
       return false if @created_at.nil?
       return false if @updated_at.nil?
       return false if @_count.nil?
@@ -328,6 +368,16 @@ module Zippendo
       end
 
       @currency = currency
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] packing_slip_scan_code Object to be assigned
+    def packing_slip_scan_code=(packing_slip_scan_code)
+      validator = EnumAttributeValidator.new('String', ["NONE", "QR", "BARCODE"])
+      unless validator.valid?(packing_slip_scan_code)
+        fail ArgumentError, "invalid value for \"packing_slip_scan_code\", must be one of #{validator.allowable_values}."
+      end
+      @packing_slip_scan_code = packing_slip_scan_code
     end
 
     # Custom attribute writer method with validation
@@ -379,6 +429,7 @@ module Zippendo
           postal_code == o.postal_code &&
           country == o.country &&
           customs == o.customs &&
+          packing_slip_scan_code == o.packing_slip_scan_code &&
           created_at == o.created_at &&
           updated_at == o.updated_at &&
           _count == o._count
@@ -393,7 +444,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, slug, description, currency, vat_number, billing_email, company_name, address_line1, address_line2, city, postal_code, country, customs, created_at, updated_at, _count].hash
+      [id, name, slug, description, currency, vat_number, billing_email, company_name, address_line1, address_line2, city, postal_code, country, customs, packing_slip_scan_code, created_at, updated_at, _count].hash
     end
 
     # Builds the object from hash

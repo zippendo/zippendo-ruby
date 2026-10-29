@@ -84,6 +84,9 @@ module Zippendo
     # Automatically print documents when shipment is sent
     attr_accessor :auto_print_documents
 
+    # When automatic printing starts: `ON_BOOKING` prints as soon as the shipment is sent, `ON_SCAN` waits until the packing slip is scanned.
+    attr_accessor :auto_print_trigger
+
     # ID of the label printer
     attr_accessor :label_printer_id
 
@@ -166,6 +169,7 @@ module Zippendo
         :'generate_packing_list' => :'generatePackingList',
         :'auto_print_labels' => :'autoPrintLabels',
         :'auto_print_documents' => :'autoPrintDocuments',
+        :'auto_print_trigger' => :'autoPrintTrigger',
         :'label_printer_id' => :'labelPrinterId',
         :'document_printer_id' => :'documentPrinterId',
         :'return_shipping_rule_id' => :'returnShippingRuleId',
@@ -218,6 +222,7 @@ module Zippendo
         :'generate_packing_list' => :'Boolean',
         :'auto_print_labels' => :'Boolean',
         :'auto_print_documents' => :'Boolean',
+        :'auto_print_trigger' => :'String',
         :'label_printer_id' => :'String',
         :'document_printer_id' => :'String',
         :'return_shipping_rule_id' => :'String',
@@ -416,6 +421,12 @@ module Zippendo
         self.auto_print_documents = false
       end
 
+      if attributes.key?(:'auto_print_trigger')
+        self.auto_print_trigger = attributes[:'auto_print_trigger']
+      else
+        self.auto_print_trigger = nil
+      end
+
       if attributes.key?(:'label_printer_id')
         self.label_printer_id = attributes[:'label_printer_id']
       else
@@ -586,6 +597,10 @@ module Zippendo
         invalid_properties.push('invalid value for "auto_print_documents", auto_print_documents cannot be nil.')
       end
 
+      if @auto_print_trigger.nil?
+        invalid_properties.push('invalid value for "auto_print_trigger", auto_print_trigger cannot be nil.')
+      end
+
       if @auto_create_return_shipment.nil?
         invalid_properties.push('invalid value for "auto_create_return_shipment", auto_create_return_shipment cannot be nil.')
       end
@@ -642,6 +657,9 @@ module Zippendo
       return false if @generate_packing_list.nil?
       return false if @auto_print_labels.nil?
       return false if @auto_print_documents.nil?
+      return false if @auto_print_trigger.nil?
+      auto_print_trigger_validator = EnumAttributeValidator.new('String', ["ON_BOOKING", "ON_SCAN"])
+      return false unless auto_print_trigger_validator.valid?(@auto_print_trigger)
       return false if @auto_create_return_shipment.nil?
       return false if @org_id.nil?
       return false if @created_at.nil?
@@ -875,6 +893,16 @@ module Zippendo
       @auto_print_documents = auto_print_documents
     end
 
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] auto_print_trigger Object to be assigned
+    def auto_print_trigger=(auto_print_trigger)
+      validator = EnumAttributeValidator.new('String', ["ON_BOOKING", "ON_SCAN"])
+      unless validator.valid?(auto_print_trigger)
+        fail ArgumentError, "invalid value for \"auto_print_trigger\", must be one of #{validator.allowable_values}."
+      end
+      @auto_print_trigger = auto_print_trigger
+    end
+
     # Custom attribute writer method with validation
     # @param [Object] auto_create_return_shipment Value to be assigned
     def auto_create_return_shipment=(auto_create_return_shipment)
@@ -963,6 +991,7 @@ module Zippendo
           generate_packing_list == o.generate_packing_list &&
           auto_print_labels == o.auto_print_labels &&
           auto_print_documents == o.auto_print_documents &&
+          auto_print_trigger == o.auto_print_trigger &&
           label_printer_id == o.label_printer_id &&
           document_printer_id == o.document_printer_id &&
           return_shipping_rule_id == o.return_shipping_rule_id &&
@@ -987,7 +1016,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, description, translations, direction, carrier_id, product_id, services, additional_parameters, address_id, receiving_countries, email_notification, phone_notification, min_weight, max_weight, min_order_value, max_order_value, conditions, generate_proforma_invoice, generate_commercial_invoice, generate_packing_list, auto_print_labels, auto_print_documents, label_printer_id, document_printer_id, return_shipping_rule_id, auto_create_return_shipment, org_id, brand_id, created_at, updated_at, carrier, address, label_printer, document_printer, return_shipping_rule].hash
+      [id, name, description, translations, direction, carrier_id, product_id, services, additional_parameters, address_id, receiving_countries, email_notification, phone_notification, min_weight, max_weight, min_order_value, max_order_value, conditions, generate_proforma_invoice, generate_commercial_invoice, generate_packing_list, auto_print_labels, auto_print_documents, auto_print_trigger, label_printer_id, document_printer_id, return_shipping_rule_id, auto_create_return_shipment, org_id, brand_id, created_at, updated_at, carrier, address, label_printer, document_printer, return_shipping_rule].hash
     end
 
     # Builds the object from hash

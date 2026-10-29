@@ -57,6 +57,9 @@ module Zippendo
     # Organization-wide customs identifiers (EORI, IOSS, VOEC, etc.); null clears all
     attr_accessor :customs
 
+    # Code printed on packing slips that a scan turns into a print: `QR`, `BARCODE`, or `NONE` for no code.
+    attr_accessor :packing_slip_scan_code
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -95,7 +98,8 @@ module Zippendo
         :'city' => :'city',
         :'postal_code' => :'postalCode',
         :'country' => :'country',
-        :'customs' => :'customs'
+        :'customs' => :'customs',
+        :'packing_slip_scan_code' => :'packingSlipScanCode'
       }
     end
 
@@ -125,7 +129,8 @@ module Zippendo
         :'city' => :'String',
         :'postal_code' => :'String',
         :'country' => :'String',
-        :'customs' => :'Hash<String, String>'
+        :'customs' => :'Hash<String, String>',
+        :'packing_slip_scan_code' => :'String'
       }
     end
 
@@ -141,7 +146,7 @@ module Zippendo
         :'city',
         :'postal_code',
         :'country',
-        :'customs'
+        :'customs',
       ])
     end
 
@@ -218,6 +223,10 @@ module Zippendo
           self.customs = value
         end
       end
+
+      if attributes.key?(:'packing_slip_scan_code')
+        self.packing_slip_scan_code = attributes[:'packing_slip_scan_code']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -267,6 +276,8 @@ module Zippendo
       return false if !@phone.nil? && @phone.to_s.length > 32
       return false if !@phone.nil? && @phone !~ Regexp.new(/^\+?[\d\s()-]{4,31}$/)
       return false if !@billing_email.nil? && @billing_email !~ Regexp.new(/^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/)
+      packing_slip_scan_code_validator = EnumAttributeValidator.new('String', ["NONE", "QR", "BARCODE"])
+      return false unless packing_slip_scan_code_validator.valid?(@packing_slip_scan_code)
       true
     end
 
@@ -339,6 +350,16 @@ module Zippendo
       @billing_email = billing_email
     end
 
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] packing_slip_scan_code Object to be assigned
+    def packing_slip_scan_code=(packing_slip_scan_code)
+      validator = EnumAttributeValidator.new('String', ["NONE", "QR", "BARCODE"])
+      unless validator.valid?(packing_slip_scan_code)
+        fail ArgumentError, "invalid value for \"packing_slip_scan_code\", must be one of #{validator.allowable_values}."
+      end
+      @packing_slip_scan_code = packing_slip_scan_code
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -357,7 +378,8 @@ module Zippendo
           city == o.city &&
           postal_code == o.postal_code &&
           country == o.country &&
-          customs == o.customs
+          customs == o.customs &&
+          packing_slip_scan_code == o.packing_slip_scan_code
     end
 
     # @see the `==` method
@@ -369,7 +391,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, slug, description, currency, vat_number, phone, billing_email, company_name, address_line1, address_line2, city, postal_code, country, customs].hash
+      [name, slug, description, currency, vat_number, phone, billing_email, company_name, address_line1, address_line2, city, postal_code, country, customs, packing_slip_scan_code].hash
     end
 
     # Builds the object from hash

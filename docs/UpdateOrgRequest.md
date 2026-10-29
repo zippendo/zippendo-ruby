@@ -18,6 +18,7 @@
 | **postal_code** | **String** | Postal code | [optional] |
 | **country** | **String** | Country (ISO 3166-1 alpha-2 code) | [optional] |
 | **customs** | **Hash&lt;String, String&gt;** | Organization-wide customs identifiers (EORI, IOSS, VOEC, etc.); null clears all | [optional] |
+| **packing_slip_scan_code** | **String** | Code printed on packing slips that a scan turns into a print: &#x60;QR&#x60;, &#x60;BARCODE&#x60;, or &#x60;NONE&#x60; for no code. | [optional] |
 
 ## Example
 
@@ -38,7 +39,8 @@ instance = Zippendo::UpdateOrgRequest.new(
   city: København,
   postal_code: 1058,
   country: DK,
-  customs: null
+  customs: null,
+  packing_slip_scan_code: QR
 )
 ```
 

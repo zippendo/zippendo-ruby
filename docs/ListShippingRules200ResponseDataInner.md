@@ -27,6 +27,7 @@
 | **generate_packing_list** | **Boolean** | Generate a packing slip with parcel and item details | [default to false] |
 | **auto_print_labels** | **Boolean** | Automatically print labels when shipment is sent | [default to false] |
 | **auto_print_documents** | **Boolean** | Automatically print documents when shipment is sent | [default to false] |
+| **auto_print_trigger** | **String** | When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned. |  |
 | **label_printer_id** | **String** | ID of the label printer |  |
 | **document_printer_id** | **String** | ID of the document printer |  |
 | **return_shipping_rule_id** | **String** | ID of the return shipping rule |  |
@@ -70,6 +71,7 @@ instance = Zippendo::ListShippingRules200ResponseDataInner.new(
   generate_packing_list: false,
   auto_print_labels: false,
   auto_print_documents: false,
+  auto_print_trigger: ON_BOOKING,
   label_printer_id: null,
   document_printer_id: null,
   return_shipping_rule_id: null,
