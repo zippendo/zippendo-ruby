@@ -173,6 +173,75 @@ module Zippendo
       return data, status_code, headers
     end
 
+    # Cancel sent shipment
+    # Cancel a sent shipment with its carrier. The shipment becomes `cancelled` when the carrier confirms at once; a carrier that confirms later leaves it `dispatched` with the request in its activity, and its tracking shows the outcome; a carrier that withdrew only some parcels leaves it `dispatched` with each parcel's outcome in its activity. Only carriers whose `cancelsShipments` is true accept it, except products listed in `uncancellableProductIds`; others answer SHIPMENT_CANCEL_NOT_SUPPORTED, and a carrier that refuses (for example because the parcel was collected) answers CARRIER_CANCEL_REFUSED.
+    # @param org_id [String] Organization identifier.
+    # @param shipment_id [String] Shipment identifier.
+    # @param [Hash] opts the optional parameters
+    # @return [CreateShipment201Response]
+    def cancel_shipment(org_id, shipment_id, opts = {})
+      data, _status_code, _headers = cancel_shipment_with_http_info(org_id, shipment_id, opts)
+      data
+    end
+
+    # Cancel sent shipment
+    # Cancel a sent shipment with its carrier. The shipment becomes &#x60;cancelled&#x60; when the carrier confirms at once; a carrier that confirms later leaves it &#x60;dispatched&#x60; with the request in its activity, and its tracking shows the outcome; a carrier that withdrew only some parcels leaves it &#x60;dispatched&#x60; with each parcel&#39;s outcome in its activity. Only carriers whose &#x60;cancelsShipments&#x60; is true accept it, except products listed in &#x60;uncancellableProductIds&#x60;; others answer SHIPMENT_CANCEL_NOT_SUPPORTED, and a carrier that refuses (for example because the parcel was collected) answers CARRIER_CANCEL_REFUSED.
+    # @param org_id [String] Organization identifier.
+    # @param shipment_id [String] Shipment identifier.
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreateShipment201Response, Integer, Hash)>] CreateShipment201Response data, response status code and response headers
+    def cancel_shipment_with_http_info(org_id, shipment_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: ShipmentsApi.cancel_shipment ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling ShipmentsApi.cancel_shipment"
+      end
+      # verify the required parameter 'shipment_id' is set
+      if @api_client.config.client_side_validation && shipment_id.nil?
+        fail ArgumentError, "Missing the required parameter 'shipment_id' when calling ShipmentsApi.cancel_shipment"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/shipments/{shipmentId}/cancel'.sub('{orgId}', CGI.escape(org_id.to_s)).sub('{shipmentId}', CGI.escape(shipment_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreateShipment201Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"ShipmentsApi.cancel_shipment",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: ShipmentsApi#cancel_shipment\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Create return shipment
     # Create and auto-send a return shipment from a dispatched outbound shipment with swapped sender/receiver. Requires a configured return shipping rule. The return is returned with the outcome of sending it: `dispatched`, or `error` with the carrier's reasons in `errors`. Returns 409 while a return for the same shipment is already being created.
     # @param org_id [String] Organization identifier.

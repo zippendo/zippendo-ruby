@@ -6,6 +6,7 @@ All URIs are relative to *https://api.zippendo.com*
 | ------ | ------------ | ----------- |
 | [**batch_send_shipments**](ShipmentsApi.md#batch_send_shipments) | **POST** /orgs/{orgId}/shipments/batch-send | Batch send shipments |
 | [**batch_split_shipment**](ShipmentsApi.md#batch_split_shipment) | **POST** /orgs/{orgId}/shipments/{shipmentId}/batch-split-shipment | Batch split shipment |
+| [**cancel_shipment**](ShipmentsApi.md#cancel_shipment) | **POST** /orgs/{orgId}/shipments/{shipmentId}/cancel | Cancel sent shipment |
 | [**create_return_shipment**](ShipmentsApi.md#create_return_shipment) | **POST** /orgs/{orgId}/shipments/{shipmentId}/create-return | Create return shipment |
 | [**create_shipment**](ShipmentsApi.md#create_shipment) | **POST** /orgs/{orgId}/shipments | Create shipment |
 | [**delete_shipment**](ShipmentsApi.md#delete_shipment) | **DELETE** /orgs/{orgId}/shipments/{shipmentId} | Delete shipment |
@@ -161,6 +162,77 @@ end
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## cancel_shipment
+
+> <CreateShipment201Response> cancel_shipment(org_id, shipment_id)
+
+Cancel sent shipment
+
+Cancel a sent shipment with its carrier. The shipment becomes `cancelled` when the carrier confirms at once; a carrier that confirms later leaves it `dispatched` with the request in its activity, and its tracking shows the outcome; a carrier that withdrew only some parcels leaves it `dispatched` with each parcel's outcome in its activity. Only carriers whose `cancelsShipments` is true accept it, except products listed in `uncancellableProductIds`; others answer SHIPMENT_CANCEL_NOT_SUPPORTED, and a carrier that refuses (for example because the parcel was collected) answers CARRIER_CANCEL_REFUSED.
+
+### Examples
+
+```ruby
+require 'time'
+require 'zippendo'
+# setup authorization
+Zippendo.configure do |config|
+  # Configure Bearer authorization (JWT): bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = Zippendo::ShipmentsApi.new
+org_id = 'org_1a2b3c4d' # String | Organization identifier.
+shipment_id = 'shp_4d9e7a2f' # String | Shipment identifier.
+
+begin
+  # Cancel sent shipment
+  result = api_instance.cancel_shipment(org_id, shipment_id)
+  p result
+rescue Zippendo::ApiError => e
+  puts "Error when calling ShipmentsApi->cancel_shipment: #{e}"
+end
+```
+
+#### Using the cancel_shipment_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<CreateShipment201Response>, Integer, Hash)> cancel_shipment_with_http_info(org_id, shipment_id)
+
+```ruby
+begin
+  # Cancel sent shipment
+  data, status_code, headers = api_instance.cancel_shipment_with_http_info(org_id, shipment_id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <CreateShipment201Response>
+rescue Zippendo::ApiError => e
+  puts "Error when calling ShipmentsApi->cancel_shipment_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** | Organization identifier. |  |
+| **shipment_id** | **String** | Shipment identifier. |  |
+
+### Return type
+
+[**CreateShipment201Response**](CreateShipment201Response.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 

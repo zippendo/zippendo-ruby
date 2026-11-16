@@ -18,6 +18,9 @@
 | **beta** | **Boolean** | Whether this integration is newly launched and still being verified in production | [optional] |
 | **generates_customs_documents** | **Boolean** | Whether the carrier produces the customs declaration (CN22/CN23) itself and returns it with the label. | [optional] |
 | **generates_commercial_invoice** | **Boolean** | Whether the carrier produces the commercial invoice itself and returns it with the label, e.g. via electronic trade documents. | [optional] |
+| **cancels_shipments** | **Boolean** | Whether a sent shipment of this carrier can be cancelled from Zippendo. | [optional] |
+| **uncancellable_product_ids** | **Array&lt;String&gt;** | Products whose shipments this carrier cannot cancel, although it cancels its other products (for example locker deliveries). | [optional] |
+| **verifies_credentials** | **Boolean** | Whether Zippendo checks the credentials with the carrier when the carrier is connected or updated. | [optional] |
 
 ## Example
 
@@ -38,7 +41,10 @@ instance = Zippendo::ListAvailableCarriers200ResponseInner.new(
   deprecation_message: The standalone Instabox API is deprecated. Migrate to the Instabee-powered Instabox integration.,
   beta: true,
   generates_customs_documents: true,
-  generates_commercial_invoice: true
+  generates_commercial_invoice: true,
+  cancels_shipments: true,
+  uncancellable_product_ids: [&quot;LOCKER_EXPRESS&quot;],
+  verifies_credentials: true
 )
 ```
 

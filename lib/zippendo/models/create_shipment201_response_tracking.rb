@@ -24,6 +24,12 @@ module Zippendo
     # Label-free drop-off code.
     attr_accessor :label_free_code
 
+    # The day the carrier plans to collect the parcel, for carriers that choose the pickup day at booking (WebrinQ return pickups).
+    attr_accessor :expected_pickup_date
+
+    # When a cancellation was sent to a carrier that confirms it later. The shipment stays dispatched until the carrier reports it cancelled.
+    attr_accessor :cancellation_requested_at
+
     # DEPRECATED — use `qrCodeDataUri` (embeddable data URI) or `qrCodeUrl` (hosted link). Catch-all that carries whichever applies, kept populated for backwards compatibility during the migration and until it is disabled.
     attr_accessor :qr_code_link
 
@@ -39,6 +45,8 @@ module Zippendo
         :'url' => :'url',
         :'number' => :'number',
         :'label_free_code' => :'labelFreeCode',
+        :'expected_pickup_date' => :'expectedPickupDate',
+        :'cancellation_requested_at' => :'cancellationRequestedAt',
         :'qr_code_link' => :'qrCodeLink',
         :'qr_code_data_uri' => :'qrCodeDataUri',
         :'qr_code_url' => :'qrCodeUrl'
@@ -61,6 +69,8 @@ module Zippendo
         :'url' => :'String',
         :'number' => :'String',
         :'label_free_code' => :'String',
+        :'expected_pickup_date' => :'String',
+        :'cancellation_requested_at' => :'String',
         :'qr_code_link' => :'String',
         :'qr_code_data_uri' => :'String',
         :'qr_code_url' => :'String'
@@ -73,6 +83,8 @@ module Zippendo
         :'url',
         :'number',
         :'label_free_code',
+        :'expected_pickup_date',
+        :'cancellation_requested_at',
         :'qr_code_link',
         :'qr_code_data_uri',
         :'qr_code_url'
@@ -105,6 +117,14 @@ module Zippendo
 
       if attributes.key?(:'label_free_code')
         self.label_free_code = attributes[:'label_free_code']
+      end
+
+      if attributes.key?(:'expected_pickup_date')
+        self.expected_pickup_date = attributes[:'expected_pickup_date']
+      end
+
+      if attributes.key?(:'cancellation_requested_at')
+        self.cancellation_requested_at = attributes[:'cancellation_requested_at']
       end
 
       if attributes.key?(:'qr_code_link')
@@ -143,6 +163,8 @@ module Zippendo
           url == o.url &&
           number == o.number &&
           label_free_code == o.label_free_code &&
+          expected_pickup_date == o.expected_pickup_date &&
+          cancellation_requested_at == o.cancellation_requested_at &&
           qr_code_link == o.qr_code_link &&
           qr_code_data_uri == o.qr_code_data_uri &&
           qr_code_url == o.qr_code_url
@@ -157,7 +179,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [url, number, label_free_code, qr_code_link, qr_code_data_uri, qr_code_url].hash
+      [url, number, label_free_code, expected_pickup_date, cancellation_requested_at, qr_code_link, qr_code_data_uri, qr_code_url].hash
     end
 
     # Builds the object from hash

@@ -60,6 +60,15 @@ module Zippendo
     # Whether the carrier produces the commercial invoice itself and returns it with the label, e.g. via electronic trade documents.
     attr_accessor :generates_commercial_invoice
 
+    # Whether a sent shipment of this carrier can be cancelled from Zippendo.
+    attr_accessor :cancels_shipments
+
+    # Products whose shipments this carrier cannot cancel, although it cancels its other products (for example locker deliveries).
+    attr_accessor :uncancellable_product_ids
+
+    # Whether Zippendo checks the credentials with the carrier when the carrier is connected or updated.
+    attr_accessor :verifies_credentials
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -77,7 +86,10 @@ module Zippendo
         :'deprecation_message' => :'deprecationMessage',
         :'beta' => :'beta',
         :'generates_customs_documents' => :'generatesCustomsDocuments',
-        :'generates_commercial_invoice' => :'generatesCommercialInvoice'
+        :'generates_commercial_invoice' => :'generatesCommercialInvoice',
+        :'cancels_shipments' => :'cancelsShipments',
+        :'uncancellable_product_ids' => :'uncancellableProductIds',
+        :'verifies_credentials' => :'verifiesCredentials'
       }
     end
 
@@ -108,7 +120,10 @@ module Zippendo
         :'deprecation_message' => :'String',
         :'beta' => :'Boolean',
         :'generates_customs_documents' => :'Boolean',
-        :'generates_commercial_invoice' => :'Boolean'
+        :'generates_commercial_invoice' => :'Boolean',
+        :'cancels_shipments' => :'Boolean',
+        :'uncancellable_product_ids' => :'Array<String>',
+        :'verifies_credentials' => :'Boolean'
       }
     end
 
@@ -211,6 +226,20 @@ module Zippendo
 
       if attributes.key?(:'generates_commercial_invoice')
         self.generates_commercial_invoice = attributes[:'generates_commercial_invoice']
+      end
+
+      if attributes.key?(:'cancels_shipments')
+        self.cancels_shipments = attributes[:'cancels_shipments']
+      end
+
+      if attributes.key?(:'uncancellable_product_ids')
+        if (value = attributes[:'uncancellable_product_ids']).is_a?(Array)
+          self.uncancellable_product_ids = value
+        end
+      end
+
+      if attributes.key?(:'verifies_credentials')
+        self.verifies_credentials = attributes[:'verifies_credentials']
       end
     end
 
@@ -353,7 +382,10 @@ module Zippendo
           deprecation_message == o.deprecation_message &&
           beta == o.beta &&
           generates_customs_documents == o.generates_customs_documents &&
-          generates_commercial_invoice == o.generates_commercial_invoice
+          generates_commercial_invoice == o.generates_commercial_invoice &&
+          cancels_shipments == o.cancels_shipments &&
+          uncancellable_product_ids == o.uncancellable_product_ids &&
+          verifies_credentials == o.verifies_credentials
     end
 
     # @see the `==` method
@@ -365,7 +397,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, carrier_slug, config, org_id, brand_id, created_at, updated_at, logo, brand_color, deprecated, deprecation_message, beta, generates_customs_documents, generates_commercial_invoice].hash
+      [id, name, carrier_slug, config, org_id, brand_id, created_at, updated_at, logo, brand_color, deprecated, deprecation_message, beta, generates_customs_documents, generates_commercial_invoice, cancels_shipments, uncancellable_product_ids, verifies_credentials].hash
     end
 
     # Builds the object from hash

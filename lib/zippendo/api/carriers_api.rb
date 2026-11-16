@@ -20,7 +20,7 @@ module Zippendo
       @api_client = api_client
     end
     # Connect carrier
-    # Connects a new carrier to the organization with its configuration.
+    # Connects a new carrier to the organization with its configuration. Carriers that support it check the credentials with the carrier first and refuse them with CARRIER_AUTH_FAILED or CARRIER_CONFIG_INVALID.
     # @param org_id [String] Organization ID
     # @param connect_carrier_request [ConnectCarrierRequest] 
     # @param [Hash] opts the optional parameters
@@ -31,7 +31,7 @@ module Zippendo
     end
 
     # Connect carrier
-    # Connects a new carrier to the organization with its configuration.
+    # Connects a new carrier to the organization with its configuration. Carriers that support it check the credentials with the carrier first and refuse them with CARRIER_AUTH_FAILED or CARRIER_CONFIG_INVALID.
     # @param org_id [String] Organization ID
     # @param connect_carrier_request [ConnectCarrierRequest] 
     # @param [Hash] opts the optional parameters
@@ -488,7 +488,7 @@ module Zippendo
     end
 
     # Update carrier
-    # Updates a connected carrier's configuration or name.
+    # Updates a connected carrier's configuration or name. A new configuration is checked with the carrier first where the carrier supports it, as on connect.
     # @param org_id [String] Organization ID
     # @param carrier_id [String] Carrier ID
     # @param update_carrier_request [UpdateCarrierRequest] 
@@ -500,7 +500,7 @@ module Zippendo
     end
 
     # Update carrier
-    # Updates a connected carrier&#39;s configuration or name.
+    # Updates a connected carrier&#39;s configuration or name. A new configuration is checked with the carrier first where the carrier supports it, as on connect.
     # @param org_id [String] Organization ID
     # @param carrier_id [String] Carrier ID
     # @param update_carrier_request [UpdateCarrierRequest] 
