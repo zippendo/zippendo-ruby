@@ -14,6 +14,7 @@
 | **is_pickup_available** | **Boolean** | Whether carrier pickup is available for this product | [default to false] |
 | **services** | [**Array&lt;ListCarrierProducts200ResponseInnerServicesInner&gt;**](ListCarrierProducts200ResponseInnerServicesInner.md) | Additional services available for this product | [optional] |
 | **additional_parameters** | [**Array&lt;ListCarrierProducts200ResponseInnerAdditionalParametersInner&gt;**](ListCarrierProducts200ResponseInnerAdditionalParametersInner.md) | Extra parameters that can or must be supplied for this product | [optional] |
+| **dangerous_goods** | [**Array&lt;ListCarrierProducts200ResponseInnerDangerousGoodsInner&gt;**](ListCarrierProducts200ResponseInnerDangerousGoodsInner.md) | How this product declares dangerous goods: the service to request and the parameters that carry the details. Absent when the product cannot carry them. | [optional] |
 | **weight_limits** | [**ListCarrierProducts200ResponseInnerWeightLimits**](ListCarrierProducts200ResponseInnerWeightLimits.md) |  | [optional] |
 
 ## Example
@@ -32,6 +33,7 @@ instance = Zippendo::ListCarrierProducts200ResponseInner.new(
   is_pickup_available: true,
   services: null,
   additional_parameters: null,
+  dangerous_goods: null,
   weight_limits: null
 )
 ```

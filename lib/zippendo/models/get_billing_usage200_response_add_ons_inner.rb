@@ -15,7 +15,7 @@ require 'time'
 
 module Zippendo
   class GetBillingUsage200ResponseAddOnsInner < ApiModelBase
-    # Type of billing add-on
+    # Type of billing add-on. Only zippy can be purchased.
     attr_accessor :type
 
     # Number of add-on units purchased

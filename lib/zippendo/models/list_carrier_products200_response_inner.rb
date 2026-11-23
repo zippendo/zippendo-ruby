@@ -45,6 +45,9 @@ module Zippendo
     # Extra parameters that can or must be supplied for this product
     attr_accessor :additional_parameters
 
+    # How this product declares dangerous goods: the service to request and the parameters that carry the details. Absent when the product cannot carry them.
+    attr_accessor :dangerous_goods
+
     attr_accessor :weight_limits
 
     class EnumAttributeValidator
@@ -82,6 +85,7 @@ module Zippendo
         :'is_pickup_available' => :'isPickupAvailable',
         :'services' => :'services',
         :'additional_parameters' => :'additionalParameters',
+        :'dangerous_goods' => :'dangerousGoods',
         :'weight_limits' => :'weightLimits'
       }
     end
@@ -109,6 +113,7 @@ module Zippendo
         :'is_pickup_available' => :'Boolean',
         :'services' => :'Array<ListCarrierProducts200ResponseInnerServicesInner>',
         :'additional_parameters' => :'Array<ListCarrierProducts200ResponseInnerAdditionalParametersInner>',
+        :'dangerous_goods' => :'Array<ListCarrierProducts200ResponseInnerDangerousGoodsInner>',
         :'weight_limits' => :'ListCarrierProducts200ResponseInnerWeightLimits'
       }
     end
@@ -194,6 +199,12 @@ module Zippendo
       if attributes.key?(:'additional_parameters')
         if (value = attributes[:'additional_parameters']).is_a?(Array)
           self.additional_parameters = value
+        end
+      end
+
+      if attributes.key?(:'dangerous_goods')
+        if (value = attributes[:'dangerous_goods']).is_a?(Array)
+          self.dangerous_goods = value
         end
       end
 
@@ -339,6 +350,7 @@ module Zippendo
           is_pickup_available == o.is_pickup_available &&
           services == o.services &&
           additional_parameters == o.additional_parameters &&
+          dangerous_goods == o.dangerous_goods &&
           weight_limits == o.weight_limits
     end
 
@@ -351,7 +363,7 @@ module Zippendo
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, product_id, type, description, available_countries, available_sender_countries, is_service_point, is_pickup_available, services, additional_parameters, weight_limits].hash
+      [name, product_id, type, description, available_countries, available_sender_countries, is_service_point, is_pickup_available, services, additional_parameters, dangerous_goods, weight_limits].hash
     end
 
     # Builds the object from hash
