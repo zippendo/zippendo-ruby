@@ -94,7 +94,7 @@ module Zippendo
     end
 
     # Disconnect carrier
-    # Disconnects a carrier from the organization.
+    # Disconnects a carrier from the organization. A carrier that has pickups cannot be disconnected.
     # @param org_id [String] Organization ID
     # @param carrier_id [String] Carrier ID
     # @param [Hash] opts the optional parameters
@@ -105,7 +105,7 @@ module Zippendo
     end
 
     # Disconnect carrier
-    # Disconnects a carrier from the organization.
+    # Disconnects a carrier from the organization. A carrier that has pickups cannot be disconnected.
     # @param org_id [String] Organization ID
     # @param carrier_id [String] Carrier ID
     # @param [Hash] opts the optional parameters

@@ -90,7 +90,7 @@ end
 
 Disconnect carrier
 
-Disconnects a carrier from the organization.
+Disconnects a carrier from the organization. A carrier that has pickups cannot be disconnected.
 
 ### Examples
 
